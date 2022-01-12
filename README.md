@@ -5,7 +5,7 @@ We are Wicrosoft, a group of young, bad and rad programmers coming to give big t
 The software would be a website for businesses. The main idea of the application is a resource management system for a small to medium sized technology business. The goal is to make software that can track the skills and abilities of the employees, while also having an organization structure that tracks the many departments/teams within the company. Would also centralize information for each specific team within the department i.e: There Jira/Trello boards so the teams can see and make updates to their team boards in one place. Also using third party api’s for skill development and retraining such as: Udemy, Coursera, etc. This application would also allow for managers to sort through candidates with relevant skills to create new departments/teams for any business needs.
 
 ### Say hello to the team!
-Brian Simmons – Team Lead
+**Brian Simmons – Team Lead**
 A veteran from Inkster, Michigan. Lived in Hawaii for two year, and also drunk cobra blood in Indonesia. I like videos games and learning new things within the computer science space.
 
 **Faizan Akheel – Deputy Team Lead**
