@@ -9,7 +9,11 @@ The software would be a website for businesses. The main idea of the application
 
 A veteran from Inkster, Michigan. Lived in Hawaii for two year, and also drunk cobra blood in Indonesia. I like videos games and learning new things within the computer science space.
 
-**Faizan Akheel – Deputy Team Lead**
+**Jacob Elwell - Deputy Team Lead**
+
+I am a Senior at EMU working towards a Bachelor of Science in Computer Science (Applied), hoping to finish my last course over the Summer. Hobbies include playing boardgames, playing ultimate frisbee, and coaching/training in Brazlilian Jiu-Jitsu
+
+**Faizan Akheel – Team Member**
 
 An international student from India and a senior at EMU majoring in Computer Science Applied, with a passion to travel, learn, and better myself as a programmer with every passing day to achieve the unimaginable.
 
@@ -27,7 +31,7 @@ This is my final semester at Eastern Michigan University and I will be graduatin
 
 **Jacob Elwell - Team Member**
 
-I am a Senor at EMU working towards a Computer Science Bachelors in Applied Science, hoping to finish my last course over the Summer. Hobbies include boardgame, playing ultimate frisbee, and coaching/training in Brazlilian Jiu-Jitsu
+I am a Senior at EMU working towards a Computer Science Bachelors in Applied Science, hoping to finish my last course over the Summer. Hobbies include boardgame, playing ultimate frisbee, and coaching/training in Brazlilian Jiu-Jitsu
 
 **Kelly Lieske – Team Member**
 
