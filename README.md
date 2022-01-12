@@ -32,3 +32,6 @@ I am a Senor at EMU working towards a Computer Science Bachelors in Applied Scie
 **Kelly Lieske – Team Member**
 
 ESenior at EMU studying Computer Science with a graduation date of Winter 2022, Works full time for Michigan Medicine, Hobbies include video games, nature walks and sleeping
+
+
+**Weekly Meeting Time: Friday @ 6p.m.**
