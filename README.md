@@ -29,9 +29,6 @@ I am a senor at Eastern Michigan University majoring in Computer Science, I am f
 
 This is my final semester at Eastern Michigan University and I will be graduating with a Bachelor's in Computer Science. In my spare time, I enjoy wearing alternative fashions, listening to music, and being the local weirdo.
 
-**Jacob Elwell - Team Member**
-
-I am a Senior at EMU working towards a Computer Science Bachelors in Applied Science, hoping to finish my last course over the Summer. Hobbies include boardgame, playing ultimate frisbee, and coaching/training in Brazlilian Jiu-Jitsu
 
 **Kelly Lieske – Team Member**
 
