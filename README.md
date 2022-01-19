@@ -34,5 +34,7 @@ This is my final semester at Eastern Michigan University and I will be graduatin
 
 ESenior at EMU studying Computer Science with a graduation date of Winter 2022, Works full time for Michigan Medicine, Hobbies include video games, nature walks and sleeping
 
+**Olaoluwa Ife-Iji – Team Member**
+I am a Junior at EMU with a Major in Computer Science and a Minor in Simulation, Animation and Gaming, I am an International Student from Nigeria. I will graduate in May 2023 and i am looking to learn all the basics of working in a group on a project in order to strengthen my Portfolio
 
 **Weekly Meeting Time: Saturday @ 1:30 p.m.**
