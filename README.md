@@ -1,7 +1,7 @@
 # Wicrosoft
 We are Wicrosoft, a group of young, bad and rad programmers coming to give big tech a run for their money!
 
-## Project: Wicrosoft Resource Mangagement
+## Project: Wicrosoft Resource Mangagement Tool
 The software would be a website for businesses. The main idea of the application is a resource management system for a small to medium sized technology business. The goal is to make software that can track the skills and abilities of the employees, while also having an organization structure that tracks the many departments/teams within the company. Would also centralize information for each specific team within the department i.e: There Jira/Trello boards so the teams can see and make updates to their team boards in one place. Also using third party api’s for skill development and retraining such as: Udemy, Coursera, etc. This application would also allow for managers to sort through candidates with relevant skills to create new departments/teams for any business needs.
 
 ### Say hello to the team!
