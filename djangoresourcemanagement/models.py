@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from datetime import date, datetime
+# from datetime import date, datetime
 
-#Standard user creation only, super and admin available
+
+# Standard user creation only, super and admin available
 class AccountManager(BaseUserManager):
     def _create_user(self, username, email, password, first_name, last_name, is_staff, is_superuser):
         if not username:
@@ -32,8 +33,9 @@ class AccountManager(BaseUserManager):
         user = self._create_user(username, work_email, password, 'admin', 'superuser', True, True)
         return user
 
+
 class Users(AbstractBaseUser):
-    #no null availability, password to require password management
+    # no null availability, password to require password management
     username         = models.CharField(max_length=150)
     password         = models.CharField(max_length=150)
     email            = models.EmailField(max_length=150)
@@ -52,7 +54,7 @@ class Users(AbstractBaseUser):
     user_project     = models.ManyToManyField("Projects")
 
 
-    #Abstract requirements
+    # Abstract requirements
     is_admin        = models.BooleanField(default=False)
     is_staff        = models.BooleanField(default=False)
     is_superuser    = models.BooleanField(default=False)
@@ -71,6 +73,7 @@ class Users(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
 
 # Teams ---------------------------------------------------------------------
 
@@ -114,6 +117,7 @@ class UserToSkill(models.Model):
     user            = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True)
     proficiency     = models.ForeignKey("ProficiencyLevels", on_delete=models.SET_NULL, null=True)
 
+
 class TechSkill(models.Model):
     skill_name      = models.CharField(max_length=150)
     description     = models.TextField()
@@ -122,6 +126,7 @@ class TechSkill(models.Model):
         through="UserToSkill",
         through_fields=('skill', 'user')
     )
+
 
 class ProficiencyLevels(models.Model):
     level_name      = models.CharField(max_length=150)
