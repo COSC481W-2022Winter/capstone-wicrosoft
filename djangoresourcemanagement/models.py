@@ -36,7 +36,7 @@ class AccountManager(BaseUserManager):
 
 class Users(AbstractBaseUser):
     # no null availability, password to require password management
-    username         = models.CharField(max_length=150)
+    username         = models.CharField(max_length=150, unique=True)
     password         = models.CharField(max_length=150)
     email            = models.EmailField(max_length=150)
     work_email       = models.EmailField(max_length=60, unique=True, null=True)
@@ -46,8 +46,8 @@ class Users(AbstractBaseUser):
     position         = models.CharField(max_length=200, null=True)
     marital_status = models.CharField(max_length=150, null=True)
     rate             = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    supervisor       = models.ForeignKey("Users", on_delete=models.CASCADE)
-    mentor           = models.ManyToManyField("Users")
+    supervisor       = models.ForeignKey("Users", on_delete=models.CASCADE, related_name='+')
+    mentor           = models.ManyToManyField("Users", related_name='+')
     hire_date        = models.DateTimeField()
     date_joined      = models.DateTimeField(auto_now_add=True)
     last_login       = models.DateTimeField(auto_now=True)
@@ -104,7 +104,7 @@ class Roles(models.Model):
 
 class Teams(models.Model):
     name                = models.CharField(max_length=150)
-    leader              = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True)
+    leader              = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True, related_name='leader')
     short_description   = models.CharField(max_length=150)
     description         = models.TextField()
     team_creation_date  = models.DateTimeField(auto_now_add=True)
