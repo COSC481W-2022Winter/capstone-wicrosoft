@@ -44,8 +44,8 @@ class Users(AbstractBaseUser):
     last_name        = models.CharField(max_length=50)
     address          = models.CharField(max_length=250, null=True)
     position         = models.CharField(max_length=200, null=True)
+    marital_status = models.CharField(max_length=150, null=True)
     rate             = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    marital_status   = models.CharField(max_length=150, null=True)
     supervisor       = models.ForeignKey("Users", on_delete=models.CASCADE)
     mentor           = models.ManyToManyField("Users")
     hire_date        = models.DateTimeField()
@@ -53,6 +53,17 @@ class Users(AbstractBaseUser):
     last_login       = models.DateTimeField(auto_now=True)
     user_project     = models.ManyToManyField("Projects")
 
+    PERMISSIONS = [
+        ('EMP', 'Employee'),
+        ('LEAD', 'Team Lead'),
+        ('MNGR', 'Manager'),
+        ('SPRMGR', 'Super Manager'),
+    ]
+    permission = models.CharField(
+        max_length=8,
+        choices=PERMISSIONS,
+        default='EMP'
+    )
 
     # Abstract requirements
     is_admin        = models.BooleanField(default=False)
@@ -80,10 +91,16 @@ class Users(AbstractBaseUser):
 class SquadMembers(models.Model):
     user             = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True)
     team             = models.ForeignKey("Teams", on_delete=models.SET_NULL, null=True)
-    role             = models.CharField(max_length=150)
+    role             = models.ForeignKey("Roles", on_delete=models.SET_NULL, null=True)
     description      = models.CharField(max_length=150)
     is_active        = models.BooleanField(default=True)
+    date_added       = models.DateTimeField(auto_now_add=True)
 
+class Roles(models.Model):
+    name                   = models.CharField(max_length=100)
+    short_description      = models.CharField(max_length=100)
+    long_description       = models.TextField()
+    date_added             = models.DateTimeField(auto_now_add=True)
 
 class Teams(models.Model):
     name                = models.CharField(max_length=150)
@@ -95,11 +112,20 @@ class Teams(models.Model):
     team_members = models.ManyToManyField(
         "Users",
         through="SquadMembers",
-        through_fields=('user', 'team')
+        through_fields=('team', 'user')
     )
     team_resources = models.ManyToManyField("Resources")
     team_announcements = models.ManyToManyField("Announcements")
     team_projects = models.ManyToManyField("Projects")
+    TYPE = [
+        ('PUB', 'Public'),
+        ('PRI', 'Private'),
+    ]
+    type = models.CharField(
+        max_length=3,
+        choices=TYPE,
+        default="PUB",
+    )
 
 
 class Announcements(models.Model):
@@ -116,10 +142,25 @@ class UserToSkill(models.Model):
     skill           = models.ForeignKey("TechSkill", on_delete=models.SET_NULL, null=True)
     user            = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True)
     proficiency     = models.ForeignKey("ProficiencyLevels", on_delete=models.SET_NULL, null=True)
-
+    date_added      = models.DateTimeField(auto_now_add=True)
+    STATUS = [
+        ('APP', "Approved"),
+        ('PEN', "Pending"),
+        ('REJ', "Rejected"),
+    ]
+    skill_status    = models.CharField(
+        max_length=10,
+        choices=STATUS,
+        default = "PEN",
+    )
+    skill_status_reason = models.CharField(max_length=255)
+    date_modified_status = models.DateTimeField()
+    projects_that_show_experience_of_skill = models.ForeignKey("Projects", on_delete=models.SET_NULL, null=True)
 
 class TechSkill(models.Model):
-    skill_name      = models.CharField(max_length=150)
+    name      = models.CharField(max_length=150)
+    category        = models.CharField(max_length=255)
+    domain          = models.CharField(max_length=255, null=True)
     description     = models.TextField()
     user_to_skill   = models.ManyToManyField(
         "Users",
@@ -129,7 +170,17 @@ class TechSkill(models.Model):
 
 
 class ProficiencyLevels(models.Model):
-    level_name      = models.CharField(max_length=150)
+    LEVELS = [
+        ('BEG','Beginner'),
+        ('INT','Intermediate'),
+        ('ADV','Advanced'),
+        ('EXP','Expert'),
+
+    ]
+    level_name = models.CharField(
+        max_length=10,
+        choices=LEVELS
+        )
     description     = models.TextField()
 
 
@@ -137,18 +188,28 @@ class ProficiencyLevels(models.Model):
 
 class Projects(models.Model):
     name                    = models.CharField(max_length=150)
+    project_owner           = models.ForeignKey("Users", on_delete=models.SET_NULL, null=True)
     short_description       = models.CharField(max_length=150)
     description             = models.TextField()
     start_date              = models.DateTimeField()
     projected_end_date      = models.DateTimeField()
     actual_end_date         = models.DateTimeField(null=True)
-    isActive                = models.BooleanField(default=True)
+    is_active                = models.BooleanField(default=True)
     project_to_announcement = models.ManyToManyField("Announcements")
     project_to_resource     = models.ManyToManyField("Resources")
+    TYPE = [
+        ('PUB', 'Public'),
+        ('PRI', 'Private'),
+    ]
+    type = models.CharField(
+        max_length=3,
+        choices=TYPE,
+        default="PUB",
+    )
 
 
 class Resources(models.Model):
     files = models.FileField(upload_to='resources/', null=True)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=255)
     text = models.TextField(null=True)
     link = models.URLField(null=True)
