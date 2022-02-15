@@ -1,0 +1,14 @@
+[
+    {
+        "model" : "djangoresourcemanagement.SquadMembers",
+        "pk"    : 2,
+        "fields":{
+                    "user"              : 3,
+                    "team"              : 2,
+                    "roll"              : null,
+                    "description"       : "Designing graph",
+                    "is_active"         : true,
+                    "date_added"        : "2022-02-14 20:58:00"
+        }
+    }
+]

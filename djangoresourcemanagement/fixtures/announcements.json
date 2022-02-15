@@ -1,0 +1,13 @@
+[
+    {
+        "model" : "djangoresourcemanagement.Announcements",
+        "pk"    : 2,
+        "fields":
+        {
+            "title"             : "Trello Update",
+            "description"       : "An update to the Trello labels has been made, please review them and respond accordingly",
+            "announcement_date" : "2022-02-14 20:58:00",
+            "author"            : 2
+        }
+    }
+]
