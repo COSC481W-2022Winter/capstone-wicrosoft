@@ -1,7 +1,7 @@
 [
     {
-        "model" : "djangoresourcemanagement.TeckSkill",
-        "pk"    : 2,
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 1,
         "fields":{
                     "name"              : "C#",
                     "category"          : "Programming Language",
@@ -10,8 +10,8 @@
         }
     },
     {
-        "model" : "djangoresourcemanagement.TeckSkill",
-        "pk"    : 3,
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 2,
         "fields":{
                     "name"              : "AWS Rolling Update",
                     "category"          : "Deployment",
@@ -20,8 +20,8 @@
         }
     },
     {
-        "model" : "djangoresourcemanagement.TeckSkill",
-        "pk"    : 4,
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 3,
         "fields":{
                     "name"              : "Django",
                     "category"          : "Framework",
@@ -30,8 +30,8 @@
         }
     },
     {
-        "model" : "djangoresourcemanagement.TeckSkill",
-        "pk"    : 5,
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 4,
         "fields":{
                     "name"              : "HTML",
                     "category"          : "Frontend",
@@ -40,8 +40,8 @@
         }
     },
     {
-        "model" : "djangoresourcemanagement.TeckSkill",
-        "pk"    : 6,
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 5,
         "fields":{
                     "name"              : "SQL",
                     "category"          : "Database",

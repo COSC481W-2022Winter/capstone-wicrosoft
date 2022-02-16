@@ -1,0 +1,13 @@
+[
+    {
+        "model" : "djangoresourcemanagement.Resources",
+        "pk"    : 1,
+        "fields":
+        {
+            "files" : null,
+            "title" : "Practice Project Link",
+            "text"  : null,
+            "link"  : "https://github.com/bsimmo11/django_tech_stack_project"
+        }
+    }
+]

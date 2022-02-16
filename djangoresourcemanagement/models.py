@@ -6,7 +6,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # Standard user creation only, super and admin available
 class AccountManager(BaseUserManager):
-    def _create_user(self, username, email, password, first_name, last_name, is_staff, is_superuser):
+    def _create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission, is_staff, is_superuser):
         if not username:
             raise ValueError("Username Required")
         now = timezone.now()
@@ -14,8 +14,17 @@ class AccountManager(BaseUserManager):
         user = self.model(
             username=username,
             email=email,
+            work_email=work_email,
             firstName=first_name,
             lastName=last_name,
+            address=address,
+            position=position,
+            marital_status=marital_status,
+            rate=rate,
+            supervisor=supervisor,
+            mentor=mentor,
+            hire_date=hire_date,
+            permission=permission,
             is_active=True,
             is_superuser=is_superuser,
             is_staff=is_staff,
@@ -26,11 +35,11 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, email, password, first_name, last_name):
-        return self._create_user(username, email, password, first_name, last_name, False, False)
+    def create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
+        return self._create_user(username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission ,False, False)
 
-    def create_superuser(self, username,  work_email, password):
-        user = self._create_user(username, work_email, password, 'admin', 'superuser', True, True)
+    def create_superuser(self, username, email, password):
+        user = self._create_user(username, email, "null", password, 'admin', 'superuser', "null", "null", "null", "null", "null", "SPRMGR", True, True)
         return user
 
 
@@ -45,13 +54,14 @@ class Users(AbstractBaseUser):
     address          = models.CharField(max_length=250, null=True)
     position         = models.CharField(max_length=200, null=True)
     marital_status = models.CharField(max_length=150, null=True)
-    rate             = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    supervisor       = models.ForeignKey("Users", on_delete=models.CASCADE, related_name='+')
+    rate             = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    supervisor       = models.ForeignKey("Users", on_delete=models.CASCADE, related_name='+', null=True)
     mentor           = models.ManyToManyField("Users", related_name='+')
     hire_date        = models.DateTimeField()
     date_joined      = models.DateTimeField(auto_now_add=True)
     last_login       = models.DateTimeField(auto_now=True)
     user_project     = models.ManyToManyField("Projects")
+
 
     PERMISSIONS = [
         ('EMP', 'Employee'),
@@ -153,8 +163,8 @@ class UserToSkill(models.Model):
         choices=STATUS,
         default = "PEN",
     )
-    skill_status_reason = models.CharField(max_length=255)
-    date_modified_status = models.DateTimeField()
+    skill_status_reason = models.CharField(max_length=255, null=True)
+    date_modified_status = models.DateTimeField(null=True)
     projects_that_show_experience_of_skill = models.ForeignKey("Projects", on_delete=models.SET_NULL, null=True)
 
 class TechSkill(models.Model):

@@ -1,26 +1,28 @@
 [
     {
         "model" : "djangoresourcemanagement.Teams",
-        "pk"    : 2,
+        "pk"    : 1,
         "fields":{
                     "name"              : "The Care Bears with Carrie Berry",
                     "leader"            : 2,
                     "short_description" : "The Care Bears are a passion driven group working on our internal software",
                     "description"       : "The Care Bears are comprised of some of our most passionate employees.\n We work on our dashboard tooling and are way better than the other teams.",
                     "team_creation_date": "2022-02-14 20:58:00",
-                    "is_active"         : true
+                    "is_active"         : true,
+                    "type"              : "PUB"
         }
     },
     {
         "model" : "djangoresourcemanagement.Teams",
-        "pk"    : 3,
+        "pk"    : 2,
         "fields":{
                     "name"              : "The Big Cats",
                     "leader"            : null,
                     "short_description" : "The Big Cats are on the hunt to be the best!",
                     "description"       : "The Big Cats have been around since the beggining!\n We have a wide range of experience, ranging from new to 10+ years.",
                     "team_creation_date": "2022-02-14 20:58:00",
-                    "is_active"         : true
+                    "is_active"         : true,
+                    "type"              : "PUB"
         }
     }
 ]

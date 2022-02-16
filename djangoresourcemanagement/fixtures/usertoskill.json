@@ -1,0 +1,17 @@
+[
+    {
+        "model" : "djangoresourcemanagement.UserToSkill",
+        "pk"    : 1,
+        "fields":
+        {
+            "user" : 3,
+            "skill" : 4,
+            "proficiency"  : 3,
+            "date_added" : "2022-02-1 08:58:00",
+            "skill_status" : "PEN",
+            "skill_status_reason" : null,
+            "date_modified_status" : null,
+            "projects_that_show_experience_of_skill" : null
+        }
+    }
+]

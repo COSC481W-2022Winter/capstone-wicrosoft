@@ -1,7 +1,7 @@
 [
     {
         "model" : "djangoresourcemanagement.Announcements",
-        "pk"    : 2,
+        "pk"    : 1,
         "fields":
         {
             "title"             : "Trello Update",

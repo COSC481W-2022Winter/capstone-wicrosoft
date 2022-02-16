@@ -1,10 +1,10 @@
 [
     {
         "model" : "djangoresourcemanagement.Users",
-        "pk"    : 2,
+        "pk"    : 1,
         "fields":{
                     "username"      : "jack123",
-                    "password"      : null,
+                    "password"      : "pbkdf2_sha256$320000$kcoLn2xZdsWp9nBMAlavUr$5nG2szFMLS8BC2e4WrryE9NcfTbjKKKK3rvNRLpP0hI=",
                     "email"         : "jacksemail@email.com",
                     "work_email"    : "jackjohnson@workplace.com",
                     "first_name"    : "Jack",
@@ -17,15 +17,15 @@
                     "hire_date"     : "2022-02-14 20:58:00",
                     "date_joined"   : "2022-02-14 20:58:00",
                     "last_login"    : "2022-02-14 20:58:00",
-                    "PERMISSIONS"   : "MNGR"
+                    "permission"   : "MNGR"
         }
     },
     {
         "model" : "djangoresourcemanagement.Users",
-        "pk"    : 3,
+        "pk"    : 2,
         "fields":{
                     "username"      : "jimboTheBro",
-                    "password"      : null,
+                    "password"      : "pbkdf2_sha256$320000$kcoLn2xZdsWp9nBMAlavUr$5nG2szFMLS8BC2e4WrryE9NcfTbjKKKK3rvNRLpP0hI=",
                     "email"         : "jimboworth@email.com",
                     "work_email"    : "jimothywilliams@workplace.com",
                     "first_name"    : "Jimothy",
@@ -34,18 +34,19 @@
                     "position"      : "Software Developer",
                     "marital_status": "Single",
                     "rate"          : 82000.00,
-                    "supervisor"    : 2,
+                    "supervisor"    : 1,
                     "hire_date"     : "2022-02-14 20:58:00",
                     "date_joined"   : "2022-02-14 20:58:00",
-                    "last_login"    : "2022-02-14 20:58:00"
+                    "last_login"    : "2022-02-14 20:58:00",
+                    "permission"    : "EMP"
         }
     },
     {
         "model" : "djangoresourcemanagement.Users",
-        "pk"    : 4,
+        "pk"    : 3,
         "fields":{
                     "username"      : "marySm1th",
-                    "password"      : null,
+                    "password"      : "pbkdf2_sha256$320000$kcoLn2xZdsWp9nBMAlavUr$5nG2szFMLS8BC2e4WrryE9NcfTbjKKKK3rvNRLpP0hI=",
                     "email"         : "msmith@email.com",
                     "work_email"    : "marysmith@workplace.com",
                     "first_name"    : "Mary",
@@ -54,50 +55,53 @@
                     "position"      : "UX Designer",
                     "marital_status": "Married",
                     "rate"          : 69000.00,
-                    "supervisor"    : 2,
+                    "supervisor"    : 1,
                     "hire_date"     : "2022-02-14 20:58:00",
                     "date_joined"   : "2022-02-14 20:58:00",
-                    "last_login"    : "2022-02-14 20:58:00"
+                    "last_login"    : "2022-02-14 20:58:00",
+                    "permission"    : "EMP"
         }
     },
     {
         "model" : "djangoresourcemanagement.Users",
-        "pk"    : 5,
+        "pk"    : 4,
         "fields":{
                     "username"      : "m1guelTheDude",
-                    "password"      : null,
+                    "password"      : "pbkdf2_sha256$320000$kcoLn2xZdsWp9nBMAlavUr$5nG2szFMLS8BC2e4WrryE9NcfTbjKKKK3rvNRLpP0hI=",
                     "email"         : "mdude@email.com",
                     "work_email"    : "miguelhonduras@workplace.com",
                     "first_name"    : "Miguel",
                     "last_name"     : "Honduras",
                     "address"       : "5555 Sandy Street",
                     "position"      : "Software Developer",
-                    "marital_status": "Married",
+                    "marital_status": "Divorced",
                     "rate"          : 90000.00,
-                    "supervisor"    : 2,
+                    "supervisor"    : 1,
                     "hire_date"     : "2022-02-14 20:58:00",
                     "date_joined"   : "2022-02-14 20:58:00",
-                    "last_login"    : "2022-02-14 20:58:00"
+                    "last_login"    : "2022-02-14 20:58:00",
+                    "permission"    : "EMP"
         }
     },
     {
         "model" : "djangoresourcemanagement.Users",
-        "pk"    : 6,
+        "pk"    : 5,
         "fields":{
                     "username"      : "carebear",
-                    "password"      : null,
+                    "password"      : "pbkdf2_sha256$320000$kcoLn2xZdsWp9nBMAlavUr$5nG2szFMLS8BC2e4WrryE9NcfTbjKKKK3rvNRLpP0hI=",
                     "email"         : "careb3ar@email.com",
                     "work_email"    : "carrieberry@workplace.com",
                     "first_name"    : "Carrie",
                     "last_name"     : "Berry",
                     "address"       : "9843 Windyday Way",
                     "position"      : "Server Maintenecne ",
-                    "marital_status": "Single",
+                    "marital_status": "Widow",
                     "rate"          : 54000.00,
-                    "supervisor"    : 2,
+                    "supervisor"    : 1,
                     "hire_date"     : "2022-02-14 20:58:00",
                     "date_joined"   : "2022-02-14 20:58:00",
-                    "last_login"    : "2022-02-14 20:58:00"
+                    "last_login"    : "2022-02-14 20:58:00",
+                    "permission"    : "EMP"
         }
     }
 ]
