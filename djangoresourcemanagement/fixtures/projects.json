@@ -1,0 +1,17 @@
+[
+    {
+        "model" : "djangoresourcemanagement.Projects",
+        "pk"    : 1,
+        "fields":{
+                    "name"              : "Dashboard Display",
+                    "project_owner"     : 2,
+                    "short_description" : "Create graphical display for the employee dashboard",
+                    "description"       : "Graphical display to include productivity log, trello boards tab, as well as clock time",
+                    "start_date"        : "2022-02-14 20:58:00",
+                    "projected_end_date": "2022-03-15 20:00:00",
+                    "actual_end_date"   : null,
+                    "is_active"         : true,
+                    "type"              : "PUB"
+        }
+    }
+]

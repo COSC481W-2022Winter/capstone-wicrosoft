@@ -1,0 +1,26 @@
+[
+    {
+        "model" : "djangoresourcemanagement.SquadMembers",
+        "pk"    : 1,
+        "fields":{
+                    "user"              : 3,
+                    "team"              : 2,
+                    "role"              : null,
+                    "description"       : "Designing graph",
+                    "is_active"         : true,
+                    "date_added"        : "2022-02-14 20:58:00"
+        }
+    },
+    {
+        "model" : "djangoresourcemanagement.SquadMembers",
+        "pk"    : 2,
+        "fields":{
+                    "user"              : 2,
+                    "team"              : 1,
+                    "role"              : null,
+                    "description"       : "Keeps track of SCRUM board, and time management.",
+                    "is_active"         : true,
+                    "date_added"        : "2022-02-14 20:58:00"
+        }
+    }
+]

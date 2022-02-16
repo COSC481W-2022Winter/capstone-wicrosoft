@@ -1,0 +1,35 @@
+[
+    {
+        "model" : "djangoresourcemanagement.ProficiencyLevels",
+        "pk"    : 1,
+        "fields":
+        {
+            "level_name" : "BEG",
+            "description" : "Uses basic understanding of the field to perform job duties; may need some guidance on job duties; applies learning to recommend options to address unusual situations."
+        }
+    },{
+        "model" : "djangoresourcemanagement.ProficiencyLevels",
+        "pk"    : 2,
+        "fields":
+        {
+            "level_name" : "INT",
+            "description" : "uccessfully completes diverse tasks of the job; applies and enhances knowledge and skill in both usual and unusual issues; needs minimal guidance in addressing unusual situations."
+        }
+    },{
+        "model" : "djangoresourcemanagement.ProficiencyLevels",
+        "pk"    : 3,
+        "fields":
+        {
+            "level_name" : "ADV",
+            "description" : "Performs without assistance; recognized as a resource to others; able to translate complex nuances to others; able to improve processes; focus on broad issues."
+        }
+    },{
+        "model" : "djangoresourcemanagement.ProficiencyLevels",
+        "pk"    : 4,
+        "fields":
+        {
+            "level_name" : "EXP",
+            "description" : "Seen as an expert and/or leader; guides, troubleshoots; has strategic focus; applies knowledge and skill across or in leading multiple projects/orgs; demonstrates knowledge of trends in field; leads in developing new processes."
+        }
+    }
+]

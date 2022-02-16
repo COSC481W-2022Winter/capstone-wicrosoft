@@ -1,0 +1,52 @@
+[
+    {
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 1,
+        "fields":{
+                    "name"              : "C#",
+                    "category"          : "Programming Language",
+                    "domain"            : null,
+                    "description"       : "C# Programming Language"
+        }
+    },
+    {
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 2,
+        "fields":{
+                    "name"              : "AWS Rolling Update",
+                    "category"          : "Deployment",
+                    "domain"            : null,
+                    "description"       : "Replaces previous versions of an application with new versions by replacing application infrastructure"
+        }
+    },
+    {
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 3,
+        "fields":{
+                    "name"              : "Django",
+                    "category"          : "Framework",
+                    "domain"            : null,
+                    "description"       : "Django framework manages backend and frontend connections as well as databasing"
+        }
+    },
+    {
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 4,
+        "fields":{
+                    "name"              : "HTML",
+                    "category"          : "Frontend",
+                    "domain"            : null,
+                    "description"       : "HTML Programming Language"
+        }
+    },
+    {
+        "model" : "djangoresourcemanagement.TechSkill",
+        "pk"    : 5,
+        "fields":{
+                    "name"              : "SQL",
+                    "category"          : "Database",
+                    "domain"            : null,
+                    "description"       : "SQL Language"
+        }
+    }
+]
