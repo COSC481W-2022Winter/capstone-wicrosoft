@@ -23,5 +23,6 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.profile_page, name='profile'),
     path('team/', views.team, name='team'),
+    path('teammaker/', views.team_maker, name='teammaker'),
     path('project/', views.project, name='project'),
 ]

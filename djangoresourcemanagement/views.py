@@ -15,5 +15,8 @@ def logout_user(request):
 def team(request):
     return render(request, 'team.html')
 
+def team_maker(request):
+    return render(request, 'team_maker.html')
+
 def project(request):
     return render(request, 'project.html')
