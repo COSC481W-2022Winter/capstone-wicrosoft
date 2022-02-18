@@ -24,5 +24,6 @@ urlpatterns = [
     path('profile/', views.profile_page, name='profile'),
     path('team/', views.team, name='team'),
     path('teammaker/', views.team_maker, name='teammaker'),
+    path('teammaker/get_users/', views.get_users),
     path('project/', views.project, name='project'),
 ]

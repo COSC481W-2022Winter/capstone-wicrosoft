@@ -5,15 +5,75 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
     <title>Team Maker</title>
 </head>
-
 <body>
-    <div class="d-flex flex-md-column align-items-center w-100 border-primary border">
-        <p class="w-50 m-1 bg-primary text-center">Times</p>
-        <p class="w-50 m-1 bg-primary text-center">Times</p>
-        <p class="w-50 m-1 bg-primary text-center">Times</p>
-    </div>
+
+        <form action="" method="post" class="">
+
+            <div class="border border-primary d-flex flex-md-column align-items-center w-50 m-auto">
+                <h2 class="bg-success w-100 text-center pb-2 pt-1">Team Information</h2>
+                <label for="team_name">Team Name:</label>
+                <input id="team_name" type="text" name="team_name">
+                <label for="team_leader">Team Leader:</label>
+                <input id="team_leader" type="text" name="team_leader">
+                <label for="short_description">Short Description:</label>
+                <input id="short_description" type="text" name="short_description">
+                <label for="long_description">Long Description:</label>
+                <input id="long_description" type="text" name="long_description">
+
+                <label for="type">Type:</label>
+                <select name="type" id="type">
+                    <option value="PUB">Public</option>
+                    <option value="PRI">Private</option>
+                </select>
+
+                <div class="d-flex flex-md-column align-items-center">
+                    <label for="projects">Projects:</label>
+                    <input type="text" name="projects" id="projects">
+                </div>
+            </div>
+
+            <div class="border border-danger d-flex flex-md-column align-items-center w-50 mt-2 ml-auto mr-auto pb-4">
+                <h2 class="bg-success w-100 text-center pb-2 pt-1">Team Assigner</h2>
+
+                <div class="d-flex flex-md-row w-100 justify-content-around">
+
+                    <div class="d-flex flex-md-column align-items-center">
+                        <label for="role">Role</label>
+                        <select name="role" id="role">
+                            <option value="FRO">Front-End Developer</option>
+                            <option value="UX">User Experience Specialist</option>
+                            <option value="SYSENG">System Engineer</option>
+                            <option value="DBADMIN">Database Administrator</option>
+                            <option value="BAD">Backend Developer</option>
+                            <option value="SCRUM">SCRUM Master</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex flex-md-column">
+                        <label for="squadmember">Squad Member</label>
+                        <input type="text" id="squadmember" name="squadmember">
+                    </div>
+                    <span class="align-self-center border bg-light pl-1 pr-1 h-25">Add</span>
+
+                </div>
+
+            </div>
+
+        </form>
+
+<script>
+    $('#team_leader').devbridgeAutocomplete({
+    serviceUrl: '/teammaker/get_users/',
+    onSelect: function (suggestion) {
+        console.log(suggestion)
+        {#alert('You selected: ' + suggestion.value + ', ' + suggestion.data);#}
+    }
+});
+</script>
+
 </body>
 
 </html>
