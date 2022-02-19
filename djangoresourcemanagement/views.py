@@ -22,7 +22,7 @@ def team_maker(request):
 
 def get_users(request):
     personToSearch = request.GET['query']
-    personOfInterest = [];
+    personsOfInterest = []
 
     if ' ' in personToSearch:
         personsNames = personToSearch.split()
@@ -41,10 +41,6 @@ def get_users(request):
                 "data" : person.id
             }
         jsonResponseData["suggestions"] += [dictionary]
-
-    print(jsonResponseData)
-
-
 
     return JsonResponse(jsonResponseData, safe=False)
 
