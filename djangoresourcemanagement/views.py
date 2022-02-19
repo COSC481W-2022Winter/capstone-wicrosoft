@@ -21,9 +21,14 @@ def team_maker(request):
     return render(request, 'team_maker.html')
 
 def get_users(request):
-    personToSearch = request.GET['query'];
+    personToSearch = request.GET['query']
+    personOfInterest = [];
 
-    personsOfInterest = list(Users.objects.filter(first_name__startswith=personToSearch))
+    if ' ' in personToSearch:
+        personsNames = personToSearch.split()
+        personsOfInterest = list(Users.objects.filter(first_name__istartswith=personsNames[0],last_name__istartswith=personsNames[1]))
+    else:
+        personsOfInterest = list(Users.objects.filter(first_name__istartswith=personToSearch))
 
     print(personsOfInterest)
 
