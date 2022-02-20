@@ -24,4 +24,6 @@ urlpatterns = [
     path('profile/', views.profile_page, name='profile'),
     path('team/', views.team, name='team'),
     path('project/', views.project, name='project'),
+    path('importusers/', views.import_users, name='import'),
+
 ]

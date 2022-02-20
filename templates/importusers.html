@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <title>Import Users</title>
+<body >
+    <div class="container">
+        <div class="heading">
+            <h2 class="heading">Create Accounts</h2>
+            <p class="subheading">Please choose a file to create accounts</p>
+        </div>
+
+        <form action = "" method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" name="userfile" class="custom-file-input" id="userfile">
+                <label class="custom-file-label" for="userfile">Choose file</label>
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Upload</button>
+              </div>
+            </div>
+            <script>
+            $('#userfile').on('change',function(){
+                //get the file name
+                var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        </script>
+        </form>
+        {% if Errors == '' %}
+            <l>no errors</l>
+            {% else %}
+            {% for error in Errors %}
+
+            <ul> Row : {{error.0}} Col : {{error.1}} Error : {{error.2}} </ul>
+
+            {% endfor %}
+        {% endif %}
+
+
+    </div>
+
+
+</body>
+</html>
