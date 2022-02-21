@@ -24,7 +24,7 @@
         <div class="leftBar">
             <div class="profilePicture">
                 <img src="" alt="user profile picture">
-                <p>First-Name Last-Name</p>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
             </div>
 
             <div class="button">
@@ -76,7 +76,8 @@
         <div class="rightBar">
             <h4>Bio</h4>
             <!-- content loaded from db -->
-
+            <p>Position: {{ user.position }}</p>
+            <p>Email: {{ user.email }}</p>
         </div>
 
     </div>
