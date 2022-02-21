@@ -1,3 +1,7 @@
+html {
+    background-color: #F6F6F6;
+
+}
 .surroundBody {
     background-color: #F6F6F6;
     display: flex;
@@ -55,4 +59,15 @@
     width: fit-content;
     padding: .3em 2em .3em 2em;
     align-self: center;
+}
+
+.navBar {
+    list-style-type: none;
+    margin:0;
+    padding: 10px;
+
+}
+
+.nav {
+    display: inline;
 }

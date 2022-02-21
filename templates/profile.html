@@ -9,12 +9,22 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <title>Profile</title>
 </head>
-<body class="surroundBody">
+<body>
 
-    <div class="leftBar">
-        <div class="flex-container">
+    <div>
+        <ul class="navBar">
+            <li class="nav"><a href="/profile">Profile</a></li>
+            <li class="nav"><a href="/search.html">Search</a></li>
+            <li class="nav"><a href="/logout.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="surroundBody">
+            <div class="flex-container">
+        <div class="leftBar">
             <div class="profilePicture">
                 <img src="" alt="user profile picture">
+                <p>First-Name Last-Name</p>
             </div>
 
             <div class="button">
@@ -55,19 +65,24 @@
         </div>
     </div>
 
-    <div class="middleBar">
-        <div class="announcements">
-            <h4>Announcements</h4>
+        <div class="middleBar">
+            <div class="announcements">
+                <h4>Announcements</h4>
+                <!-- content loaded from db -->
+
+            </div>
+        </div>
+
+        <div class="rightBar">
+            <h4>Bio</h4>
             <!-- content loaded from db -->
 
         </div>
-    </div>
-
-    <div class="rightBar">
-        <h4>Bio</h4>
-        <!-- content loaded from db -->
 
     </div>
+
+
+
 
 
 </body>
