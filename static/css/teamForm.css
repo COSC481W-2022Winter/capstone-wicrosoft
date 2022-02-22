@@ -5,3 +5,18 @@ td {
     text-align: center;
     width: 200px;
 }
+
+
+
+
+
+.member_relation{
+    text-decoration: none;
+}
+.making_delete{
+    font-size: 1em;
+    cursor: pointer;
+    /*border-radius: 1em;*/
+    padding: 0 8px;
+    font-weight: 501;
+}
