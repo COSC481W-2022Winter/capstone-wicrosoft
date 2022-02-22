@@ -1,0 +1,60 @@
+.surroundBody {
+    background-color: #F6F6F6;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.loginContainer {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    margin-top: 20px;
+    width: 350px;
+    border-radius: 9px;
+    border: 1px solid rgba(112, 112, 112, 0.31);
+    padding: 1em;
+}
+
+.heading {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subheading {
+    color: black;
+}
+.button {
+    margin-top: 20px;
+}
+
+.loginForm {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+form{
+    color: black;
+}
+form > label{
+    margin-bottom: 2px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+form > input{
+    color: black;
+    padding: 3px 0 3px 5px;
+}
+.submit_button{
+    background: rgb(240,168,104,.53);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 1.3em;
+    width: fit-content;
+    padding: .3em 2em .3em 2em;
+    align-self: center;
+}

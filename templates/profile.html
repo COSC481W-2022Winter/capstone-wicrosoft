@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <title>Profile</title>
+</head>
+<body>
+
+    <div>
+        <ul class="navBar">
+            <li class="nav"><a href="/profile">Profile</a></li>
+            <li class="nav"><a href="/search">Search</a></li>
+            <li class="nav"><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="surroundBody">
+            <div class="flex-container">
+        <div class="leftBar">
+            <div class="profilePicture">
+                <img src="" alt="user profile picture">
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
+            </div>
+
+            <div class="button">
+                <button type="button">Edit Profile</button>
+            </div>
+
+            <div class="userInfo">
+                <div>
+                    <h4>Teams</h4>
+                    <!-- content loaded from db -->
+                    <a href="">Example Team 1</a> <br>
+                    <a href="">Example Team 2</a>
+                </div>
+
+                <br>
+
+                <div>
+                    <h4>Roles</h4>
+                    <!-- content loaded from db -->
+                    <ul>
+                        <li>Example Role 1</li>
+                        <li>Example Role 2</li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div>
+                    <h4>Skills</h4>
+                    <!-- content loaded from db -->
+                    <ul>
+                        <li>Example Skill 1</li>
+                        <li>Example Skill 2</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        <div class="middleBar">
+            <div class="announcements">
+                <h4>Announcements</h4>
+                <!-- content loaded from db -->
+
+            </div>
+        </div>
+
+        <div class="rightBar">
+            <h4>Bio</h4>
+            <!-- content loaded from db -->
+            <p>Position: {{ user.position }}</p>
+            <p>Email: {{ user.email }}</p>
+        </div>
+
+    </div>
+
+
+
+
+
+</body>
+</html>

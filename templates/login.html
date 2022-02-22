@@ -13,8 +13,15 @@
     <div class="loginContainer">
         <div class="heading">
             <h2 class="heading">Login</h2>
-            <p class="subheading">Find your favorite and hated</p>
+            <p class="subheading"></p>
         </div>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+            </ul>
+        {% endif %}
 
         <form action="" method="post" class="loginForm">
             {% csrf_token %}
@@ -24,8 +31,6 @@
             <input type="password" name="login_password">
             <input class="submit_button" type="submit" value="Log-In">
         </form>
-
-        <p style="align-self: baseline;position: relative;top: 22px;"><b>Don't have an account?</b> <a href="">Sign-up</a></p>
     </div>
 
 
