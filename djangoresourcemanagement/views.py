@@ -31,8 +31,10 @@ def team_maker(request):
                 team_type = request.POST["type"]
                 projects_list = request.POST.getlist("proj")
                 squadmember_list = request.POST.getlist("personID")
-                print(squadmember_list)
                 roles_to_squadmembers = request.POST.getlist("roles")
+
+                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(projects_list) == 0 or len(squadmember_list) == 0:
+                    return render(request, 'team_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
 
                 createdTeam = Teams(
                     name=team_name,
@@ -62,8 +64,9 @@ def team_maker(request):
                     squadEntity.save()
                     print(squadEntity)
 
-            return render(request, 'team_maker.html')
+                return render(request, 'team_maker.html', {'success': "Team" + createdTeam.name + "Created"})
 
+            return render(request, 'team_maker.html')
 
     return redirect("login")
 

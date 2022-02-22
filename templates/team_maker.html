@@ -13,6 +13,19 @@
 </head>
 <body class="h-100 d-flex flex-md-column align-items-center">
 
+        {% if Fail %}
+            <div class="alert alert-danger" role="alert">
+                {{ Fail }}
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="alert alert-success" role="alert">
+                {{ success }}
+            </div>
+        {% endif %}
+
+
         <form id="team_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
             {% csrf_token %}
 
