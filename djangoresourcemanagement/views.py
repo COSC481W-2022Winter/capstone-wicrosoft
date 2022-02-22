@@ -18,48 +18,54 @@ def team(request):
     return render(request, 'team.html')
 
 def team_maker(request):
-    if request.method == 'POST':
-        print(request.POST)
-        team_name = request.POST['team_name']
-        team_leader = request.POST['team_lead']
-        shrt_desc = request.POST["short_description"]
-        long_desc = request.POST["long_description"]
-        team_type = request.POST["type"]
-        projects_list = request.POST.getlist("proj")
-        squadmember_list = request.POST.getlist("personID")
-        print(squadmember_list)
-        roles_to_squadmembers = request.POST.getlist("roles")
+    if request.user.is_authenticated:
+        if Users.objects.get(id=request.user.id).permission != 'MNGR':
+            return redirect('profile')
+        else:
+            if request.method == 'POST':
+                print(request.POST)
+                team_name = request.POST['team_name']
+                team_leader = request.POST['team_lead']
+                shrt_desc = request.POST["short_description"]
+                long_desc = request.POST["long_description"]
+                team_type = request.POST["type"]
+                projects_list = request.POST.getlist("proj")
+                squadmember_list = request.POST.getlist("personID")
+                print(squadmember_list)
+                roles_to_squadmembers = request.POST.getlist("roles")
 
-        createdTeam = Teams(
-            name=team_name,
-            leader=Users.objects.get(id=team_leader),
-            short_description=shrt_desc,
-            description=long_desc,
-            type=team_type
-        )
-        createdTeam.save()
+                createdTeam = Teams(
+                    name=team_name,
+                    leader=Users.objects.get(id=team_leader),
+                    short_description=shrt_desc,
+                    description=long_desc,
+                    type=team_type
+                )
+                createdTeam.save()
 
-        for project in projects_list:
-            createdTeam.team_projects.add(Projects.objects.get(id=project))
+                for project in projects_list:
+                    createdTeam.team_projects.add(Projects.objects.get(id=project))
 
-        SquadMembers(user=Users.objects.get(id=team_leader),
-                team=createdTeam,
-                role=Roles.objects.get(id=1),
-                description="Blank For Now").save()
+                SquadMembers(user=Users.objects.get(id=team_leader),
+                             team=createdTeam,
+                             role=Roles.objects.get(id=1),
+                             description="Blank For Now").save()
 
-        for member in squadmember_list:
-            print(member)
-            squadEntity = SquadMembers(
-                user=Users.objects.get(id=member),
-                team=createdTeam,
-                role=Roles.objects.get(id=1),
-                description="Blank For Now"
-            )
-            squadEntity.save()
-            print(squadEntity)
+                for member in squadmember_list:
+                    print(member)
+                    squadEntity = SquadMembers(
+                        user=Users.objects.get(id=member),
+                        team=createdTeam,
+                        role=Roles.objects.get(id=1),
+                        description="Blank For Now"
+                    )
+                    squadEntity.save()
+                    print(squadEntity)
+
+            return render(request, 'team_maker.html')
 
 
-    return render(request, 'team_maker.html')
+    return redirect("login")
 
 def get_projects(request):
     projectToSearch = request.GET['query']
