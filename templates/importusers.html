@@ -36,14 +36,65 @@
             })
         </script>
         </form>
+        <table class = "table">
+            <thead>
+            <th scope = "col"></th>
+            <th scope = "col">UserName        </th>
+            <th scope = "col">Password      </th>
+            <th scope = "col">Email       </th>
+            <th scope = "col">First Name      </th>
+            <th scope = "col">Last Name      </th>
+            <th scope = "col">Hire Date      </th>
+            <th scope = "col">Address</th>
+            <th scope = "col">Position     </th>
+            <th scope = "col">Marital Status    </th>
+            <th scope = "col">Rate     </th>
+            <th scope = "col">Supervisor   </th>
+            <th scope = "col">Mentor   </th>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Constraints</th>
+                <td>Username must not exist currently in System</td>
+                <td>Password must contain one Uppercase, one Lower case, and one number.</td>
+                <td>Email must be valid and not be empty</td>
+                <td>First name must not contain numbers or the characters < > % $. </td>
+                <td>Last name must not contain numbers or the characters < > % $.</td>
+                <td>Hire date must be in mm-dd-yyyy</td>
+                <td>Address must not contain invalid special characters</td>
+                <td>Position must be EMP</td>
+                <td>Marital Status must not contain numbers or special characters</td>
+                <td>Must be a valid number</td>
+                <td>Supervisor must be a Supervisor name</td>
+                <td>Mentor must be a mentor username</td>
+            </tr>
+            <tr>
+                <th scope="row">Can Field be empty in file</th>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No </td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            </tbody>
+        </table>
         {% if Errors == '' %}
             <l>no errors</l>
             {% else %}
+
             {% for error in Errors %}
 
             <ul> Row : {{error.0}} Col : {{error.1}} Error : {{error.2}} </ul>
 
             {% endfor %}
+        
         {% endif %}
 
 

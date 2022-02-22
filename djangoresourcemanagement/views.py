@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import  PermissionDenied
 import pyexcel as p
 import pyexcel_xls, pyexcel_xlsx
 import re
@@ -24,6 +25,12 @@ def project(request):
 def import_users(request):
     print(request.method)
     print(request.FILES.keys())
+    # Next three lines are for testing demo purposes, remove at deploy
+    user = authenticate(request, username = 'jack123', password = 'cosc481w')
+    # user = authenticate(request, username='jimboTheBro', password='cosc481w')
+    login(request, user)
+    if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
+        raise PermissionDenied
     if request.method == 'POST' and 'userfile' in request.FILES:
         print("got here")
         filename = request.FILES['userfile'].name
@@ -93,5 +100,5 @@ def import_users(request):
 # rate (null) 9
 # supervisor (null) (Foreign) 10
 # mentor (Foreign) 11
-# date_joined 12
-# last_login 13
+# date_joined Not read in from Excel
+# last_login Not read in from Excel
