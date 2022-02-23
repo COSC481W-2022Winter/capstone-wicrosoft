@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <title>Import Users</title>
+<body >
+    <div class="container">
+        <div class="heading">
+            <h2 class="heading">Create Accounts</h2>
+            <p class="subheading">Please choose a file to create accounts</p>
+        </div>
+
+        <form action = "" method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" name="userfile" class="custom-file-input" id="userfile">
+                <label class="custom-file-label" for="userfile">Choose file</label>
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Upload</button>
+              </div>
+            </div>
+            <script>
+            $('#userfile').on('change',function(){
+                //get the file name
+                var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        </script>
+        </form>
+        <table class = "table">
+            <thead>
+            <th scope = "col"></th>
+            <th scope = "col">UserName        </th>
+            <th scope = "col">Password      </th>
+            <th scope = "col">Email       </th>
+            <th scope = "col">First Name      </th>
+            <th scope = "col">Last Name      </th>
+            <th scope = "col">Hire Date      </th>
+            <th scope = "col">Address</th>
+            <th scope = "col">Position     </th>
+            <th scope = "col">Marital Status    </th>
+            <th scope = "col">Rate     </th>
+            <th scope = "col">Supervisor   </th>
+            <th scope = "col">Mentor   </th>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Constraints</th>
+                <td>Username must not exist currently in System</td>
+                <td>Password must contain one Uppercase, one Lower case, and one number.</td>
+                <td>Email must be valid and not be empty</td>
+                <td>First name must not contain numbers or the characters < > % $. </td>
+                <td>Last name must not contain numbers or the characters < > % $.</td>
+                <td>Hire date must be in mm-dd-yyyy</td>
+                <td>Address must not contain invalid special characters</td>
+                <td>Position must be EMP</td>
+                <td>Marital Status must not contain numbers or special characters</td>
+                <td>Must be a valid number</td>
+                <td>Supervisor must be a Supervisor name</td>
+                <td>Mentor must be a mentor username</td>
+            </tr>
+            <tr>
+                <th scope="row">Can Field be empty in file</th>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No </td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            </tbody>
+        </table>
+        {% if Errors == '' %}
+
+            <l>no errors</l>
+            {% else %}
+             <div label="output">
+            {% for error in Errors %}
+            <ul> Row : {{error.0}} Col : {{error.1}} {{error.2}} </ul>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     {% load static %}
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <title>Error 403</title>
+</head>
+<body>
+<h2> Error 403: Permision Denied </h2>
+{% if user.is_authenticated %}
+<li> Invalid Permissions </li>
+<l1> <a href = "{% url 'profile' %}"> Click here to return to profile </a> </l1>
+{% else %}
+<li> Invalid Permissions </li>
+<li> <a href = "{% url 'login' %}"> Click here to login </a> </li>
+{% endif %}
+</body>
+</html>
