@@ -53,30 +53,40 @@ def import_users(request):
                 invalidindicies.append((count,  3, "Email must be valid"))
             if (len(row) < 4 or row[3] == ""):
                 invalidindicies.append((count, 4, 'First Name cannot be empty'))
-            elif not re.match("^[^0-9<>%$]{2,}$", row[3]):
+            elif re.match("[^0-9<>%$]{2,}$", row[3]):
                 invalidindicies.append((count, 4, "First Name cannot have numbers or <>%$"))
             if (len(row) < 5 or row[4] == ""):
                 invalidindicies.append((count, 4, 'Last Name cannot be empty'))
-            elif not re.match("^[^0-9<>%$]{2,}$", row[4]):
+            elif re.match("[^0-9<>%$]{2,}$", row[4]):
                 invalidindicies.append((count, 5, "Last name cannot have numbers or <>%$"))
             if (len(row) < 6 or row[5] == ""):
                 invalidindicies.append((count, 6, 'HireDate cannot be empty'))
-            if row[6] == "":
+            elif (re.match("[^a-zA-Z<>%$]{2,}$"))
+                invalidindicies.append((count, 6, 'HireDate cannot be have letters or <>%$'))
+            if (len(row) < 7 or row[6] == ""):
                 excel[count][6] = None
-            if row[7] == "":
+            elif re.match("[^<>%$]{2,}$", row[6]):
+                invalidindicies.append((count, 7, "Address cannot have <>%$"))
+            if (len(row) < 8 or row[7] == ""):
                 excel[count][7] = None
-            if row[8] == "":
+            elif re.match("[^0-9<>%$]{2,}$", row[7]):
+                invalidindicies.append((count, 8, "Position cannot have <>%$"))
+            if (len(row) < 9 or row[8] == ""):
                 excel[count][8] = None
-            if row[9] == "":
+            elif re.match("[^0-9<>%$]{2,}$", row[8]):
+                invalidindicies.append((count, 9, "Marital Status cannot have numbers or <>%$"))
+            if (len(row) < 10 or row[9] == ""):
                 excel[count][9] = None
-            if row[10] == "":
+            elif re.match("[^a-zA-Z<>%$]{2,}$", row[9]):
+                invalidindicies.append((count, 10, "Rate cannot have letters or <>%$"))
+            if (len(row) < 11 or row[10] == ""):
                 excel[count][10] = None
-            if row[11] == "":
+            elif re.match("[^0-9<>%$]{2,}$", row[10]):
+                invalidindicies.append((count, 11, "Supervisor cannot have numbers or <>%$"))
+            if (len(row) < 12 or row[11] == ""):
                 excel[count][11] = None
-            if row[12] == "":
-                excel[count][12] = None
-            if row[13] == "":
-                excel[count][13] = None
+            elif re.match("[^0-9<>%$]{2,}$", row[11]):
+                invalidindicies.append((count, 12, "Mentor cannot have numbers or <>%$"))
         if invalidindicies == []:                                                   # Checks for Errors
             for row in excel:               # (username, email, work_email,                    password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
                 user = Users.objects.create_user(row[0], row[2], row[3] + row[4] + '@wicrosoft.com', row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[11], row[5], 'EMP')
