@@ -79,7 +79,7 @@ def import_users(request):
 
             if (len(row) < 6 or row[5] == ""):
                 invalidindicies.append((count, 6, 'HireDate cannot be empty'))
-            elif re.match("^(0[1-9]|1[0-2])[-](0[1-9]|[12][0-9]|3[01])[-](18|19|20)\\d\\d$", row[5]):
+            elif not re.match("^(0[1-9]|1[0-2])[-](0[1-9]|[12][0-9]|3[01])[-](18|19|20)\\d\\d$", row[5]):
                 invalidindicies.append((count, 6, 'Improperly formatted date, must be in mm-dd-yyyy'))
             elif not helper.valid_date(row[5]):
                 invalidindicies.append(count, 6, "Date submitted is in correct format but invalid, (Eg. >32 days, 31 days in a month with 30, Before year 1800)")
@@ -109,7 +109,7 @@ def import_users(request):
 
             if (len(row) < 10 or row[9] == ""):
                 userdata[count].append(None)
-            elif re.match("^[a-zA-Z<>%$]{2,}$", row[9]):
+            elif re.match("^[a-zA-Z<>%$]{2,}$", str(row[9])):
                 invalidindicies.append((count, 10, "Rate cannot have letters or <>%$"))
             else:
                 userdata[count].append(row[9])
@@ -118,7 +118,7 @@ def import_users(request):
                 userdata[count].append(None)
             elif not Users.objects.all().filter(username=row[10]).exists():
                 invalidindicies.append((count, 11, "User by that username does not exist"))
-            elif Users.objects.all().filter(username=row[10])[0].permission == 'MNGR':
+            elif not Users.objects.all().filter(username=row[10])[0].permission == 'MNGR':
                 invalidindicies.append((count, 11, "Given user is not a Manager"))
             else:
                 userdata[count].append(row[10])
@@ -127,16 +127,28 @@ def import_users(request):
                 userdata[count].append(None)
             elif re.match("^[0-9<>%$]{2,}$", row[11]):
                 invalidindicies.append((count, 12, "Mentor cannot have numbers or <>%$"))
-            elif not Users.objects.all().filter(username=row[10]).exists():
+            elif not Users.objects.all().filter(username=row[11]).exists():
                 invalidindicies.append((count, 12, "User by that username does not exist"))
             else:
                 userdata[count].append(row[11])
 
+        success_users = []
         if invalidindicies == []:                                                   # Checks for Errors
             for row in userdata:               # (username, email, work_email,  password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
-                user = Users.objects.create_user(row[0], row[2], row[3] + row[4] + '@wicrosoft.com', row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[11], row[5], 'EMP')
+                if row[10] is not None:
+                    row[10] = Users.objects.all().filter(username=row[10])[0]
+                if row[11] is not None:
+                    row[11] = Users.objects.all().filter(username=row[11])[0]
+                django_date = row[5].split("-")
+                django_date_format = django_date[2] + '-' + django_date[0] + '-' + django_date[1] + ' 00:00'
+                row[5] = django_date_format
+                user = Users.objects.create_user(row[0], row[2], row[3] + row[4] + '@wicrosoft.com', row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
 
-            return render(request,  'importusers.html', {'values': excel, 'Errors': ''})
+                user.mentor.add(row[11])
+                if user is not None:
+                    success_users.append((user.username, user.email, "Has been created"))
+
+            return render(request,  'importusers.html', {'values': excel, 'Errors': success_users})
 
         return render(request,  'importusers.html', {'values': excel, 'Errors': invalidindicies})
     else:

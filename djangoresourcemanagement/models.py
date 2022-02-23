@@ -6,7 +6,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # Standard user creation only, super and admin available
 class AccountManager(BaseUserManager):
-    def _create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission, is_staff, is_superuser):
+    def _create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor,  hire_date, permission, is_staff, is_superuser):
         if not username:
             raise ValueError("Username Required")
         now = timezone.now()
@@ -15,14 +15,13 @@ class AccountManager(BaseUserManager):
             username=username,
             email=email,
             work_email=work_email,
-            firstName=first_name,
-            lastName=last_name,
+            first_name=first_name,
+            last_name=last_name,
             address=address,
             position=position,
             marital_status=marital_status,
             rate=rate,
             supervisor=supervisor,
-            mentor=mentor,
             hire_date=hire_date,
             permission=permission,
             is_active=True,
@@ -35,8 +34,8 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
-        return self._create_user(username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission, False, False)
+    def create_user(self, username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor,  hire_date, permission):
+        return self._create_user(username, email, work_email, password, first_name, last_name, address, position, marital_status, rate, supervisor,  hire_date, permission, False, False)
 
     def create_superuser(self, username, email, password):
         user = self._create_user(username, email, "null", password, 'admin', 'superuser', "null", "null", "null", "null", "null", "SPRMGR", True, True)
