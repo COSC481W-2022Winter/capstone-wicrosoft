@@ -86,18 +86,15 @@
             </tbody>
         </table>
         {% if Errors == '' %}
+
             <l>no errors</l>
             {% else %}
-
+             <div label="output">
             {% for error in Errors %}
-
-            <ul> Row : {{error.0}} Col : {{error.1}} Error : {{error.2}} </ul>
-
+            <ul> Row : {{error.0}} Col : {{error.1}} {{error.2}} </ul>
             {% endfor %}
-        
+            </div>
         {% endif %}
-
-
     </div>
 
 

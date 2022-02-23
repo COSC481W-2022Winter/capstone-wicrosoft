@@ -24,12 +24,12 @@ def project(request):
     return render(request, 'project.html')
 
 def import_users(request):
-    print(request.method)
-    print(request.FILES.keys())
+    #print(request.method)
+    #print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
-    user = authenticate(request, username = 'jack123', password = 'cosc481w')
+    #user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
-    login(request, user)
+    #login(request, user)
     if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
         raise PermissionDenied
     if request.method == 'POST' and 'userfile' in request.FILES:
@@ -148,7 +148,7 @@ def import_users(request):
                 if user is not None:
                     success_users.append((user.username, user.email, "Has been created"))
 
-            return render(request,  'importusers.html', {'values': excel, 'Errors': success_users})
+            return render(request,  'importusers.html', {'values': excel, 'Success': success_users})
 
         return render(request,  'importusers.html', {'values': excel, 'Errors': invalidindicies})
     else:
