@@ -197,8 +197,10 @@ def import_users(request):
 
             if (len(row) < 3 or row[2] == ""):                                          # Email
                 invalidindicies.append((count + 1, 3, 'Email cannot be empty'))
-            elif  not re.match(RegexStrings['Email'], row[2]):
-                invalidindicies.append((count,  3, "Email must be valid"))
+            elif not re.match(RegexStrings['Email'], row[2]):
+                invalidindicies.append((count + 1,  3, "Email must be valid"))
+            elif Users.objects.all().filter(email=row[2]).exists():
+                invalidindicies.append(count + 1, 3, "Email already exists")
             else:
                 userdata[count].append(row[2])
 
