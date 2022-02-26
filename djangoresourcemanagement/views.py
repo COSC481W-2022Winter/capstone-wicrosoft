@@ -190,28 +190,28 @@ def import_users(request):
 
             if (len(row) < 2 or row[1] == ""):                                          # Password
                 invalidindicies.append((count, 2, 'Password cannot be empty'))
-            elif not re.match(RegexStrings['PasswordRegex'], str(row[1])):
+            elif not re.match(RegexStrings['Password'], str(row[1])):
                 invalidindicies.append((count,  2, 'Password must contain at least 8 characters, at least 1  uppercase letter 1 lower case letter and 1 number'))
             else:
                 userdata[count].append(row[1])
 
             if (len(row) < 3 or row[2] == ""):                                          # Email
                 invalidindicies.append((count, 3, 'Email cannot be empty'))
-            elif  not re.match(RegexStrings['EmailRegex'], row[2]):
+            elif  not re.match(RegexStrings['Email'], row[2]):
                 invalidindicies.append((count,  3, "Email must be valid"))
             else:
                 userdata[count].append(row[2])
 
             if (len(row) < 4 or row[3] == ""):
                 invalidindicies.append((count, 4, 'First Name cannot be empty'))
-            elif re.match(RegexStrings['NumbersAndSpecialCharactersRegex'], row[3]):
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[3]):
                 invalidindicies.append((count, 4, "First Name cannot have numbers or <>%$"))
             else:
                 userdata[count].append(row[3])
 
             if (len(row) < 5 or row[4] == ""):
                 invalidindicies.append((count, 4, 'Last Name cannot be empty'))
-            elif re.match(RegexStrings['NumbersAndSpecialCharactersRegex'], row[4]):
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[4]):
                 invalidindicies.append((count, 5, "Last name cannot have numbers or <>%$"))
             else:
                 userdata[count].append(row[4])
