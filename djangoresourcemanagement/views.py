@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import *
 
-
 from djangoresourcemanagement import HelperFunctions as helper
 # Create your views here.
 
@@ -280,7 +279,7 @@ def import_users(request):
                 django_date = row[5].split("-")
                 django_date_format = django_date[2] + '-' + django_date[0] + '-' + django_date[1] + ' 00:00'
                 row[5] = django_date_format
-                user = Users.objects.create_user(row[0], row[2], row[3] + row[4] + '@wicrosoft.com', row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
+                user = Users.objects.create_user(row[0], row[2], helper.create__valid_work_email(row[3] + row[4]), row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
 
                 user.mentor.add(row[11])
                 if user is not None:
