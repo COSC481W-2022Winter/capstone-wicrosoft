@@ -285,7 +285,7 @@ def import_users(request):
                 if user is not None:
                     success_users.append((user.username, user.email, "Has been created"))
 
-            return render(request,  'importusers.html', {'values': excel, 'Success': success_users})
+            return render(request,  'importusers.html', {'values': excel, 'Errors': success_users})
 
         return render(request,  'importusers.html', {'values': excel, 'Errors': invalidindicies})
     else:
