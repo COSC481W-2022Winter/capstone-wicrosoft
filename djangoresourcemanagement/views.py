@@ -163,10 +163,10 @@ def import_users(request):
     RegexStrings = {
         'Password' : '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
         'Email' : '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
-        'NumbersAndSpecialCharacters' : "^[0-9<>%$]{2,}$",
+        'NumbersAndSpecialCharacters' : "^.*[0-9<>%$].*$",
         'ValidDate' : "^(0[1-9]|1[0-2])[-/](0[1-9]|[12][0-9]|3[01])[-/](18|19|20)\\d\\d$",
-        'SpecialCharacters' : '^[<>%$]{2,}$',
-        'LettersAndSpecialCharacters' : '^[a-zA-Z<>%$]{2,}$',
+        'SpecialCharacters' : '^.*[<>%$].*$',
+        'LettersAndSpecialCharacters' : '^.*[a-zA-Z<>%$].*$',
 
     }
     if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
