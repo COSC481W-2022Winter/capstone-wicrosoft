@@ -25,3 +25,4 @@ def create__valid_work_email(name):
         email = name + counter + '@wicrosoft.com'
         if not Users.objects.all().filter(work_email='email').exists():
             return email
+        counter += 1
