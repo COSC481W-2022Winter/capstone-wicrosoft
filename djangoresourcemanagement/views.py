@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import *
 
-
 from djangoresourcemanagement import HelperFunctions as helper
 # Create your views here.
 
@@ -158,9 +157,18 @@ def import_users(request):
     #print(request.method)
     #print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
-    #user = authenticate(request, username = 'jack123', password = 'cosc481w')
+    user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
-    #login(request, user)
+    login(request, user)
+    RegexStrings = {
+        'Password' : '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
+        'Email' : '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
+        'NumbersAndSpecialCharacters' : "^.*[0-9<>%$].*$",
+        'ValidDate' : "^(0[1-9]|1[0-2])[-/](0[1-9]|[12][0-9]|3[01])[-/](18|19|20)\\d\\d$",
+        'SpecialCharacters' : '^.*[<>%$].*$',
+        'LettersAndSpecialCharacters' : '^.*[a-zA-Z<>%$].*$',
+
+    }
     if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
         raise PermissionDenied
     if request.method == 'POST' and 'userfile' in request.FILES:
@@ -174,92 +182,92 @@ def import_users(request):
         for count, row in enumerate(excel):
             userdata.append([])
             if len(row) < 1 or row[0] == "":                                            # Username
-                invalidindicies.append((count, 1, 'Username cannot be empty'))
+                invalidindicies.append((count + 1 , 1, 'Username cannot be empty'))
             elif Users.objects.all().filter(username=row[0]).exists():
-                invalidindicies.append((count, 1, "Username already exists"))
+                invalidindicies.append((count + 1, 1, "Username already exists"))
             else:
                 userdata[count].append(row[0])
 
             if (len(row) < 2 or row[1] == ""):                                          # Password
-                invalidindicies.append((count, 2, 'Password cannot be empty'))
-            elif not re.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", str(row[1])):
-                invalidindicies.append((count,  2, 'Password must contain at least 8 characters, at least 1  uppercase letter 1 lower case letter and 1 number'))
+                invalidindicies.append((count + 1, 2, 'Password cannot be empty'))
+            elif not re.match(RegexStrings['Password'], str(row[1])):
+                invalidindicies.append((count + 1,  2, 'Password must contain at least 8 characters, at least 1  uppercase letter 1 lower case letter and 1 number'))
             else:
                 userdata[count].append(row[1])
 
             if (len(row) < 3 or row[2] == ""):                                          # Email
-                invalidindicies.append((count, 3, 'Email cannot be empty'))
-            elif  not re.match("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b", row[2]):
-                invalidindicies.append((count,  3, "Email must be valid"))
+                invalidindicies.append((count + 1, 3, 'Email cannot be empty'))
+            elif not re.match(RegexStrings['Email'], row[2]):
+                invalidindicies.append((count + 1,  3, "Email must be valid"))
+            elif Users.objects.all().filter(email=row[2]).exists():
+                invalidindicies.append((count + 1, 3, "Email already exists"))
             else:
                 userdata[count].append(row[2])
 
             if (len(row) < 4 or row[3] == ""):
-                invalidindicies.append((count, 4, 'First Name cannot be empty'))
-            elif re.match("^[0-9<>%$]{2,}$", row[3]):
-                invalidindicies.append((count, 4, "First Name cannot have numbers or <>%$"))
+                invalidindicies.append((count + 1, 4, 'First Name cannot be empty'))
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[3]):
+                invalidindicies.append((count + 1, 4, "First Name cannot have numbers or <>%$"))
             else:
                 userdata[count].append(row[3])
 
             if (len(row) < 5 or row[4] == ""):
-                invalidindicies.append((count, 4, 'Last Name cannot be empty'))
-            elif re.match("^[0-9<>%$]{2,}$", row[4]):
-                invalidindicies.append((count, 5, "Last name cannot have numbers or <>%$"))
+                invalidindicies.append((count + 1, 4, 'Last Name cannot be empty'))
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[4]):
+                invalidindicies.append((count + 1, 5, "Last name cannot have numbers or <>%$"))
             else:
                 userdata[count].append(row[4])
 
             if (len(row) < 6 or row[5] == ""):
-                invalidindicies.append((count, 6, 'HireDate cannot be empty'))
-            elif not re.match("^(0[1-9]|1[0-2])[-](0[1-9]|[12][0-9]|3[01])[-](18|19|20)\\d\\d$", row[5]):
-                invalidindicies.append((count, 6, 'Improperly formatted date, must be in mm-dd-yyyy'))
+                invalidindicies.append((count + 1, 6, 'HireDate cannot be empty'))
+            elif not re.match(RegexStrings['ValidDate'], row[5]):
+                invalidindicies.append((count + 1, 6, 'Improperly formatted date, must be in mm-dd-yyyy or mm/dd/yyyy'))
             elif not helper.valid_date(row[5]):
-                invalidindicies.append(count, 6, "Date submitted is in correct format but invalid, (Eg. >32 days, 31 days in a month with 30, Before year 1800)")
+                invalidindicies.append(count + 1, 6, "Date submitted is in correct format but invalid, (Eg. >32 days, 31 days in a month with 30, Before year 1800)")
             else:
                 userdata[count].append(row[5])
 
             if (len(row) < 7 or row[6] == ""):
                 userdata[count].append(None)
-            elif re.match("^[<>%$]{2,}$", row[6]):
-                invalidindicies.append((count, 7, "Address cannot have <>%$"))
+            elif re.match(RegexStrings['SpecialCharacters'], row[6]):
+                invalidindicies.append((count + 1, 7, "Address cannot have <>%$"))
             else:
                 userdata[count].append(row[6])
 
             if (len(row) < 8 or row[7] == ""):
                 userdata[count].append(None)
-            elif re.match("^[0-9<>%$]{2,}$", row[7]):
-                invalidindicies.append((count, 8, "Position cannot have <>%$ or numbers"))
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[7]):
+                invalidindicies.append((count + 1, 8, "Position cannot have <>%$ or numbers"))
             else:
                 userdata[count].append(row[7])
 
             if (len(row) < 9 or row[8] == ""):
                 userdata[count].append(None)
-            elif re.match("^[0-9<>%$]{2,}$", row[8]):
-                invalidindicies.append((count, 9, "Marital Status cannot have numbers or <>%$"))
+            elif re.match(RegexStrings['NumbersAndSpecialCharacters'], row[8]):
+                invalidindicies.append((count + 1, 9, "Marital Status cannot have numbers or <>%$"))
             else:
                 userdata[count].append(row[8])
 
             if (len(row) < 10 or row[9] == ""):
                 userdata[count].append(None)
-            elif re.match("^[a-zA-Z<>%$]{2,}$", str(row[9])):
-                invalidindicies.append((count, 10, "Rate cannot have letters or <>%$"))
+            elif re.match(RegexStrings['LettersAndSpecialCharacters'], str(row[9])):
+                invalidindicies.append((count + 1, 10, "Rate cannot have letters or <>%$"))
             else:
                 userdata[count].append(row[9])
 
             if (len(row) < 11 or row[10] == ""):
                 userdata[count].append(None)
             elif not Users.objects.all().filter(username=row[10]).exists():
-                invalidindicies.append((count, 11, "User by that username does not exist"))
+                invalidindicies.append((count + 1, 11, "User by that username does not exist"))
             elif not Users.objects.all().filter(username=row[10])[0].permission == 'MNGR':
-                invalidindicies.append((count, 11, "Given user is not a Manager"))
+                invalidindicies.append((count + 1, 11, "Given user is not a Manager"))
             else:
                 userdata[count].append(row[10])
 
             if (len(row) < 12 or row[11] == ""):
                 userdata[count].append(None)
-            elif re.match("^[0-9<>%$]{2,}$", row[11]):
-                invalidindicies.append((count, 12, "Mentor cannot have numbers or <>%$"))
             elif not Users.objects.all().filter(username=row[11]).exists():
-                invalidindicies.append((count, 12, "User by that username does not exist"))
+                invalidindicies.append((count + 1, 12, "User by that username does not exist"))
             else:
                 userdata[count].append(row[11])
 
@@ -273,15 +281,15 @@ def import_users(request):
                 django_date = row[5].split("-")
                 django_date_format = django_date[2] + '-' + django_date[0] + '-' + django_date[1] + ' 00:00'
                 row[5] = django_date_format
-                user = Users.objects.create_user(row[0], row[2], row[3] + row[4] + '@wicrosoft.com', row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
+                user = Users.objects.create_user(row[0], row[2], helper.create__valid_work_email(row[3] + row[4]), row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
 
                 user.mentor.add(row[11])
                 if user is not None:
-                    success_users.append((user.username, user.email, "Has been created"))
+                    success_users.append((user.username, user.work_email))
 
-            return render(request,  'importusers.html', {'values': excel, 'Success': success_users})
+            return render(request,  'importusers.html', {'values': excel, 'Output': success_users, 'Success': True})
 
-        return render(request,  'importusers.html', {'values': excel, 'Errors': invalidindicies})
+        return render(request,  'importusers.html', {'values': excel, 'Output': invalidindicies})
     else:
         return render(request, 'importusers.html', {'values': []})
 
