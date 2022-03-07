@@ -8,9 +8,25 @@
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <title>Import Users</title>
-<body >
+<body>
+
+
+
     <div class="container">
         <div class="heading">
+             {% if Success == True %}
+        <div class="alert alert-primary" role="alert">
+            Users have successfully been created!
+        </div>
+
+        {% elif Output is not None %}
+        <div class="alert alert-danger" role="alert">
+          Errors have occurred while trying to add users! No users created
+        </div>
+
+        {% else %}
+
+        {% endif %}
             <h2 class="heading">Create Accounts</h2>
             <p class="subheading">Please choose a file to create accounts</p>
         </div>
@@ -85,16 +101,20 @@
             </tr>
             </tbody>
         </table>
-        {% if Errors == '' %}
+        {% if Success == True %}
+            {% for user in Output %}
+            <ul> User : {{user.0}} Email : {{user.1}} Has been created </ul>
+            {% endfor %}
 
-            <l>no errors</l>
-            {% else %}
-             <div label="output">
-            {% for error in Errors %}
+        {% elif Output is not None %}
+
+            {% for error in Output %}
             <ul> Row : {{error.0}} Col : {{error.1}} {{error.2}} </ul>
             {% endfor %}
-            </div>
+        {% else %}
+
         {% endif %}
+
     </div>
 
 

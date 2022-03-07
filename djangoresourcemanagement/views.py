@@ -200,7 +200,7 @@ def import_users(request):
             elif not re.match(RegexStrings['Email'], row[2]):
                 invalidindicies.append((count + 1,  3, "Email must be valid"))
             elif Users.objects.all().filter(email=row[2]).exists():
-                invalidindicies.append(count + 1, 3, "Email already exists")
+                invalidindicies.append((count + 1, 3, "Email already exists"))
             else:
                 userdata[count].append(row[2])
 
@@ -285,11 +285,11 @@ def import_users(request):
 
                 user.mentor.add(row[11])
                 if user is not None:
-                    success_users.append((user.username, user.email, "Has been created"))
+                    success_users.append((user.username, user.work_email))
 
-            return render(request,  'importusers.html', {'values': excel, 'Errors': success_users})
+            return render(request,  'importusers.html', {'values': excel, 'Output': success_users, 'Success': True})
 
-        return render(request,  'importusers.html', {'values': excel, 'Errors': invalidindicies})
+        return render(request,  'importusers.html', {'values': excel, 'Output': invalidindicies})
     else:
         return render(request, 'importusers.html', {'values': []})
 

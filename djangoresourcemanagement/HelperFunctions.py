@@ -16,13 +16,17 @@ def valid_date(date):
 def create__valid_work_email(name):
 
     email = name + '@wicrosoft.com'
-    if not Users.objects.all().filter(work_email='email').exists():
+
+    if not Users.objects.all().filter(work_email=email).exists():
+        print('returning unedited email')
         return email
 
     counter = 1
 
     while counter != -1:
-        email = name + counter + '@wicrosoft.com'
-        if not Users.objects.all().filter(work_email='email').exists():
+        print('got to while loop')
+        email = name + str(counter) + '@wicrosoft.com'
+        if not Users.objects.all().filter(work_email=email).exists():
+            print('got to if in while')
             return email
         counter += 1
