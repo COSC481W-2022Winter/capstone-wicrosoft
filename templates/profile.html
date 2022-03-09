@@ -35,8 +35,12 @@
                 <div>
                     <h4>Teams</h4>
                     <!-- content loaded from db -->
-                    <a href="">Example Team 1</a> <br>
-                    <a href="">Example Team 2</a>
+                    {% if user.is_authenticated %}
+                    {% for team in usersTeams %}
+                        <p>Teams: {{ team.name }}</p>
+                    {% endfor %}
+                    {% endif %}
+
                 </div>
 
                 <br>
