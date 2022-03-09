@@ -310,3 +310,6 @@ def import_users(request):
 # date_joined Not read in from Excel
 # last_login Not read in from Excel
 #
+
+def navigation_bar(request):
+    return render(request, "nav.html")
