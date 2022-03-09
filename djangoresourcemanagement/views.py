@@ -47,6 +47,8 @@ def profile_page(request):
         usersTeams = get_teams(request)
 
 
+
+
         return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams})
 
     else:

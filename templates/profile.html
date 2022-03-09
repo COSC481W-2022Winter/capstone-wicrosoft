@@ -37,7 +37,10 @@
                     <!-- content loaded from db -->
                     {% if user.is_authenticated %}
                     {% for team in usersTeams %}
-                        <p>Teams: {{ team.name }}</p>
+                        <h5>{{ team.name }}</h5>
+                        {% for member in team.team_members.all %}
+                            <p>{{member}}</p>
+                        {% endfor %}
                     {% endfor %}
                     {% endif %}
 
@@ -85,10 +88,6 @@
         </div>
 
     </div>
-
-
-
-
 
 </body>
 </html>
