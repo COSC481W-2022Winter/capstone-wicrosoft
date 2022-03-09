@@ -1,5 +1,5 @@
 html {
-    background-color: #F6F6F6;
+    background-color: #C1C8E4;
 
 }
 .surroundBody {
@@ -40,6 +40,12 @@ html {
 .leftBar {
     border: 1px solid black;
     padding: 15px;
+}
+
+.teamFlex {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
 }
 
 .middleBar {

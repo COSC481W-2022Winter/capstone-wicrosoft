@@ -35,12 +35,17 @@ def login_page(request):
 def profile_page(request):
     user = request.user
 
+
     if user.is_authenticated:
         profile_info = {"first_name": user.first_name,
                         "last_name": user.last_name,
                         "position": user.position,
                         "permission": user.permission}
-        return render(request, 'profile.html', profile_info)
+
+        usersTeams = get_teams(request)
+
+
+        return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams})
 
     else:
         return redirect('login')
@@ -54,6 +59,29 @@ def logout_user(request):
 
 def team(request):
     return render(request, 'team.html')
+
+def get_teams(request):
+    userInTeam = request.user
+    squadMember = SquadMembers.objects.filter(user=userInTeam.id)
+
+    usersTeams = []
+
+    listOfTeams = Teams.objects.all()
+    for team in listOfTeams:
+        for squad in squadMember:
+            if team.id == squad.team_id:
+                usersTeams.append(team)
+
+    jsonResponseData = {'response': []}
+    for team in usersTeams:
+        dictionary = {
+            "value": team.name,
+            "data": team.id
+        }
+        jsonResponseData['response'] += dictionary
+
+    return usersTeams
+        ##JsonResponse(jsonResponseData, safe=False)
 
 def team_maker(request):
     if request.user.is_authenticated:
@@ -108,6 +136,10 @@ def team_maker(request):
 
     return redirect("login")
 
+
+def project(request):
+    return render(request, 'project.html')
+
 def get_projects(request):
     projectToSearch = request.GET['query']
     projectsOfInterest = []
@@ -150,8 +182,7 @@ def get_users(request):
 
     return JsonResponse(jsonResponseData, safe=False)
 
-def project(request):
-    return render(request, 'project.html')
+
 
 def import_users(request):
     #print(request.method)
