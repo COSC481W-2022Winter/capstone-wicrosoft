@@ -154,6 +154,22 @@ def get_users(request):
 def project(request):
     return render(request, 'project.html')
 
+def skills(request):
+
+    user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
+    login(request, user)
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    userskills = UserToSkill.objects.all().filter(user=request.user)
+
+    return_skills = []
+
+    for row in userskills:
+        return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
+
+    return render(request,  'skills.html', {'skills' : return_skills})
+
 def import_users(request):
     #print(request.method)
     #print(request.FILES.keys())
