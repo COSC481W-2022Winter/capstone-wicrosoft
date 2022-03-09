@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.core.exceptions import  PermissionDenied
 import pyexcel as p
-import pyexcel_xls, pyexcel_xlsx
+import pyexcel_xls
+import pyexcel_xlsx
 import re
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
