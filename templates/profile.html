@@ -1,23 +1,25 @@
+{% extends 'nav.html' %}
+
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <title>Profile</title>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+    {% endblock %}
+    {% block title %}<title>Profile</title>{% endblock %}
+    {% block profile_page %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'profile' %}">Profile <span class="sr-only">(current)</span></a>
+        </li>
+    {% endblock %}
 </head>
+{% block content %}
 <body>
-
-    <div>
-        <ul class="navBar">
-            <li class="nav"><a href="/profile">Profile</a></li>
-            <li class="nav"><a href="/search">Search</a></li>
-            <li class="nav"><a href="/logout">Logout</a></li>
-        </ul>
-    </div>
 
     <div class="surroundBody">
             <div class="flex-container">
@@ -87,4 +89,5 @@
 
 
 </body>
+{% endblock %}
 </html>
