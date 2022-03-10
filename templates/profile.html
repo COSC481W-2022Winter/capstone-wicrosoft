@@ -38,12 +38,16 @@
                     {% if user.is_authenticated %}
                     {% for team in usersTeams %}
                         <h5>{{ team.name }}</h5>
+                        {% if team.leader != null %}
+                            <p>{{ team.leader }} (Lead)</p>
+                        {% endif %}
                         {% for member in team.team_members.all %}
-                            <p>{{member}}</p>
+                            {% if member != team.leader %}
+                                <p>{{member}}</p>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                     {% endif %}
-
                 </div>
 
                 <br>
