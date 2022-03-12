@@ -9,7 +9,9 @@
     {% block title %} {% endblock %}
 
     <nav class="navbar navbar-dark navbar-expand-lg p-1" style="background-color: #5680e9;">
-        <a class="navbar-brand" href="{% url 'profile' %}">Wicrosoft</a>
+        <a class="navbar-brand ml-1 mr-1" href="{% url 'profile' %}">
+            <img src="{% static 'images/logo/wicrosoft_logo.svg' %}" width="40" height="40" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -76,9 +78,13 @@
             </ul>
 
                     {% if user.is_authenticated %}
-                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'logout' %}">Sign-Out</a>
+                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'logout' %}">
+                            Sign-out
+                        </a>
                     {% else %}
-                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'login' %}">Sign-In</a>
+                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'login' %}">
+                            Sign-in
+                        </a>
                     {% endif %}
         </div>
     </nav>
