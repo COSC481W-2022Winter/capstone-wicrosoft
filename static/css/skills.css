@@ -1,0 +1,7 @@
+.table {
+width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
+}
+
+.thead {
+    background-color: #005cbf; color: white
+}
