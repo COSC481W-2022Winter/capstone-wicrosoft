@@ -1,0 +1,83 @@
+{% load static %}
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block styling %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% endblock %}
+
+    {% block title %} {% endblock %}
+
+    <nav class="navbar navbar-dark navbar-expand-lg p-1" style="background-color: #5680e9;">
+        <a class="navbar-brand ml-1 mr-1" href="{% url 'profile' %}">
+            <img src="{% static 'images/logo/wicrosoft_logo.svg' %}" width="40" height="40" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+
+                {% block profile_page %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Profile <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endblock %}
+
+                {% block teams_page %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Teams</a>
+                    </li>
+                {% endblock %}
+
+                {% block skills_page %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Skills</a>
+                    </li>
+                {% endblock %}
+
+
+{#                for managers when doing if statement#}
+                {% if user.permission == "MNGR" %}
+                    {% block admin_tools %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin Tools
+                            </a>
+                            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Skill Acceptance</a>
+                                <div class="dropdown-divider m-0"></div>
+                                <a class="dropdown-item" href="{% url 'import' %}">Employee Creation</a>
+                            </div>
+                        </li>
+                    {% endblock %}
+
+                    {% block builders_pages %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Builders
+                            </a>
+                            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{% url 'teammaker' %}">Team Builder</a>
+                                <div class="dropdown-divider m-0"></div>
+                                <a class="dropdown-item" href="#">Project Builder</a>
+                            </div>
+                        </li>
+                    {% endblock %}
+                {% endif %}
+
+            </ul>
+
+                    {% if user.is_authenticated %}
+                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'logout' %}">
+                            Sign-out
+                        </a>
+                    {% else %}
+                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'login' %}">
+                            Sign-in
+                        </a>
+                    {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
