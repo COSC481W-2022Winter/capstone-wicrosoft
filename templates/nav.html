@@ -39,15 +39,6 @@
 
 {#                for managers when doing if statement#}
                 {% if user.permission == "MNGR" %}
-{#                    NORMAL non grouped navigation items.#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="#">Skill Acceptance</a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="{% url 'import' %}">Employee Creation</a>#}
-{#                    </li>#}
-
-{#                    GROUPED Navigation items#}
                     {% block admin_tools %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
