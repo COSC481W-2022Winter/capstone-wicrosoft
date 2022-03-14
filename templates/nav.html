@@ -8,7 +8,7 @@
 
     {% block title %} {% endblock %}
 
-    <nav class="navbar navbar-dark navbar-expand-lg p-1" style="background-color: #5680e9;">
+    <nav class="navbar navbar-dark navbar-expand-lg p-0" style="background-color: #5680e9;">
         <a class="navbar-brand ml-1 mr-1" href="{% url 'profile' %}">
             <img src="{% static 'images/logo/wicrosoft_logo.svg' %}" width="40" height="40" alt="">
         </a>
@@ -77,6 +77,10 @@
                             Sign-in
                         </a>
                     {% endif %}
+
+        </div>
+        <div id="notification_section" class="btn btn-warning">
+            <span id="notification_count" class="badge badge-light">5</span>
         </div>
     </nav>
 
