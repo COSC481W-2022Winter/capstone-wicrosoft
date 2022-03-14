@@ -155,8 +155,28 @@ def project(request):
     return render(request, 'project.html')
 
 def skills(request):
+    if not request.user.is_authenticated :
+        raise PermissionDenied
+    user = request.user
+    #user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
+    #user = authenticate(request, username='jack123', password='cosc481w')
 
-    user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
+    listOfTechSkills = TechSkill.objects.all()
+
+    techSkill = listOfTechSkills[1]
+
+    profLevel = ProficiencyLevels.objects.all().filter(level_name='EXP')[0]
+
+    print(profLevel)
+
+    # newSkill = UserToSkill(
+    #                 skill=techSkill,
+    #                 user=user,
+    #                 proficiency=profLevel,
+    #                 skill_status='REJ',
+    #           )
+    # newSkill.save()
+
     login(request, user)
     if not request.user.is_authenticated:
         raise PermissionDenied
@@ -174,7 +194,7 @@ def import_users(request):
     #print(request.method)
     #print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
-    user = authenticate(request, username = 'jack123', password = 'cosc481w')
+    #user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
     login(request, user)
     RegexStrings = {

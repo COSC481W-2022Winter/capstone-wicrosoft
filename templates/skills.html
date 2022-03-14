@@ -10,7 +10,9 @@
     <title>Skills</title>
 </head>
 <body>
-<h1 style="text-align: center"> View Skills </h1>
+<h1 style="text-align: center"> Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
+<h2 style="text-align: center"> View Skills </h2>
+
 <table class="table" id="skillsTable">
   <thead class = "thead">
     <tr>
@@ -18,17 +20,21 @@
       <th scope="col">Skill Proficiency</th>
       <th scope="col">Status</th>
     </tr>
+
   </thead>
   <tbody>
+   {% if not skills %}
     <tr>
-
-        {% for i in skills %}
+        <th colspan="3"> There are no records available for this user</th>
+    </tr>
+    {% endif %}
+    {% for i in skills %}
+    <tr>
         <td>{{i.0}}</td>
         <td>{{i.1}}</td>
         <td>{{i.2}}</td>
-        {% endfor %}
     </tr>
-
+    {% endfor %}
   </tbody>
 </table>
 </body>

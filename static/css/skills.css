@@ -6,6 +6,9 @@ width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
     background-color: #005cbf; color: white;
 }
 
+.skillStaus{
+    display: inline-block;
+}
 .pendingCircle {
     height: 15px;
     width: 15px;
@@ -14,7 +17,6 @@ width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
     display: inline-block;
 
 }
-
 .rejectedCircle{
     height: 15px;
     width: 15px;
@@ -23,7 +25,6 @@ width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
     display: inline-block;
 
 }
-
 .approvedCircle{
     height: 15px;
     width: 15px;
