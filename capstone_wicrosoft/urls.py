@@ -28,5 +28,6 @@ urlpatterns = [
     path('teammaker/get_projects/', views.get_projects),
     path('project/', views.project, name='project'),
     path('importusers/', views.import_users, name='import'),
+    path('nav/', views.nav)
 
 ]
