@@ -2,6 +2,7 @@
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/notifications/nav_notification.js' %}"></script>
     {% block styling %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% endblock %}
@@ -80,7 +81,7 @@
 
         </div>
         <div id="notification_section" class="btn btn-warning">
-            <span id="notification_count" class="badge badge-light">5</span>
+            <span id="notification_count" class="badge badge-light"></span>
         </div>
     </nav>
 
