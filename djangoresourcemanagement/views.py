@@ -11,6 +11,8 @@ from .models import *
 
 from djangoresourcemanagement import HelperFunctions as helper
 # Create your views here.
+def nav(request):
+    return render(request, 'nav.html')
 
 def login_page(request):
     if request.user.is_authenticated:
@@ -152,6 +154,11 @@ def get_users(request):
 
 def project(request):
     return render(request, 'project.html')
+
+def get_skill_request(request):
+
+    return;
+
 
 def import_users(request):
     #print(request.method)
