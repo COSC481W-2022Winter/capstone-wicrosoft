@@ -128,7 +128,8 @@ def get_skill_request(request):
                     temp = temp + 1
 
             dictionary = {
-                "id": employee.name,
+                "id": employee.id,
+                "name": employee.name,
                 "numOfRequests": temp
             }
 
