@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
+
     <title>Profile</title>
 </head>
 <body>
@@ -33,19 +35,25 @@
 
             <div class="userInfo">
                 <div>
+
                     <h4>Teams</h4>
                     <!-- content loaded from db -->
                     {% if user.is_authenticated %}
                     {% for team in usersTeams %}
-                        <h5>{{ team.name }}</h5>
-                        {% if team.leader != null %}
-                            <p>{{ team.leader }} (Lead)</p>
-                        {% endif %}
-                        {% for member in team.team_members.all %}
-                            {% if member != team.leader %}
-                                <p>{{member}}</p>
-                            {% endif %}
-                        {% endfor %}
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
+                        <div class="collapse multi-collapse" id="{{ team.id }}">
+                            <div class="card card-body">
+                                {% if team.leader != null %}
+                                    <p>{{ team.leader }} (Lead)</p>
+                                {% endif %}
+                                {% for member in team.team_members.all %}
+                                    {% if member != team.leader %}
+                                        <p>{{member}}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <br><br>
                     {% endfor %}
                     {% endif %}
                 </div>
@@ -63,14 +71,7 @@
 
                 <br>
 
-                <div>
-                    <h4>Skills</h4>
-                    <!-- content loaded from db -->
-                    <ul>
-                        <li>Example Skill 1</li>
-                        <li>Example Skill 2</li>
-                    </ul>
-                </div>
+
 
             </div>
         </div>
@@ -89,6 +90,14 @@
             <!-- content loaded from db -->
             <p>Position: {{ user.position }}</p>
             <p>Email: {{ user.email }}</p>
+            <div>
+                    <h4>Skills</h4>
+                    <!-- content loaded from db -->
+                    <ul>
+                        <li>Example Skill 1</li>
+                        <li>Example Skill 2</li>
+                    </ul>
+                </div>
         </div>
 
     </div>
