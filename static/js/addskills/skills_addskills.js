@@ -5,9 +5,6 @@ $(document).ready(function() {
      let skillstablebody = skillstable.children[1];
     console.log(skillstablebody.tagName);
 
-
-
-
     for(let i = 0; i < skillstablebody.children.length; i++) {
         let row = skillstablebody.children[i];
         let rowStatus = row.children[2];
@@ -25,7 +22,7 @@ $(document).ready(function() {
         }
         else if (rowStatus.textContent === 'PEN') {
            // console.log('got here')
-            rowStatus.
+
             let circle1 = document.createElement("div");
             circle1.setAttribute("class" ,"pendingCircle");
             rowStatus.appendChild(circle1);
