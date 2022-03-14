@@ -108,6 +108,36 @@ def team_maker(request):
 
     return redirect("login")
 
+
+def get_skill_request(request):
+    if request.user.is_authenticated and request.user.permission == "MNGR":
+        user = request.user;
+
+        employees = []
+        for u in Users:
+            if u.supervisor_id == user.id:
+                employees.append(u)
+
+        jsonResponseData = {"suggestions": []}
+        for employee in employees:
+            temp = 0
+            for skill in UserToSkill:
+                if skill.skill_status == "Pending" and skill.user_id == employee.id:
+                    temp = temp + 1
+
+            dictionary = {
+                "id": employee.name,
+                "numOfRequests": temp
+            }
+
+            if temp > 0:
+                jsonResponseData["suggestions"] += [dictionary]
+
+        return JsonResponse(jsonResponseData, safe=False)
+
+    return redirect("login")
+
+
 def get_projects(request):
     projectToSearch = request.GET['query']
     projectsOfInterest = []
