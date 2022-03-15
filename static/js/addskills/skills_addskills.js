@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 function showModal(){
     console.log("got here");
-    $('#exampleModal').toggle();
+    $('#exampleModal').modal('show');
 }
 
 
