@@ -29,6 +29,6 @@ urlpatterns = [
     path('project/', views.project, name='project'),
     path('importusers/', views.import_users, name='import'),
     path('nav/', views.nav),
-    path('nav/getNotifications', views.get_skill_request)
+    path('getNotifications', views.get_skill_request)
 
 ]
