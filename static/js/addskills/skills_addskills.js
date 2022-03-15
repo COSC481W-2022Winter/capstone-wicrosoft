@@ -12,24 +12,54 @@ $(document).ready(function() {
 
 } );
 
-
-
 function showModal(){
     console.log("got here");
     $('#exampleModal').modal('show');
     let suggestions;
     $.getJSON('/skills/get_new_skills/', function(data){
 
+        let modalTitle = document.getElementsByClassName("modal-title")[0];
+        modalTitle.textContent = "Add Skills"
         console.log(data);
        suggestions =  data.suggestions;
          let modalBody = document.getElementsByClassName("modal-body")[0];
+         modalBody.textContent = "Choose a skill(s) to add";
 
     for(let i = 0; i < suggestions.length;i++) {
-        console.log(suggestions[i]);
-        console.log(suggestions[i].skillName);
-        let newSkillLine = document.createElement("li");
-        newSkillLine.textContent = suggestions[i].skillName;
+        //console.log(suggestions[i]);
+        //console.log(suggestions[i].skillName);
+        let newSkillLine = document.createElement("tr");
+        let newSkillText = document.createElement("td");
+        newSkillText.textContent = suggestions[i].skillName;
+        newSkillLine.append(newSkillText);
+        newSkillSelector = document.createElement("select")
+        newSkillSelector.setAttribute("value", "skillLevel");
+
+        beginner = document.createElement("option");
+        beginner.setAttribute("value", "BEG");
+        beginner.textContent = "Beginner";
+        newSkillSelector.append(beginner);
+
+        intermediate = document.createElement("option");
+        intermediate.setAttribute("value", "INT");
+        intermediate.textContent = "Intermediate";
+        newSkillSelector.append(intermediate);
+
+        advanced = document.createElement("option");
+        advanced.setAttribute("value", "ADV");
+        advanced.textContent = "Advanced";
+        newSkillSelector.append(advanced);
+
+        expert = document.createElement("option");
+        expert.setAttribute("value", "EXP");
+        expert.textContent = "Expert";
+        newSkillSelector.append(expert);
+
+        newSkillLine.append(newSkillSelector);
+
+
         modalBody.append(newSkillLine);
+
     }
 
     });
