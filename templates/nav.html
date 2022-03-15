@@ -41,14 +41,17 @@
 {#                for managers when doing if statement#}
                 {% if user.permission == "MNGR" %}
                     {% block admin_tools %}
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown m-auto">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="notification_indicator d-none" style="border-radius: 2em;padding: 3px;background: blue;display: inline-block;margin-bottom: 3px;position: relative;left: 3px;"></span>
                             Admin Tools
                             </a>
                             <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Skill Acceptance</a>
+                                <a class="dropdown-item" href="#">Skill Acceptance
+                                    <span id="skill_notification_count" class="badge badge-primary ml-1 d-none"></span>
+                                </a>
                                 <div class="dropdown-divider m-0"></div>
-                                <a class="dropdown-item" href="{% url 'import' %}">Employee Creation</a>
+                                <a class="dropdown-item"  href="{% url 'import' %}">Employee Creation</a>
                             </div>
                         </li>
                     {% endblock %}
@@ -80,7 +83,7 @@
                     {% endif %}
 
         </div>
-        <div id="notification_section" class="btn btn-warning">
+        <div id="notification_section" class="btn btn-warning d-none">
             <span id="notification_count" class="badge badge-light"></span>
         </div>
     </nav>
