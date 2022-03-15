@@ -2,10 +2,18 @@ $(document).ready(function() {
 
     addStatusCircles();
 
+
+
+    $('#skillButton').on("click", showModal);
+
+
 } );
 
 
-
+function showModal(){
+    console.log("got here");
+    $('#exampleModal').toggle();
+}
 
 
 function addStatusCircles(){

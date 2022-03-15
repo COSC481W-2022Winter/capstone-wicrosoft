@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
      {% load static %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/skills.css' %}">
-    <script src="{% static 'js/jquery.min.js' %}"></script>
+
     <script src="{% static 'js/addskills/skills_addskills.js' %}"></script>
     <title>Skills</title>
 </head>
 <body>
 <h1 style="text-align: center"> Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
 <h2 style="text-align: center"> View Skills </h2>
+
+<div class="top-right">
+    <button id="skillButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add skill
+</button>
+</div>
 
 <table class="table" id="skillsTable">
   <thead class = "thead">
@@ -37,5 +44,24 @@
     {% endfor %}
   </tbody>
 </table>
+
 </body>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        my modal
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </html>
