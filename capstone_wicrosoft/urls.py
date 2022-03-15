@@ -29,4 +29,5 @@ urlpatterns = [
     path('project/', views.project, name='project'),
     path('importusers/', views.import_users, name='import'),
     path('skills/', views.skills, name='skills'),
+    path('skills/get_new_skills/', views.get_new_skills),
 ]

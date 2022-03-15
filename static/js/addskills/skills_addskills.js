@@ -4,17 +4,46 @@ $(document).ready(function() {
 
 
 
-    $('#skillButton').on("click", showModal);
+    $('#skillButton').on("click", showModal)
+    $('#closeModal1').on("click", closeModal)
+    $('#closeModal2').on("click", closeModal)
+
 
 
 } );
 
 
+
 function showModal(){
     console.log("got here");
     $('#exampleModal').modal('show');
-}
+    let suggestions;
+    $.getJSON('/skills/get_new_skills/', function(data){
 
+        console.log(data);
+       suggestions =  data.suggestions;
+         let modalBody = document.getElementsByClassName("modal-body")[0];
+
+    for(let i = 0; i < suggestions.length;i++) {
+        console.log(suggestions[i]);
+        console.log(suggestions[i].skillName);
+        let newSkillLine = document.createElement("li");
+        newSkillLine.textContent = suggestions[i].skillName;
+        modalBody.append(newSkillLine);
+    }
+
+    });
+
+
+
+
+
+
+
+}
+function closeModal(){
+    $('#exampleModal').modal('hide');
+}
 
 function addStatusCircles(){
        let skillstable = document.getElementsByClassName("statsCol");

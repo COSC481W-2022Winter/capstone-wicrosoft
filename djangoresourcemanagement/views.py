@@ -151,6 +151,24 @@ def get_users(request):
 
     return JsonResponse(jsonResponseData, safe=False)
 
+def get_new_skills(request):
+    user = request.user
+    jsonResposnseData = {"suggestions": []}
+    userSkillsList = UserToSkill.objects.all().filter(user=user)
+    allSkillsList = TechSkill.objects.all()
+
+    for userSkill in userSkillsList:
+       allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
+
+    for possibleNewSkill in allSkillsList:
+        dictionary = {
+            "skillName" : possibleNewSkill.name
+        }
+        jsonResposnseData["suggestions"] += [dictionary]
+    print(jsonResposnseData)
+    return JsonResponse(jsonResposnseData, safe='False')
+
+
 def project(request):
     return render(request, 'project.html')
 
@@ -190,13 +208,15 @@ def skills(request):
 
     return render(request,  'skills.html', {'skills' : return_skills})
 
+
+
 def import_users(request):
     #print(request.method)
     #print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
     #user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
-    login(request, user)
+    #login(request, user)
     RegexStrings = {
         'Password' : '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
         'Email' : '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
