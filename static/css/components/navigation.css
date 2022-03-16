@@ -17,3 +17,16 @@
     animation-iteration-count: infinite;
 }
 
+.counter_indicator{
+    border: 2px solid black;
+    border-radius: 1em;
+    padding: 0px 4px 0px 3px;
+    background: red;
+    font-size: .5em;
+    color: white;
+    font-weight: 601;
+    position: relative;
+    display: inline-block;
+    right: 15px;
+    bottom: 8px;
+}
