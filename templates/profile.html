@@ -5,6 +5,7 @@
     {% load static %}
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/teams/teamview.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
@@ -34,13 +35,13 @@
             </div>
 
             <div class="userInfo">
-                <div>
+                <div style="display: flex;flex-direction: column;">
 
                     <h4>Teams</h4>
                     <!-- content loaded from db -->
                     {% if user.is_authenticated %}
                     {% for team in usersTeams %}
-                        <button class="btn btn-primary" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
+                        <button class="btn btn-primary teams mb-2" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
                         <div class="collapse multi-collapse" id="{{ team.id }}">
                             <div class="card card-body">
                                 {% if team.leader != null %}
@@ -53,9 +54,9 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <br><br>
                     {% endfor %}
                     {% endif %}
+                    <button id="showTeams" class="btn btn-secondary">Show All</button>
                 </div>
 
                 <br>
