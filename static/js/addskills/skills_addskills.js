@@ -7,11 +7,50 @@ $(document).ready(function() {
     $('#skillButton').on("click", showModal)
     $('#closeModal1').on("click", closeModal)
     $('#closeModal2').on("click", closeModal)
+    $('#saveSkills').on("click", saveSkills)
+
 
 
 
 } );
 
+function saveSkills(){
+
+    let skillList = {skills :[]};
+    $('.modal-body').eq(0).children().each(function(index, element){
+        // Check if each row is checked to be added
+       if (element.children[2].children[0].checked === true){
+           let skill_to_add = element.children[0].textContent;
+           console.log(skill_to_add);
+           let skillLevel_to_add = element.children[1].value;
+           console.log(skillLevel_to_add);
+
+           let intermediateArr = [skill_to_add, skillLevel_to_add];
+
+            skillList.skills.push(intermediateArr);
+
+            console.log(skillList);
+
+
+           // Create Json Object
+
+
+           // Add Skill Name
+
+
+           // Add Proficieny Level
+
+
+           // Add Object to List
+
+       }
+
+
+    })
+    // Return list
+}
+//console.log();
+//console.log(element);
 function showModal(){
     console.log("got here");
     $('#exampleModal').modal('show');
@@ -20,7 +59,7 @@ function showModal(){
 
         let modalTitle = document.getElementsByClassName("modal-title")[0];
         modalTitle.textContent = "Add Skills"
-        console.log(data);
+        //console.log(data);
         suggestions =  data.suggestions;
         let modalBody = document.getElementsByClassName("modal-body")[0];
         modalBody.textContent = "Choose a skill(s) to add";
@@ -56,8 +95,8 @@ function showModal(){
         expert.textContent = "Expert";
         newSkillSelector.append(expert);
         newSkillLine.append(newSkillSelector);
-        console.log(i);
-        console.log($("#modal-body").children(i));
+       // console.log(i);
+        //console.log($("#modal-body").children(i));
         modalBody.append(newSkillLine);
 
         $("#modal-body").children().eq(i).append("<td class=\"form-check form-check-inline\">\n" +
@@ -67,27 +106,15 @@ function showModal(){
             "  </label>\n" +
             "</td>");
 
-
-
         // let checkBoxForm = document.createElement("div");
         // checkBoxForm.setAttribute('class', 'form-check');
         // checkBox = document.createElement("input");
         // checkBox.setAttribute('class', 'form-check-input');
         //checkBox.setAttribute('type',)
 
-
-
-
-
-
     }
 
     });
-
-
-
-
-
 
 
 }
