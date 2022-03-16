@@ -21,14 +21,15 @@ function showModal(){
         let modalTitle = document.getElementsByClassName("modal-title")[0];
         modalTitle.textContent = "Add Skills"
         console.log(data);
-       suggestions =  data.suggestions;
-         let modalBody = document.getElementsByClassName("modal-body")[0];
-         modalBody.textContent = "Choose a skill(s) to add";
+        suggestions =  data.suggestions;
+        let modalBody = document.getElementsByClassName("modal-body")[0];
+        modalBody.textContent = "Choose a skill(s) to add";
 
     for(let i = 0; i < suggestions.length;i++) {
         //console.log(suggestions[i]);
         //console.log(suggestions[i].skillName);
         let newSkillLine = document.createElement("tr");
+
         let newSkillText = document.createElement("td");
         newSkillText.textContent = suggestions[i].skillName;
         newSkillLine.append(newSkillText);
@@ -54,11 +55,30 @@ function showModal(){
         expert.setAttribute("value", "EXP");
         expert.textContent = "Expert";
         newSkillSelector.append(expert);
-
         newSkillLine.append(newSkillSelector);
-
-
+        console.log(i);
+        console.log($("#modal-body").children(i));
         modalBody.append(newSkillLine);
+
+        $("#modal-body").children.eq(i).append("<td class=\"form-check form-check-inline\">\n" +
+            "  <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"defaultCheck1\">\n" +
+            "  <label class=\"form-check-label\" for=\"defaultCheck1\">\n" +
+            "    Add Skill\n" +
+            "  </label>\n" +
+            "</td>");
+
+
+
+        // let checkBoxForm = document.createElement("div");
+        // checkBoxForm.setAttribute('class', 'form-check');
+        // checkBox = document.createElement("input");
+        // checkBox.setAttribute('class', 'form-check-input');
+        //checkBox.setAttribute('type',)
+
+
+
+
+
 
     }
 

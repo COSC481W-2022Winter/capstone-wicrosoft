@@ -157,8 +157,13 @@ def get_new_skills(request):
     userSkillsList = UserToSkill.objects.all().filter(user=user)
     allSkillsList = TechSkill.objects.all()
 
+    #I've tried this every way I can think of and am getting a non iterable object
+    #for i in ProficiencyLevels.level_name.LEVELS:
+      #  print(i[0])
+
     for userSkill in userSkillsList:
-       allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
+        if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
+            allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
 
     for possibleNewSkill in allSkillsList:
         dictionary = {
