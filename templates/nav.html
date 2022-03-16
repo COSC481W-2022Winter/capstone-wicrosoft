@@ -1,6 +1,7 @@
 {% load static %}
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/notifications/nav_notification.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/components/navigation.css' %}">
@@ -10,7 +11,7 @@
 
     {% block title %} {% endblock %}
 
-    <nav class="navbar navbar-dark navbar-expand-lg p-0" style="background-color: #5680e9;">
+    <nav class="navbar navbar-dark navbar-expand p-0" style="background-color: #5680e9;">
         <a class="navbar-brand ml-1 mr-1" href="{% url 'profile' %}">
             <img src="{% static 'images/logo/wicrosoft_logo.svg' %}" width="40" height="40" alt="">
         </a>
@@ -74,9 +75,12 @@
             </ul>
 
                     {% if user.is_authenticated %}
-                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'logout' %}">
-                            Sign-out
-                        </a>
+                        <div class="dropdown ml-auto pl-0">
+                            <img class="mr-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{%  static 'images/components/person-circle-off-white.svg' %}" style="height: 1em; width: 1em; font-size: 1.7em;cursor:pointer;">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: auto;right: 0;padding: 0;border-radius: 0;min-width: auto;">
+                                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            </div>
+                        </div>
                     {% else %}
                         <a class="nav-link text-white ml-auto pl-0" href="{% url 'login' %}">
                             Sign-in
@@ -84,9 +88,10 @@
                     {% endif %}
 
         </div>
-        <div id="notification_section" class="btn btn-warning d-none">
-            <span id="notification_count" class="badge badge-light"></span>
-        </div>
+        {% if user.permission == "MNGR" %}
+            <img id="clipboard_notify" src="{% static 'images/components/clipboard-off-white.svg' %}" class="mr-1" data-toggle="popover" title="Skill Notifications" style="height: 1em; width: 1em;font-size: 1.7em;cursor: pointer;">
+            <span id="notification_count" class="counter_indicator d-none"></span>
+        {% endif %}
     </nav>
 
     {% block content %}{% endblock %}
