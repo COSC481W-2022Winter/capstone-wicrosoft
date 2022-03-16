@@ -60,7 +60,7 @@ function showModal(){
         console.log($("#modal-body").children(i));
         modalBody.append(newSkillLine);
 
-        $("#modal-body").children.eq(i).append("<td class=\"form-check form-check-inline\">\n" +
+        $("#modal-body").children().eq(i).append("<td class=\"form-check form-check-inline\">\n" +
             "  <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"defaultCheck1\">\n" +
             "  <label class=\"form-check-label\" for=\"defaultCheck1\">\n" +
             "    Add Skill\n" +
