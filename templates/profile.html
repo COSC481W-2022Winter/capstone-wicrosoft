@@ -7,9 +7,8 @@
     {% load static %}
     {% block styling %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-            <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-
-        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+        <script src="{% static 'js/teams/teamview.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Profile</title>{% endblock %}
     {% block profile_page %}
@@ -34,11 +33,28 @@
             </div>
 
             <div class="userInfo">
-                <div>
+                <div style="display: flex;flex-direction: column;">
+
                     <h4>Teams</h4>
                     <!-- content loaded from db -->
-                    <a href="">Example Team 1</a> <br>
-                    <a href="">Example Team 2</a>
+                    {% if user.is_authenticated %}
+                    {% for team in usersTeams %}
+                        <button class="btn btn-primary teams mb-2" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
+                        <div class="collapse multi-collapse" id="{{ team.id }}">
+                            <div class="card card-body">
+                                {% if team.leader != null %}
+                                    <p>{{ team.leader }} (Lead)</p>
+                                {% endif %}
+                                {% for member in team.team_members.all %}
+                                    {% if member != team.leader %}
+                                        <p>{{member}}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    <button id="showTeams" class="btn btn-secondary">Show All</button>
                 </div>
 
                 <br>
@@ -54,14 +70,7 @@
 
                 <br>
 
-                <div>
-                    <h4>Skills</h4>
-                    <!-- content loaded from db -->
-                    <ul>
-                        <li>Example Skill 1</li>
-                        <li>Example Skill 2</li>
-                    </ul>
-                </div>
+
 
             </div>
         </div>
@@ -80,13 +89,17 @@
             <!-- content loaded from db -->
             <p>Position: {{ user.position }}</p>
             <p>Email: {{ user.email }}</p>
+            <div>
+                    <h4>Skills</h4>
+                    <!-- content loaded from db -->
+                    <ul>
+                        <li>Example Skill 1</li>
+                        <li>Example Skill 2</li>
+                    </ul>
+                </div>
         </div>
 
     </div>
-
-
-
-
 
 </body>
 {% endblock %}
