@@ -1,14 +1,17 @@
 {% load static %}
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/notifications/nav_notification.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/components/navigation.css' %}">
     {% block styling %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% endblock %}
 
     {% block title %} {% endblock %}
 
-    <nav class="navbar navbar-dark navbar-expand-lg p-1" style="background-color: #5680e9;">
+    <nav class="navbar navbar-dark navbar-expand p-0" style="background-color: #5680e9;">
         <a class="navbar-brand ml-1 mr-1" href="{% url 'profile' %}">
             <img src="{% static 'images/logo/wicrosoft_logo.svg' %}" width="40" height="40" alt="">
         </a>
@@ -40,14 +43,17 @@
 {#                for managers when doing if statement#}
                 {% if user.permission == "MNGR" %}
                     {% block admin_tools %}
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown m-auto">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="notification_indicator d-none"></span>
                             Admin Tools
                             </a>
                             <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Skill Acceptance</a>
+                                <a class="dropdown-item" href="#">Skill Acceptance
+                                    <span id="skill_notification_count" class="badge badge-primary ml-1 d-none"></span>
+                                </a>
                                 <div class="dropdown-divider m-0"></div>
-                                <a class="dropdown-item" href="{% url 'import' %}">Employee Creation</a>
+                                <a class="dropdown-item"  href="{% url 'import' %}">Employee Creation</a>
                             </div>
                         </li>
                     {% endblock %}
@@ -69,15 +75,23 @@
             </ul>
 
                     {% if user.is_authenticated %}
-                        <a class="nav-link text-white ml-auto pl-0" href="{% url 'logout' %}">
-                            Sign-out
-                        </a>
+                        <div class="dropdown ml-auto pl-0">
+                            <img class="mr-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{%  static 'images/components/person-circle-off-white.svg' %}" style="height: 1em; width: 1em; font-size: 1.7em;cursor:pointer;">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: auto;right: 0;padding: 0;border-radius: 0;min-width: auto;">
+                                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            </div>
+                        </div>
                     {% else %}
                         <a class="nav-link text-white ml-auto pl-0" href="{% url 'login' %}">
                             Sign-in
                         </a>
                     {% endif %}
+
         </div>
+        {% if user.permission == "MNGR" %}
+            <img id="clipboard_notify" src="{% static 'images/components/clipboard-off-white.svg' %}" class="mr-1" data-toggle="popover" title="Skill Notifications" style="height: 1em; width: 1em;font-size: 1.7em;cursor: pointer;">
+            <span id="notification_count" class="counter_indicator d-none"></span>
+        {% endif %}
     </nav>
 
     {% block content %}{% endblock %}
