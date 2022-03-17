@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
 import pyexcel as p
-import pyexcel_xls, pyexcel_xlsx
+import pyexcel_xls
+import pyexcel_xlsx
 import re
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -194,11 +195,51 @@ def get_users(request):
 def project(request):
     return render(request, 'project.html')
 
+def skills(request):
+    if not request.user.is_authenticated :
+        raise PermissionDenied
+    user = request.user
+    #user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
+    #user = authenticate(request, username='jack123', password='cosc481w')
+
+    listOfTechSkills = TechSkill.objects.all()
+
+    techSkill = listOfTechSkills[1]
+
+    profLevel = ProficiencyLevels.objects.all().filter(level_name='EXP')[0]
+
+    print(profLevel)
+
+    # newSkill = UserToSkill(
+    #                 skill=techSkill,
+    #                 user=user,
+    #                 proficiency=profLevel,
+    #                 skill_status='REJ',
+    #           )
+    # newSkill.save()
+
+    login(request, user)
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    userskills = UserToSkill.objects.all().filter(user=request.user)
+
+    return_skills = []
+
+    for row in userskills:
+        return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
+
+    return render(request,  'skills.html', {'skills' : return_skills})
+
 def import_users(request):
     # print(request.method)
     # print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
+<<<<<<< HEAD
     user = authenticate(request, username='jack123', password='cosc481w')
+=======
+    #user = authenticate(request, username = 'jack123', password = 'cosc481w')
+>>>>>>> main
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
     login(request, user)
     RegexStrings = {

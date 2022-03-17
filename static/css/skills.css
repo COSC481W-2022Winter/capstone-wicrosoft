@@ -1,0 +1,35 @@
+.table {
+width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
+}
+
+.thead {
+    background-color: #005cbf; color: white;
+}
+
+.skillStatus{
+    display: inline-block;
+}
+.pendingCircle {
+    height: 15px;
+    width: 15px;
+    background-color: #f6b81b;
+    border-radius: 50%;
+    display: inline-block;
+
+}
+.rejectedCircle{
+    height: 15px;
+    width: 15px;
+    background-color: #c82333;
+    border-radius: 50%;
+    display: inline-block;
+
+}
+.approvedCircle{
+    height: 15px;
+    width: 15px;
+    background-color: #1e7e34;
+    border-radius: 50%;
+    display: inline-block;
+
+}
