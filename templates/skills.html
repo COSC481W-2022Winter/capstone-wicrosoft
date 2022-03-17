@@ -14,6 +14,14 @@
     <title>Skills</title>
 </head>
 <body>
+
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
+
 <h1 style="text-align: center"> Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
 <h2 style="text-align: center"> View Skills </h2>
 

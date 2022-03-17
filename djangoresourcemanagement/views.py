@@ -213,6 +213,10 @@ def project(request):
     return render(request, 'project.html')
 
 def skills(request):
+
+    print(request.GET)
+
+
     if not request.user.is_authenticated :
         raise PermissionDenied
     user = request.user
@@ -229,8 +233,9 @@ def skills(request):
     allSkillsList = TechSkill.objects.all()
 
     # I've tried this every way I can think of and am getting a non iterable object
-    # for i in ProficiencyLevels.level_name.LEVELS:
+     #for i in ProficiencyLevels.:
     #  print(i[0])
+
 
     for userSkill in userSkillsList:
         if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
@@ -242,6 +247,14 @@ def skills(request):
 
     for row in userskills:
         return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
+
+    if request.GET:
+        print(request.GET)
+        if request.GET["success"][0] == "1":
+            print("got to success")
+            return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList, "message": "The skills were added successfully!"})
+
+
 
     return render(request,  'skills.html', {'skills' : return_skills, "newSkills" : allSkillsList})
 

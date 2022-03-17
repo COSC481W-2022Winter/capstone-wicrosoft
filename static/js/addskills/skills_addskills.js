@@ -34,13 +34,10 @@ function saveSkills(){
             skillList.skills.push(intermediateArr);
 
             console.log(skillList);
-
        }
 
 
     })
-
-
 
     $.ajax({
         type:'POST',
@@ -51,7 +48,7 @@ function saveSkills(){
         contentType: false,
         success: function(data){
             closeModal()
-            location.reload(true)
+            location.replace("/skills/?success=1");
             }
 
         });
