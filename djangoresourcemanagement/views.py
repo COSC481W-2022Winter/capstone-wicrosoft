@@ -16,6 +16,8 @@ from djangoresourcemanagement import HelperFunctions as helper
 
 
 # Create your views here.
+def nav(request):
+    return render(request, 'nav.html')
 
 def login_page(request):
     if request.user.is_authenticated:
@@ -144,6 +146,35 @@ def team_maker(request):
     return redirect("login")
 
 
+def get_skill_request(request):
+    if request.user.is_authenticated and request.user.permission == "MNGR":
+        user = request.user
+
+        employees = []
+        for u in Users.objects.all():
+            if u.supervisor_id == user.id:
+                employees.append(u)
+
+        jsonResponseData = {"suggestions": []}
+        for employee in employees:
+            temp = 0
+            for skill in UserToSkill.objects.all():
+                if skill.skill_status == "PEN" and skill.user_id == employee.id:
+                    temp = temp + 1
+
+            dictionary = {
+                "id": employee.id,
+                "name": employee.first_name + " " + employee.last_name,
+                "numOfRequests": temp
+            }
+
+            if temp > 0:
+                jsonResponseData["suggestions"] += [dictionary]
+            print(dictionary)
+
+        return JsonResponse(jsonResponseData, safe=False)
+
+    return redirect("login")
 
 def project(request):
     return render(request, 'project.html')

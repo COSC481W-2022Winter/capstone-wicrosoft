@@ -1,0 +1,32 @@
+@keyframes blinking_indicator {
+    from { background-color: #c1c8e4; }
+    to { background-color: #8860d0; }
+}
+
+.notification_indicator{
+    border-radius: 2em;
+    padding: 3px;
+    background: blue;
+    display: inline-block;
+    margin-bottom: 3px;
+    position: relative;
+    left: 3px;
+    animation-name: blinking_indicator;
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+.counter_indicator{
+    border: 2px solid black;
+    border-radius: 1em;
+    padding: 0px 4px 0px 3px;
+    background: red;
+    font-size: .5em;
+    color: white;
+    font-weight: 601;
+    position: relative;
+    display: inline-block;
+    right: 15px;
+    bottom: 8px;
+}
