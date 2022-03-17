@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
-from django.core.exceptions import  PermissionDenied
+from django.core.exceptions import PermissionDenied
 import pyexcel as p
 import pyexcel_xls
 import pyexcel_xlsx
@@ -11,6 +11,8 @@ from django.contrib import messages
 from .models import *
 
 from djangoresourcemanagement import HelperFunctions as helper
+
+
 # Create your views here.
 def nav(request):
     return render(request, 'nav.html')
@@ -38,12 +40,19 @@ def login_page(request):
 def profile_page(request):
     user = request.user
 
+
     if user.is_authenticated:
         profile_info = {"first_name": user.first_name,
                         "last_name": user.last_name,
                         "position": user.position,
                         "permission": user.permission}
-        return render(request, 'profile.html', profile_info)
+
+        usersTeams = get_teams(request)
+
+
+
+
+        return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams})
 
     else:
         return redirect('login')
@@ -54,9 +63,31 @@ def logout_user(request):
         logout(request)
         return redirect('login')
 
-
 def team(request):
     return render(request, 'team.html')
+
+def get_teams(request):
+    userInTeam = request.user
+    squadMember = SquadMembers.objects.filter(user=userInTeam.id)
+
+    usersTeams = []
+
+    listOfTeams = Teams.objects.all()
+    for team in listOfTeams:
+        for squad in squadMember:
+            if team.id == squad.team_id:
+                usersTeams.append(team)
+
+    jsonResponseData = {'response': []}
+    for team in usersTeams:
+        dictionary = {
+            "value": team.name,
+            "data": team.id
+        }
+        jsonResponseData['response'] += dictionary
+
+    return usersTeams
+        ##JsonResponse(jsonResponseData, safe=False)
 
 def team_maker(request):
     if request.user.is_authenticated:
@@ -74,7 +105,8 @@ def team_maker(request):
                 squadmember_list = request.POST.getlist("personID")
                 roles_to_squadmembers = request.POST.getlist("roles")
 
-                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(projects_list) == 0 or len(squadmember_list) == 0:
+                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(
+                        projects_list) == 0 or len(squadmember_list) == 0:
                     return render(request, 'team_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
 
                 createdTeam = Teams(
@@ -142,6 +174,9 @@ def get_skill_request(request):
 
     return redirect("login")
 
+def project(request):
+    return render(request, 'project.html')
+
 
 def get_projects(request):
     projectToSearch = request.GET['query']
@@ -161,29 +196,32 @@ def get_projects(request):
 
     return JsonResponse(jsonResponseData, safe=False)
 
+
 def get_users(request):
     personToSearch = request.GET['query']
     personsOfInterest = []
 
     if ' ' in personToSearch:
         personsNames = personToSearch.split()
-        personsOfInterest = list(Users.objects.filter(first_name__istartswith=personsNames[0],last_name__istartswith=personsNames[1]))
+        personsOfInterest = list(
+            Users.objects.filter(first_name__istartswith=personsNames[0], last_name__istartswith=personsNames[1]))
     else:
         personsOfInterest = list(Users.objects.filter(first_name__istartswith=personToSearch))
 
     print(personsOfInterest)
 
-    jsonResponseData = {"suggestions" : []}
+    jsonResponseData = {"suggestions": []}
     for person in personsOfInterest:
         print(person.id)
         print(person.first_name)
         dictionary = {
-                "value" : person.first_name + " " + person.last_name,
-                "data" : person.id
-            }
+            "value": person.first_name + " " + person.last_name,
+            "data": person.id
+        }
         jsonResponseData["suggestions"] += [dictionary]
 
     return JsonResponse(jsonResponseData, safe=False)
+
 
 def project(request):
     return render(request, 'project.html')
@@ -225,19 +263,19 @@ def skills(request):
     return render(request,  'skills.html', {'skills' : return_skills})
 
 def import_users(request):
-    #print(request.method)
-    #print(request.FILES.keys())
+    # print(request.method)
+    # print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
     #user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
     login(request, user)
     RegexStrings = {
-        'Password' : '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
-        'Email' : '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
-        'NumbersAndSpecialCharacters' : "^.*[0-9<>%$].*$",
-        'ValidDate' : "^(0[1-9]|1[0-2])[-/](0[1-9]|[12][0-9]|3[01])[-/](18|19|20)\\d\\d$",
-        'SpecialCharacters' : '^.*[<>%$].*$',
-        'LettersAndSpecialCharacters' : '^.*[a-zA-Z<>%$].*$',
+        'Password': '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
+        'Email': '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
+        'NumbersAndSpecialCharacters': "^.*[0-9<>%$].*$",
+        'ValidDate': "^(0[1-9]|1[0-2])[-/](0[1-9]|[12][0-9]|3[01])[-/](18|19|20)\\d\\d$",
+        'SpecialCharacters': '^.*[<>%$].*$',
+        'LettersAndSpecialCharacters': '^.*[a-zA-Z<>%$].*$',
 
     }
     if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
@@ -249,27 +287,28 @@ def import_users(request):
         content = request.FILES['userfile'].read()
         excel = p.get_array(file_type=extension, file_content=content)
         invalidindicies = []
-        userdata =[]
+        userdata = []
         for count, row in enumerate(excel):
             userdata.append([])
-            if len(row) < 1 or row[0] == "":                                            # Username
-                invalidindicies.append((count + 1 , 1, 'Username cannot be empty'))
+            if len(row) < 1 or row[0] == "":  # Username
+                invalidindicies.append((count + 1, 1, 'Username cannot be empty'))
             elif Users.objects.all().filter(username=row[0]).exists():
                 invalidindicies.append((count + 1, 1, "Username already exists"))
             else:
                 userdata[count].append(row[0])
 
-            if (len(row) < 2 or row[1] == ""):                                          # Password
+            if (len(row) < 2 or row[1] == ""):  # Password
                 invalidindicies.append((count + 1, 2, 'Password cannot be empty'))
             elif not re.match(RegexStrings['Password'], str(row[1])):
-                invalidindicies.append((count + 1,  2, 'Password must contain at least 8 characters, at least 1  uppercase letter 1 lower case letter and 1 number'))
+                invalidindicies.append((count + 1, 2,
+                                        'Password must contain at least 8 characters, at least 1  uppercase letter 1 lower case letter and 1 number'))
             else:
                 userdata[count].append(row[1])
 
-            if (len(row) < 3 or row[2] == ""):                                          # Email
+            if (len(row) < 3 or row[2] == ""):  # Email
                 invalidindicies.append((count + 1, 3, 'Email cannot be empty'))
             elif not re.match(RegexStrings['Email'], row[2]):
-                invalidindicies.append((count + 1,  3, "Email must be valid"))
+                invalidindicies.append((count + 1, 3, "Email must be valid"))
             elif Users.objects.all().filter(email=row[2]).exists():
                 invalidindicies.append((count + 1, 3, "Email already exists"))
             else:
@@ -294,7 +333,8 @@ def import_users(request):
             elif not re.match(RegexStrings['ValidDate'], row[5]):
                 invalidindicies.append((count + 1, 6, 'Improperly formatted date, must be in mm-dd-yyyy or mm/dd/yyyy'))
             elif not helper.valid_date(row[5]):
-                invalidindicies.append(count + 1, 6, "Date submitted is in correct format but invalid, (Eg. >32 days, 31 days in a month with 30, Before year 1800)")
+                invalidindicies.append(count + 1, 6,
+                                       "Date submitted is in correct format but invalid, (Eg. >32 days, 31 days in a month with 30, Before year 1800)")
             else:
                 userdata[count].append(row[5])
 
@@ -343,8 +383,8 @@ def import_users(request):
                 userdata[count].append(row[11])
 
         success_users = []
-        if invalidindicies == []:                                                   # Checks for Errors
-            for row in userdata:               # (username, email, work_email,  password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
+        if invalidindicies == []:  # Checks for Errors
+            for row in userdata:  # (username, email, work_email,  password, first_name, last_name, address, position, marital_status, rate, supervisor, mentor, hire_date, permission):
                 if row[10] is not None:
                     row[10] = Users.objects.all().filter(username=row[10])[0]
                 if row[11] is not None:
@@ -352,18 +392,19 @@ def import_users(request):
                 django_date = row[5].split("-")
                 django_date_format = django_date[2] + '-' + django_date[0] + '-' + django_date[1] + ' 00:00'
                 row[5] = django_date_format
-                user = Users.objects.create_user(row[0], row[2], helper.create__valid_work_email(row[3] + row[4]), row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10], row[5], 'EMP')
+                user = Users.objects.create_user(row[0], row[2], helper.create__valid_work_email(row[3] + row[4]),
+                                                 row[1], row[3], row[4], row[6], row[7], row[8], row[9], row[10],
+                                                 row[5], 'EMP')
 
                 user.mentor.add(row[11])
                 if user is not None:
                     success_users.append((user.username, user.work_email))
 
-            return render(request,  'importusers.html', {'values': excel, 'Output': success_users, 'Success': True})
+            return render(request, 'importusers.html', {'values': excel, 'Output': success_users, 'Success': True})
 
-        return render(request,  'importusers.html', {'values': excel, 'Output': invalidindicies})
+        return render(request, 'importusers.html', {'values': excel, 'Output': invalidindicies})
     else:
         return render(request, 'importusers.html', {'values': []})
-
 
 # Username 0
 # Password 1
