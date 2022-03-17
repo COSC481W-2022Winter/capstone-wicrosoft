@@ -152,8 +152,10 @@ def get_users(request):
     return JsonResponse(jsonResponseData, safe=False)
 
 def get_new_skills(request):
-    user = request.user
+
     jsonResposnseData = {"suggestions": []}
+
+    user = request.user
     userSkillsList = UserToSkill.objects.all().filter(user=user)
     allSkillsList = TechSkill.objects.all()
 
@@ -204,6 +206,18 @@ def skills(request):
     if not request.user.is_authenticated:
         raise PermissionDenied
 
+    user = request.user
+    userSkillsList = UserToSkill.objects.all().filter(user=user)
+    allSkillsList = TechSkill.objects.all()
+
+    # I've tried this every way I can think of and am getting a non iterable object
+    # for i in ProficiencyLevels.level_name.LEVELS:
+    #  print(i[0])
+
+    for userSkill in userSkillsList:
+        if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
+            allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
+
     userskills = UserToSkill.objects.all().filter(user=request.user)
 
     return_skills = []
@@ -211,7 +225,7 @@ def skills(request):
     for row in userskills:
         return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
 
-    return render(request,  'skills.html', {'skills' : return_skills})
+    return render(request,  'skills.html', {'skills' : return_skills, "newSkills" : allSkillsList})
 
 
 
