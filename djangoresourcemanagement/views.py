@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
@@ -223,35 +225,92 @@ def get_users(request):
     return JsonResponse(jsonResponseData, safe=False)
 
 
+def save_skills(request):
+
+    #print(request.body)
+    newSkills = json.loads(request.body)
+    print(newSkills)
+    for newSkill in newSkills['skills']:
+        skillName=newSkill[0]
+        skillLevel=newSkill[1]
+
+        techSkill= TechSkill.objects.all().filter(name=skillName)
+
+        techSkill = techSkill[0]
+
+        profLevel = ProficiencyLevels.objects.all().filter(level_name=skillLevel)[0]
+
+
+        # print(skill)
+        # print(skill[0])
+        # print(skill[1])
+        newSkill = UserToSkill(
+            skill=techSkill,
+            user=request.user,
+            proficiency=profLevel,
+            skill_status='PEN',
+        )
+        newSkill.save()
+
+    return render(request,  'skills.html')
+
+
+def get_new_skills(request):
+
+    jsonResposnseData = {"suggestions": []}
+
+    user = request.user
+    userSkillsList = UserToSkill.objects.all().filter(user=user)
+    allSkillsList = TechSkill.objects.all()
+
+    #I've tried this every way I can think of and am getting a non iterable object
+    #for i in ProficiencyLevels.level_name.LEVELS:
+      #  print(i[0])
+
+    for userSkill in userSkillsList:
+        if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
+            allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
+
+    for possibleNewSkill in allSkillsList:
+        dictionary = {
+            "skillName" : possibleNewSkill.name
+        }
+        jsonResposnseData["suggestions"] += [dictionary]
+    print(jsonResposnseData)
+    return JsonResponse(jsonResposnseData, safe='False')
+
+
 def project(request):
     return render(request, 'project.html')
 
 def skills(request):
+
+    print(request.GET)
+
+
     if not request.user.is_authenticated :
         raise PermissionDenied
     user = request.user
     #user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
     #user = authenticate(request, username='jack123', password='cosc481w')
 
-    listOfTechSkills = TechSkill.objects.all()
-
-    techSkill = listOfTechSkills[1]
-
-    profLevel = ProficiencyLevels.objects.all().filter(level_name='EXP')[0]
-
-    print(profLevel)
-
-    # newSkill = UserToSkill(
-    #                 skill=techSkill,
-    #                 user=user,
-    #                 proficiency=profLevel,
-    #                 skill_status='REJ',
-    #           )
-    # newSkill.save()
 
     login(request, user)
     if not request.user.is_authenticated:
         raise PermissionDenied
+
+    user = request.user
+    userSkillsList = UserToSkill.objects.all().filter(user=user)
+    allSkillsList = TechSkill.objects.all()
+
+    # I've tried this every way I can think of and am getting a non iterable object
+     #for i in ProficiencyLevels.:
+    #  print(i[0])
+
+
+    for userSkill in userSkillsList:
+        if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
+            allSkillsList = allSkillsList.exclude(name=userSkill.skill.name)
 
     userskills = UserToSkill.objects.all().filter(user=request.user)
 
@@ -260,7 +319,17 @@ def skills(request):
     for row in userskills:
         return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
 
-    return render(request,  'skills.html', {'skills' : return_skills})
+    if request.GET:
+        print(request.GET)
+        if request.GET["success"][0] == "1":
+            print("got to success")
+            return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList, "message": "The skills were added successfully!"})
+
+
+
+    return render(request,  'skills.html', {'skills' : return_skills, "newSkills" : allSkillsList})
+
+
 
 def import_users(request):
     # print(request.method)
@@ -268,7 +337,7 @@ def import_users(request):
     # Next three lines are for testing demo purposes, remove at deploy
     #user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
-    login(request, user)
+    #login(request, user)
     RegexStrings = {
         'Password': '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
         'Email': '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
