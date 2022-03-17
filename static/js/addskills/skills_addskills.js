@@ -1,3 +1,5 @@
+const csrf = Cookies.get('csrftoken');
+
 $(document).ready(function() {
 
     addStatusCircles();
@@ -24,7 +26,7 @@ function saveSkills(){
        if ($('.form-check-input')[index].checked){
            let skill_to_add = element.children[0].textContent;
            console.log(skill_to_add);
-           let skillLevel_to_add = $('.SkillLevel').eq(index);
+           let skillLevel_to_add = $('.skillLevel')[index].value;
            console.log($('.skillLevel')[index].value);
 
            let intermediateArr = [skill_to_add, skillLevel_to_add];
@@ -38,10 +40,21 @@ function saveSkills(){
 
     })
 
-    $.post(
-        '/skills/save_skills/',
-        JSON.stringify(skillList)
-    )
+
+
+    $.ajax({
+        type:'POST',
+        url:'/skills/save_skills/',
+        headers: {'X-CSRFToken': csrf},
+        data: JSON.stringify(skillList),
+        processData: false,
+        contentType: false,
+        success: function(data){
+            closeModal()
+            location.reload(true)
+            }
+
+        });
     // Return list
 }
 //console.log();

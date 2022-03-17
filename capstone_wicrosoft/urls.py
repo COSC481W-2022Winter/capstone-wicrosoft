@@ -30,4 +30,5 @@ urlpatterns = [
     path('importusers/', views.import_users, name='import'),
     path('skills/', views.skills, name='skills'),
     path('skills/get_new_skills/', views.get_new_skills),
+    path('skills/save_skills/', views.save_skills),
 ]

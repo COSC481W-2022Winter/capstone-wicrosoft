@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
@@ -151,6 +153,37 @@ def get_users(request):
 
     return JsonResponse(jsonResponseData, safe=False)
 
+
+def save_skills(request):
+
+    #print(request.body)
+    newSkills = json.loads(request.body)
+    print(newSkills)
+    for newSkill in newSkills['skills']:
+        skillName=newSkill[0]
+        skillLevel=newSkill[1]
+
+        techSkill= TechSkill.objects.all().filter(name=skillName)
+
+        techSkill = techSkill[0]
+
+        profLevel = ProficiencyLevels.objects.all().filter(level_name=skillLevel)[0]
+
+
+        # print(skill)
+        # print(skill[0])
+        # print(skill[1])
+        newSkill = UserToSkill(
+            skill=techSkill,
+            user=request.user,
+            proficiency=profLevel,
+            skill_status='PEN',
+        )
+        newSkill.save()
+
+    return render(request,  'skills.html')
+
+
 def get_new_skills(request):
 
     jsonResposnseData = {"suggestions": []}
@@ -186,21 +219,6 @@ def skills(request):
     #user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
     #user = authenticate(request, username='jack123', password='cosc481w')
 
-    listOfTechSkills = TechSkill.objects.all()
-
-    techSkill = listOfTechSkills[1]
-
-    profLevel = ProficiencyLevels.objects.all().filter(level_name='EXP')[0]
-
-    print(profLevel)
-
-    # newSkill = UserToSkill(
-    #                 skill=techSkill,
-    #                 user=user,
-    #                 proficiency=profLevel,
-    #                 skill_status='REJ',
-    #           )
-    # newSkill.save()
 
     login(request, user)
     if not request.user.is_authenticated:
