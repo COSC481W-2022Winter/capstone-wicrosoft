@@ -1,9 +1,7 @@
 html {
-    background-color: #C1C8E4;
 
 }
 .surroundBody {
-    background-color: #F6F6F6;
     display: flex;
     align-content: center;
     justify-content: space-between;
