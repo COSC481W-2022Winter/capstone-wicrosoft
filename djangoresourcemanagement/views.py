@@ -235,11 +235,7 @@ def import_users(request):
     # print(request.method)
     # print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
-<<<<<<< HEAD
-    user = authenticate(request, username='jack123', password='cosc481w')
-=======
     #user = authenticate(request, username = 'jack123', password = 'cosc481w')
->>>>>>> main
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
     login(request, user)
     RegexStrings = {
