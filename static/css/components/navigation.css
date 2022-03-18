@@ -18,9 +18,8 @@
 }
 
 .counter_indicator{
-    border: 2px solid black;
     border-radius: 1em;
-    padding: 0px 4px 0px 3px;
+    padding: 0px 4px 0px 4px;
     background: red;
     font-size: .5em;
     color: white;
@@ -29,4 +28,5 @@
     display: inline-block;
     right: 15px;
     bottom: 8px;
+    box-shadow: 0px 0px 1px black;
 }
