@@ -1,5 +1,5 @@
 .table {
-width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
+width: 90%; margin-left: auto; margin-right: auto; /*! margin-top: 50px; */
 }
 
 .thead {
@@ -10,10 +10,9 @@ width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
     display: inline-block;
 }
 .top-right{
-    position: absolute;
-    top: 30px;
-    right: 30px;
 
+    margin: 0 auto 0 auto;
+    width: 90%;
 }
 .pendingCircle {
     height: 15px;
