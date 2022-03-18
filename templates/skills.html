@@ -1,17 +1,40 @@
+{% extends 'nav.html' %}
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
      {% load static %}
+    {% block styling %}
      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/skills.css' %}">
-    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/addskills/skills_addskills.js' %}"></script>
-    <title>Skills</title>
+    {% endblock %}
+   {% block title %}  <title>Skills</title> {% endblock %}
+    {% block skills_page %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Skills</a>
+                    </li>
+    {% endblock %}
 </head>
+{% block content %}
 <body>
+
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
+
 <h1 style="text-align: center"> Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
 <h2 style="text-align: center"> View Skills </h2>
+
+<div class="top-right">
+    <button id="skillButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add skill
+</button>
+</div>
 
 <table class="table" id="skillsTable">
   <thead class = "thead">
@@ -37,5 +60,47 @@
     {% endfor %}
   </tbody>
 </table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" id="closeModal1" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body" id ="modal-body">
+          <table>
+              <tbody class="newSkillsTable" id="newSkillsTable">
+          {% for skill in newSkills %}
+            <tr>
+                <td class="skillName">{{skill.name}}</td>
+                <td><select value="skillLevel" class="skillLevel">
+                    <option value="BEG">Beginner</option>
+                    <option value="INT">Intermediate</option>
+                    <option value="ADV">Advanced</option>
+                    <option value="EXP">Expert</option></select>
+                </td>
+                <td class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Add Skill
+              </label>
+            </td>
+            </tr>
+          {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeModal2" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="saveSkills" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
+
+{% endblock %}
+
 </html>

@@ -9,6 +9,12 @@ width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px;
 .skillStatus{
     display: inline-block;
 }
+.top-right{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+}
 .pendingCircle {
     height: 15px;
     width: 15px;
