@@ -40,7 +40,7 @@ $(document).ready(function(){
         else if (count === 1)
             $(popoverDOMelement).attr("data-content",count+" employee has skills that need review.");
         else
-            $(popoverDOMelement).attr("data-content",count+" employees has skills that need review.")
+            $(popoverDOMelement).attr("data-content",count+" employees have skills that need review.")
     }
 
     function initPopover() {
