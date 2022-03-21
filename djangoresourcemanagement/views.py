@@ -78,7 +78,8 @@ def get_teams(request):
     for team in listOfTeams:
         for squad in squadMember:
             if team.id == squad.team_id:
-                usersTeams.append(team)
+                if (not usersTeams.__contains__(team)):
+                    usersTeams.append(team)
 
     jsonResponseData = {'response': []}
     for team in usersTeams:
