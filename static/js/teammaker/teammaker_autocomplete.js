@@ -112,7 +112,7 @@ $(document).ready(function(){
             "value": role_value
         }));
         let closeButton = ($('<span>')).attr({
-            "class" : "making_delete rounded-circle bg-white border"
+            "class" : "making_delete bg-white border"
         });
 
         p1[0].innerText = role_name;
