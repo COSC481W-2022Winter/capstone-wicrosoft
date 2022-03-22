@@ -1,0 +1,16 @@
+#page_title_info{
+    color: black;
+    width: 90%;
+    margin: 15px auto 25px auto;
+}
+.page_title{
+    color: #5680e9;
+    font-weight: 505;
+    text-shadow: 0px 1px 1px black;
+    margin-bottom: 3px;
+}
+.page_summary{
+    color: rgb(0,0,0,.9);
+    line-height: 21px;
+    font-size: 1.1em;
+}

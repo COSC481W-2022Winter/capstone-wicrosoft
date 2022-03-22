@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
      {% load static %}
     {% block styling %}
-     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/skills.css' %}">
-    <script src="{% static 'js/addskills/skills_addskills.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/skills.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <script src="{% static 'js/addskills/skills_addskills.js' %}"></script>
     {% endblock %}
    {% block title %}  <title>Skills</title> {% endblock %}
     {% block skills_page %}
@@ -26,19 +27,21 @@
         </div>
     {% endif %}
 
+    <div id="page_title_info">
+        <h2 class="page_title">Skill Assembler</h2>
+        <p class="page_summary">This is the Skill Assembler application, it houses all the skills you have. It also allows you to add company wide skills for your fellow employees and manager to see the skills.</p>
+    </div>
 
-<h1 style="text-align: center; margin-top: 15px;"> Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
-<h2 style="text-align: center"> View Skills </h2>
 
-<div class="top-right">
-    <button id="skillButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right;">
-  Add skill
-</button>
-</div>
+    <div class="top-right">
+        <button id="skillButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right;padding: 2px 5px 2px 5px;border-radius: 0;">
+      Add skill
+    </button>
+    </div>
 
-<table class="table" id="skillsTable">
-  <thead class = "thead">
-    <tr>
+    <table class="table" id="skillsTable">
+    <thead class = "thead">
+    <tr style="border: 0px;">
       <th scope="col">Skill Name</th>
       <th scope="col">Skill Proficiency</th>
       <th scope="col">Status</th>
@@ -53,9 +56,9 @@
     {% endif %}
     {% for i in skills %}
     <tr>
-        <td>{{i.0}}</td>
-        <td>{{i.1}}</td>
-        <td class="statsCol">{{i.2}}</td>
+        <td style="padding-left:9px;">{{i.0}}</td>
+        <td style="padding-left:9px;">{{i.1}}</td>
+        <td style="padding-left:9px;" class="statsCol">{{i.2}}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -65,12 +68,22 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" id="closeModal1" data-bs-dismiss="modal" aria-label="Close">X</button>
+        <h4 class="modal-title" id="exampleModalLabel" style="color: #5680e9;font-size: 1.7em;font-weight: 505;text-shadow: 0px 1px 0px black;">Add Skills</h4>
+        <button class="close" id="closeModal1" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times</span>
+        </button>
       </div>
       <div class="modal-body" id ="modal-body">
-          <table>
-              <tbody class="newSkillsTable" id="newSkillsTable">
+          <table id="newSkillsTable">
+              <tbody class="newSkillsTable">
+
+              <thead class = "thead">
+                <tr>
+                  <th scope="col">Skill Name</th>
+                  <th colspan="2" scope="col">Skill Proficiency</th>
+                </tr>
+
+              </thead>
           {% for skill in newSkills %}
             <tr>
                 <td class="skillName">{{skill.name}}</td>
@@ -92,8 +105,8 @@
           </table>
       </div>
       <div class="modal-footer">
-        <button type="button" id="closeModal2" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="saveSkills" class="btn btn-primary">Save changes</button>
+        <button type="button" id="closeModal2" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="saveSkills" class="btn btn-primary rounded-0" style="background-color: #5680e9">Save changes</button>
       </div>
     </div>
   </div>
