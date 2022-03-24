@@ -33,6 +33,7 @@ urlpatterns = [
     path('skills/get_new_skills/', views.get_new_skills),
     path('skills/save_skills/', views.save_skills),
     path('search/', views.search_page, name='search'),
+    path('search/<str:query>/<str:filters>', views.search_utility),
     path('nav/', views.nav),
     path('getNotifications', views.get_skill_request),
 ]
