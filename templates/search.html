@@ -1,10 +1,96 @@
+{% extends 'nav.html' %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    {% load static %}
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/search.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+    {% endblock %}
+    {% block title %}<title>Search Utility</title>{% endblock %}
+    {% block search_page %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'search' %}">Search</a>
+        </li>
+    {% endblock %}
 </head>
+{% block content %}
 <body>
-$END$
+
+    <div id="page_title_container">
+        <div id="page_title_info">
+            <h2 class="page_title">Search Utility</h2>
+            <p class="page_summary">Allows user to search through all the public teams, projects, and employees within the company.</p>
+        </div>
+    </div>
+
+    <div id="search_parent">
+        <div id="search_container">
+            <div id="filter_container">
+                <span class="filter_button">Teams</span>
+                <span class="filter_button">Projects</span>
+                <span class="filter_button">Employees</span>
+            </div>
+            <input type="text" name="search_input" id="search_box">
+            <img class="search_icon" src="{% static 'images/components/search-grey.svg' %}">
+        </div>
+    </div>
+
+    <div id="entity_container">
+
+        <div class="card bg-light mb-3 team" style="max-width: 18rem;">
+            <div class="card-header search_card_name">The Dragon Slayers</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3 project" style="max-width: 18rem;">
+            <div class="card-header search_card_name">DashBoard Display</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3 user" style="max-width: 18rem;">
+            <div class="card-header search_card_name">Brian Simmons</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3 user" style="max-width: 18rem;">
+            <div class="card-header search_card_name">Jacoby Kirkland</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3 user" style="max-width: 18rem;">
+            <div class="card-header search_card_name">DevOps Team</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3 user" style="max-width: 18rem;">
+            <div class="card-header search_card_name">Django.py Coders</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+
+    </div>
+
 </body>
+{% endblock %}
 </html>
