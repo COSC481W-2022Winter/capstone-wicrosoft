@@ -16,6 +16,9 @@ from djangoresourcemanagement import HelperFunctions as helper
 
 
 # Create your views here.
+def search_page(request):
+    return render(request, 'search.html')
+
 def nav(request):
     return render(request, 'nav.html')
 
