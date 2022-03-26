@@ -37,7 +37,7 @@ def search_utility(request, query="", filters=""):
     if filters == "":
         teams = Teams.objects.filter(name__istartswith=query)
         projects = Projects.objects.filter(name__istartswith=query)
-        if ' ' in query:
+        if ' ' in query and len(query.split()) == 2:
             personsNames = query.split()
             users = list(
                 Users.objects.filter(first_name__istartswith=personsNames[0], last_name__istartswith=personsNames[1]))
@@ -59,13 +59,23 @@ def search_utility(request, query="", filters=""):
                 "team_count": Teams.objects.filter(team_projects=project).count()
             }]
         for user in users:
+            teamsForUser = {'teams': []}
+            scopeTeam = Teams.objects.filter(team_members=user)
+
+            for teamInter in scopeTeam:
+                teamsForUser['teams'] += [{
+                    "name": teamInter.name,
+                    "members": teamInter.squadmembers_set.count()
+                }]
+            print(user.id, user.position)
             finalResponse['users'] += [{
                 "id": user.id,
                 "name": user.first_name + " " + user.last_name,
-                "teams": SquadMembers.team.objects.filter(team_members=user),
+                "position": user.position,
+                "teams": teamsForUser['teams']
             }]
 
-    if 'teams' in filters:
+    if 'Teams' in filters:
         teams = Teams.objects.filter(name__istartswith=query)
         for team in teams:
             finalResponse['teams'] += [{
@@ -74,7 +84,7 @@ def search_utility(request, query="", filters=""):
                 "short_desc": team.short_description,
                 "member_count": team.squadmembers_set.count()
             }]
-    if 'projects' in filters:
+    if 'Projects' in filters:
         projects = Projects.objects.filter(name__istartswith=query)
         for project in projects:
             finalResponse['projects'] += [{
@@ -83,13 +93,28 @@ def search_utility(request, query="", filters=""):
                 "short_desc": project.short_description,
                 "team_count": Teams.objects.filter(team_projects=project).count()
             }]
-    if 'users' in filters:
-        users = Users.objects.filter(name__istartswith=query)
+    if 'Employees' in filters:
+        users = ""
+        if ' ' in query and len(query.split()) == 2:
+            personsNames = query.split()
+            users = Users.objects.filter(first_name__istartswith=personsNames[0], last_name__istartswith=personsNames[1])
+        else:
+            users = Users.objects.filter(first_name__istartswith=query)
         for user in users:
+            teamsForUser = {'teams': []}
+            scopeTeam = Teams.objects.filter(team_members=user)
+
+            for teamInter in scopeTeam:
+                teamsForUser['teams'] += [{
+                    "name": teamInter.name,
+                    "members": teamInter.squadmembers_set.count()
+                }]
+            print(user.id,user.position)
             finalResponse['users'] += [{
                 "id": user.id,
                 "name": user.first_name + " " + user.last_name,
-                "teams": SquadMembers.team.objects.filter(team_members=user),
+                "position": user.position,
+                "teams": teamsForUser['teams']
             }]
 
     return JsonResponse(finalResponse, safe=False)
