@@ -25,7 +25,11 @@ label[for=search_box]{
     cursor: pointer;
 }
 .filter_button:hover{
-    background-color: #5680e9;
+    background-color: rgb(86, 128, 233,0.2);
+    color: white;
+}
+.filter_active:hover{
+    background-color: rgb(86, 128, 233,0.5);
     color: white;
 }
 .filter_active{
@@ -96,4 +100,10 @@ label[for=search_box]{
 
 .user {
     color: black;
+}
+.user_team{
+    background-color: white;
+    border: 1px solid rgb(0,0,0,.2);
+    text-align: center;
+    margin: 2px;
 }
