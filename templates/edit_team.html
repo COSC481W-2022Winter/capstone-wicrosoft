@@ -53,21 +53,21 @@
                     <tr>
                         <td>
                             <label for="team_name" >Team Name:</label> <br>
-                            <input id="team_name" type="text" name="team_name">
+                            <input id="team_name" type="text" name="team_name" value="{{team.0.name}}">
                         </td>
                         <td>
                             <label for="team_leader">Team Leader:</label> <br>
-                            <input id="team_leader" type="text" name="team_leader">
+                            <input id="team_leader" type="text" name="team_leader" value="{{team.0.leader.first_name}} {{team.0.leader.last_name}}">
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label for="short_description">Short Description:</label> <br>
-                            <input id="short_description" type="text" name="short_description">
+                            <input id="short_description" type="text" name="short_description" value="{{team.0.short_description}}">
                         </td>
                         <td>
                             <label for="long_description">Long Description:</label> <br>
-                            <input id="long_description" type="text" name="long_description">
+                            <input id="long_description" type="text" name="long_description"  value="{{team.0.description}}">
                         </td>
                     </tr>
 
@@ -75,14 +75,21 @@
 
 
                 <label for="type">Type:</label>
-                <select name="type" id="type">
+                <select name="type" id="type"  value="{{team.0.type}}">
                     <option value="PUB">Public</option>
                     <option value="PRI">Private</option>
                 </select>
 
+
                 <div class="d-flex flex-md-column align-items-center">
                     <label for="projects">Projects:</label>
                     <input type="text" name="projects" id="projects">
+                    {% for project in team.0.team_projects.all %}
+                       <div class="border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1">
+                           <p class="single_project m-0">{{project.name}}</p>
+                           <input type="hidden" name="proj" value="{{project.id}}">
+                       </div>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -109,8 +116,17 @@
                         <input type="text" id="squadmember" name="squadmember">
                     </div>
                     <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
-
                 </div>
+
+                {% for member in team.0.team_members.all %}
+                      <div class="member_relation mt-3 d-flex flex-md-row justify-content-around w-50 border bg-light align-items-center p-2">
+                          <p class="role_association m-0"></p>
+                          <p class="name_association m-0">{{member.first_name}} {{member.last_name}}</p>
+                          <span class="making_delete rounded-circle bg-white border">X</span>
+                          <input type="hidden" name="personID" value="{{member.id}}">
+                          <input type="hidden" name="roles" value="NOCHOICE">
+                      </div>
+                    {% endfor %}
 
             </div>
 
