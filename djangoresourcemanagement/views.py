@@ -148,9 +148,24 @@ def team_maker(request):
 
 def get_edit_team(request,team_id):
 
-    team = Teams.objects.filter(id=team_id)
+    members_and_roles = {
+        'members' : [],
+        'role' : []
+    }
 
-    return render(request, 'edit_team.html', {'team' : team})
+    team = Teams.objects.get(id=team_id)
+
+    for member in team.team_members.all():
+        members_and_roles['members'] += [{
+            'member_id' : member.id,
+            'name' : member.first_name + " " + member.last_name,
+        }]
+        members_and_roles['role'] += [{
+            "role_id" : SquadMembers.objects.get(team=team,user=member).role.id,
+            "name" : SquadMembers.objects.get(team=team,user=member).role.name
+        }]
+
+    return render(request, 'edit_team.html', {'team' : team, 'members_and_roles' : members_and_roles})
 
 def get_skill_request(request):
     if request.user.is_authenticated and request.user.permission == "MNGR":
