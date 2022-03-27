@@ -146,7 +146,7 @@ def team_maker(request):
 
     return redirect("login")
 
-def get_edit_team(request,team):
+def get_edit_team(request,team_id):
     return render(request, 'edit_team.html')
 
 def get_skill_request(request):
