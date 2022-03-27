@@ -118,13 +118,13 @@
                     <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
                 </div>
 
-                {% for member in team.0.team_members.all %}
+                {% for member, role in members_and_roles.members %}
                       <div class="member_relation mt-3 d-flex flex-md-row justify-content-around w-50 border bg-light align-items-center p-2">
-                          <p class="role_association m-0"></p>
+                          <p class="role_association m-0">{{role.name}}</p>
                           <p class="name_association m-0">{{member.first_name}} {{member.last_name}}</p>
                           <span class="making_delete rounded-circle bg-white border">X</span>
                           <input type="hidden" name="personID" value="{{member.id}}">
-                          <input type="hidden" name="roles" value="NOCHOICE">
+                          <input type="hidden" name="roles" value="{{role.id}}">
                       </div>
                     {% endfor %}
 
