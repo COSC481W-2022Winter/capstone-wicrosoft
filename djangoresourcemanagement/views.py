@@ -147,7 +147,10 @@ def team_maker(request):
     return redirect("login")
 
 def get_edit_team(request,team_id):
-    return render(request, 'edit_team.html')
+
+    team = Teams.objects.filter(id=team_id)
+
+    return render(request, 'edit_team.html', {'team' : team})
 
 def get_skill_request(request):
     if request.user.is_authenticated and request.user.permission == "MNGR":
