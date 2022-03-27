@@ -150,7 +150,6 @@ def get_edit_team(request,team_id):
 
     members_and_roles = {
         'members' : [],
-        'role' : []
     }
 
     team = Teams.objects.get(id=team_id)
@@ -159,10 +158,8 @@ def get_edit_team(request,team_id):
         members_and_roles['members'] += [{
             'member_id' : member.id,
             'name' : member.first_name + " " + member.last_name,
-        }]
-        members_and_roles['role'] += [{
-            "role_id" : SquadMembers.objects.get(team=team,user=member).role.id,
-            "name" : SquadMembers.objects.get(team=team,user=member).role.name
+            'role_id' : SquadMembers.objects.get(team=team,user=member).role.id,
+            'role_name' : SquadMembers.objects.get(team=team,user=member).role.name
         }]
 
     return render(request, 'edit_team.html', {'team' : team, 'members_and_roles' : members_and_roles})
