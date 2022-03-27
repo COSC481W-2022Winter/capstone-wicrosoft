@@ -26,6 +26,7 @@ urlpatterns = [
     path('teammaker/', views.team_maker, name='teammaker'),
     path('teammaker/get_users/', views.get_users),
     path('teammaker/get_projects/', views.get_projects),
+    path('teammaker/edit/<int:team_id>', views.get_edit_team),
     path('project/', views.project, name='project'),
     path('importusers/', views.import_users, name='import'),
     path('skills/', views.skills, name='skills'),

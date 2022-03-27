@@ -146,6 +146,8 @@ def team_maker(request):
 
     return redirect("login")
 
+def get_edit_team(request,team):
+    return render(request, 'edit_team.html')
 
 def get_skill_request(request):
     if request.user.is_authenticated and request.user.permission == "MNGR":
