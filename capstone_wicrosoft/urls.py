@@ -34,4 +34,5 @@ urlpatterns = [
     path('skills/save_skills/', views.save_skills),
     path('nav/', views.nav),
     path('getNotifications', views.get_skill_request),
+    path('projectDisplay/<int:id>/', views.display_project, name='displayProject'),
 ]

@@ -476,6 +476,21 @@ def import_users(request):
     else:
         return render(request, 'importusers.html', {'values': []})
 
+def display_project(request, id):
+    if request.user.is_authenticated:
+        displayed_project = Projects.objects.get(id = id)
+
+        projectsTeams = []
+        information = {
+            "id": displayed_project.id,
+            "short_description": displayed_project.short_description,
+            "description": displayed_project.description,
+        }
+
+        return render(request, 'project_display.html', {"info": information, "usersTeams": projectsTeams})
+
+    return redirect('login')
+
 # Username 0
 # Password 1
 # Email 2
