@@ -1,17 +1,20 @@
+{% extends 'nav.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+{% block content %}
+    <body>
 
-<p>Name:{{team_information.name}}</p>
-<p>Description:{{team_information.short_description}}</p>
+    <p>Name:{{team_information.name}}</p>
+    <p>Description:{{team_information.short_description}}</p>
 
-<p>Team Members:</p>
-{% for member in teamMembers %}
-    <p>{{member.first_name}} {{member.last_name}}</p>
-{% endfor %}
-</body>
+    <p>Team Members:</p>
+    {% for member in teamMembers %}
+      <p>{{member.first_name}} {{member.last_name}}</p>
+    {% endfor %}
+    </body>
+{% endblock %}
 </html>
