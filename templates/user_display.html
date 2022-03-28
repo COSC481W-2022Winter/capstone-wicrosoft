@@ -1,0 +1,30 @@
+{% extends 'nav.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+{% block content %}
+<body>
+<p>Name: {{profile_info.name}}</p>
+<p>ID: {{profile_info.id}}</p>
+<p>position: {{profile_info.position}}</p>
+<p>Address: {{profile_info.address}}</p>
+<p>Teams:</p>
+{% for team in usersTeams %}
+<li>{{ team.name }}</li>
+{% endfor %}
+
+
+<p>Projects:</p>
+{% for project in usersprojects %}
+    <p>{{ project.name }}<p>
+{% endfor %}
+
+</body>
+{% endblock %}
+</html>

@@ -476,6 +476,33 @@ def import_users(request):
     else:
         return render(request, 'importusers.html', {'values': []})
 
+def display_user(request, id):
+    if request.user.is_authenticated:
+        displayeduser = Users.objects.get(id = id)
+        usersSquads = SquadMembers.objects.filter(user_id = id)
+
+        allTeams = Teams.objects.all()
+        usersTeams = []
+        usersProjects = []
+
+        for team in allTeams:
+            for u in usersSquads:
+                if team.id == u.team_id:
+                    if not usersTeams.__contains__(team):
+                        usersTeams.append(team)
+
+        information = {
+            "name": displayeduser.first_name + " " + displayeduser.last_name,
+            "email": displayeduser.email,
+            "position": displayeduser.position,
+            "address": displayeduser.address,
+            "id": displayeduser.id
+        }
+
+    return render(request, 'User_display.html', {"profile_info": information, "usersTeams": usersTeams, "usersProjects":
+        usersProjects})
+
+    return redirect('login')
 # Username 0
 # Password 1
 # Email 2
