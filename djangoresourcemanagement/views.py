@@ -258,7 +258,6 @@ def get_skill_request(request):
 
             if temp > 0:
                 jsonResponseData["suggestions"] += [dictionary]
-            print(dictionary)
 
         return JsonResponse(jsonResponseData, safe=False)
 
