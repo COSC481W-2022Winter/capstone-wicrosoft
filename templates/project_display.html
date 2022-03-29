@@ -12,6 +12,12 @@
 <p>Short Description: {{info.short_description}}</p>
 <p>Description: {{info.description}}</p>
 
+
+{% for team in projectTeams %}
+ <li>{{team.name}}</li>
+{% endfor %}
+
+
 </body>
 {% endblock %}
 </html>

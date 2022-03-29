@@ -481,13 +481,20 @@ def display_project(request, id):
         displayed_project = Projects.objects.get(id = id)
 
         projectsTeams = []
+
+        for team in Teams.objects.all():
+            for proj in team.team_projects.all():
+                if proj.id == id:
+                    if not projectsTeams.__contains__(team):
+                        projectsTeams.append(team)
+
         information = {
             "id": displayed_project.id,
             "short_description": displayed_project.short_description,
             "description": displayed_project.description,
         }
 
-        return render(request, 'project_display.html', {"info": information, "usersTeams": projectsTeams})
+        return render(request, 'project_display.html', {"info": information, "projectTeams": projectsTeams})
 
     return redirect('login')
 
