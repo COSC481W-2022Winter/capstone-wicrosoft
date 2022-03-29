@@ -476,6 +476,8 @@ def display_team(request, id):
         squadMembers = SquadMembers.objects.filter(team_id=displayedTeam.id)
         teamMembers = []
         doesContain = False
+        teamProjects = []
+
 
         for x in squadMembers:
             if x.user_id == request.user.id:
@@ -483,6 +485,9 @@ def display_team(request, id):
             temp = Users.objects.get(id = x.user_id)
             if not teamMembers.__contains__(temp):
                 teamMembers.append(temp)
+
+        for p in displayedTeam.team_projects.all():
+            teamProjects.append(p)
 
         if request.user.permission == 'MNGR' or displayedTeam.type == 'PUB' or doesContain:
 
@@ -494,7 +499,7 @@ def display_team(request, id):
             # Name of Team
             # Short Description
             return render(request, 'display_team.html',
-                          {"team_information": information, "teamMembers": teamMembers})
+                          {"team_information": information, "teamMembers": teamMembers, "teamProjects": teamProjects})
 
         else:
             return redirect('profile')

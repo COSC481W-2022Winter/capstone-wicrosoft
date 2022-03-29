@@ -13,7 +13,13 @@
 
     <p>Team Members:</p>
     {% for member in teamMembers %}
-      <p>{{member.first_name}} {{member.last_name}}</p>
+      <li>{{member.first_name}} {{member.last_name}}</li>
+    {% endfor %}
+
+
+    <p>Team Projects:</p>
+     {% for project in teamProjects %}
+      <li>{{project.name}}</li>
     {% endfor %}
     </body>
 {% endblock %}
