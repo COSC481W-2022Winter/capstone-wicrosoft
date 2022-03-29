@@ -1,12 +1,23 @@
 $(document).ready(function(){
-    const teamLeader = $("#team_leader");
-    const squadMember = $("#squadmember");
-    let role = $("#role");
 
-    squadMember[0].value = "";
-    role[0].selectedIndex = 0;
-    document.getElementById("projects").value = "";
+    /* AUTOCOMPLETE SECTION */
+    const teamLeader = $("#team_leader"); // team leader input textbox
+    const squadMember = $("#squadmember"); // squad member input textbox
+    let role = $("#role"); // role selectbox
 
+    squadMember[0].value = ""; // set default textvalue to empty string
+    role[0].selectedIndex = 0; // make selected index default to 0 for first entry
+    document.getElementById("projects").value = ""; // set default textbox input to empty string for projects textbox
+
+    /* This ties the jquery plugin for the autocomplete
+    * to the teamLeader textbox, so when a user types in it
+    * the values are showed on the textbox.
+    *
+    * When a user selects one of the entries from the dropdown/autocomplete
+    * that entries' id is stored as a hidden input variable that will be passed
+    * to the backend view upon submission of the form. So for this one the team leader
+    * id will be hidden in the html with the name: team_lead
+    */
     teamLeader.devbridgeAutocomplete({
     serviceUrl: '/teammaker/get_users/',
     showNoSuggestionNotice: true,
@@ -24,7 +35,6 @@ $(document).ready(function(){
         }
     }
     });
-
     squadMember.devbridgeAutocomplete({
     serviceUrl: '/teammaker/get_users/',
     showNoSuggestionNotice: true,
@@ -41,7 +51,10 @@ $(document).ready(function(){
         }
     }
     });
-
+    /* This event is similar to the ones above but it also calls another function
+    * that adds the dom elements to the html page to show the project. Also resets the text
+    * input back to empty string allowing the user to type in another project if desired.
+    */
     $('#projects').devbridgeAutocomplete({
     serviceUrl: '/teammaker/get_projects/',
     showNoSuggestionNotice: true,
@@ -62,20 +75,20 @@ $(document).ready(function(){
     }
     });
 
-    function addProject(currentElement, pElement, inputh){
-        const main_container = currentElement.parentElement;
-        const project_container = $('<div>').attr({
-            "class" : "border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1"
-        });
+    /*  EVENT SECTION */
 
-        project_container[0].append(pElement[0]);
-        project_container[0].append(inputh[0]);
-        main_container.appendChild(project_container[0]);
-
-    }
-
+    //Event when a user clicks the add button for adding members and roles.
     $('#add_role_assignment').on( "click", addRoleRelation);
 
+    /*
+        Event when a member clicks the x button on a member to delete
+        The method first checks if the member has the class .delete on their
+        container, and if so then we remove that class meaning that a person
+        does not want to delete that member.
+        Else that means if the .delete is not on the member and a user clicks
+        the delete x button then we add .delete which makes the member opaque
+        and add a hidden id that takes the id of that current member to delete.
+     */
     $(".current_member_delete").on("click", function() {
         if ($(this.parentElement).hasClass("delete")){
             this.parentElement.children[5].remove();
@@ -91,6 +104,9 @@ $(document).ready(function(){
         }
     });
 
+    /*
+        Works similar to the above method, except it used for the projects.
+     */
     $(".delete_project").on("click", function() {
         if ($(this.parentElement).hasClass("delete")){
             this.parentElement.children[3].remove();
@@ -106,6 +122,28 @@ $(document).ready(function(){
         }
     });
 
+    /* FUNCTIONS SECTION */
+
+    /*
+        Method takes the project element, created <p> element, hidden <input>
+        Creates the grey container that holds the project, and appends it to the
+        project element container within the DOM.
+     */
+    function addProject(currentElement, pElement, inputh){
+        const main_container = currentElement.parentElement;
+        const project_container = $('<div>').attr({
+            "class" : "border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1"
+        });
+
+        project_container[0].append(pElement[0]);
+        project_container[0].append(inputh[0]);
+        main_container.appendChild(project_container[0]);
+    }
+
+    /*
+        Used to create the grey container that has the role and the member when a
+        user clicks the add button.
+     */
     function addRoleRelation(){
         const containerParent = this.parentElement.parentElement;
         const role_holder = this.parentElement.children[0].children[1];
