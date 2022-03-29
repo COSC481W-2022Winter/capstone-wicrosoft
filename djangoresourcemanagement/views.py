@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
+from datetime import datetime
 import pyexcel as p
 import pyexcel_xls
 import pyexcel_xlsx
@@ -146,6 +147,40 @@ def team_maker(request):
 
     return redirect("login")
 
+def project_maker(request):
+    if request.user.is_authenticated:
+        if Users.objects.get(id=request.user.id).permission != 'MNGR':
+            return redirect('profile')
+        else:
+            if request.method == 'POST':
+                print(request.POST)
+                project_name    = request.POST['project_name']
+                project_owner   = request.POST['project_owner']
+                shrt_desc       = request.POST["short_description"]
+                long_desc       = request.POST["long_description"]
+                project_type    = request.POST["type"],
+                projected_end   = request.POST["projected_end_date"],
+                project_start   = request.POST["start_date"]
+
+                if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
+                        return render(request, 'project_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
+
+                createdProject = Projects(
+                    name=project_name,
+                    project_owner=Users.objects.get(id=project_owner),
+                    short_description=shrt_desc,
+                    description=long_desc,
+                    type=project_type,
+                    start_date=project_start,
+                    projected_end_date=projected_end
+                )
+                createdProject.save()
+
+                return render(request, 'project_maker.html', {'success': "Project " + createdProject.name + " Created"})
+
+            return render(request, 'project_maker.html')
+
+    return redirect("login")
 
 def get_skill_request(request):
     if request.user.is_authenticated and request.user.permission == "MNGR":

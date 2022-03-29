@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="{% static 'css/utilities/autocomplete.css' %}">
         <link rel="stylesheet" href="{% static 'css/teamForm.css' %}">
         <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
-        <script src="{% static 'js/teammaker/teammaker_autocomplete.js' %}"></script>
+        <script src="{% static 'js/projectmaker/projectmaker.js' %}"></script>
     {% endblock %}
-    {% block title %}<title>Team Maker</title>{% endblock %}
+    {% block title %}<title>Project Maker</title>{% endblock %}
     {% block builders_pages %}
         <li class="nav-item active dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,21 +43,21 @@
         {% endif %}
 
 
-        <form id="team_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
+        <form id="project_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
             {% csrf_token %}
 
             <div class="border d-flex flex-md-column align-items-center w-100 pb-2">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Information</h2>
+                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Project Information</h2>
 
                 <table>
                     <tr>
                         <td>
-                            <label for="team_name" >Team Name:</label> <br>
-                            <input id="team_name" type="text" name="team_name">
+                            <label for="project_name" >Project Name:</label> <br>
+                            <input id="project_name" type="text" name="project_name" required>
                         </td>
                         <td>
-                            <label for="team_leader">Team Leader:</label> <br>
-                            <input id="team_leader" type="text" name="team_leader">
+                            <label for="project_owner">Project Owner:</label> <br>
+                            <input id="project_owner" type="text" name="project_owner" required>
                         </td>
                     </tr>
                     <tr>
@@ -81,41 +81,15 @@
                 </select>
 
                 <div class="d-flex flex-md-column align-items-center">
-                    <label for="projects">Projects:</label>
-                    <input type="text" name="projects" id="projects">
+                    <label for="start_date">Start Date</label><br>
+                    <input type="date" name="start_date" id="start_date0">
+                    <label for="projected_end_date">Projected End Date</label><br>
+                    <input type="date" name="projected_end_date" id="projected_end_date">
                 </div>
-            </div>
-
-            <div class="border d-flex flex-md-column align-items-center w-100 mt-2 pb-4">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Assigner</h2>
-
-                <div class="d-flex flex-md-row w-100 justify-content-center align-items-center">
-
-                    <div class="d-flex flex-md-column mr-5">
-                        <label for="role">Role</label>
-                        <select name="role" id="role">
-                            <option value="NOCHOICE" selected>Choose Role</option>
-                            <option value="FRO">Front-End Developer</option>
-                            <option value="UX">User Experience Specialist</option>
-                            <option value="SYSENG">System Engineer</option>
-                            <option value="DBADMIN">Database Administrator</option>
-                            <option value="BAD">Backend Developer</option>
-                            <option value="SCRUM">SCRUM Master</option>
-                        </select>
-                    </div>
-
-                    <div class="d-flex flex-md-column mr-1">
-                        <label for="squadmember">Squad Member</label>
-                        <input type="text" id="squadmember" name="squadmember">
-                    </div>
-                    <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
-
-                </div>
-
             </div>
 
             <div id="submit_group" class="mt-3 w-75 d-flex flex-md-row justify-content-center">
-                <input type="submit" value="Create Team" class="btn btn-primary w-50 mr-2">
+                <input type="submit" value="Create Project" class="btn btn-primary w-50 mr-2">
                 <span id="cancel_create" class="btn btn-outline-secondary w-50 ml-2">Cancel</span>
             </div>
         </form>
