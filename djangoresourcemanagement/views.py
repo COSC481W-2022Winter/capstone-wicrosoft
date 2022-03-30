@@ -529,7 +529,30 @@ def import_users(request):
         return render(request, 'importusers.html', {'values': []})
 
 
-<<<<<<< HEAD
+def display_project(request, id):
+    if request.user.is_authenticated:
+        displayed_project = Projects.objects.get(id = id)
+        owner = Users.objects.get(id=displayed_project.project_owner_id)
+        projectsTeams = []
+
+        for team in Teams.objects.all():
+            for proj in team.team_projects.all():
+                if proj.id == id:
+                    if not projectsTeams.__contains__(team):
+                        projectsTeams.append(team)
+
+        information = {
+            "owner": owner.first_name + " " + owner.last_name,
+            "owner_id": owner.id,
+            "id": displayed_project.id,
+            "short_description": displayed_project.short_description,
+            "description": displayed_project.description,
+        }
+
+        return render(request, 'project_display.html', {"info": information, "projectTeams": projectsTeams})
+
+
+
 def display_team(request, id):
     if request.user.is_authenticated:
         displayedTeam = Teams.objects.get(id=id)
@@ -563,7 +586,7 @@ def display_team(request, id):
 
         else:
             return redirect('profile')
-=======
+
 def display_user(request, id):
     if request.user.is_authenticated:
         displayeduser = Users.objects.get(id=id)
@@ -605,7 +628,7 @@ def display_user(request, id):
        
         return render(request, 'user_display.html', {"profile_info": information, "usersTeams": usersTeams, "usersProjects":
         usersProjects, "usersSkills": userSkills})
->>>>>>> main
+
 
     return redirect('login')
 
