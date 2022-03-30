@@ -1,0 +1,58 @@
+{% extends 'nav.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/user_display.css' %}">
+        <script src="{% static 'js/teams/teamview.js' %}"></script>
+    {% endblock %}
+</head>
+
+{% block content %}
+<body>
+   <div class = "surroundTitle">
+       <div class="information">
+            <p>Name: {{profile_info.name}}</p>
+            <p>ID: {{profile_info.id}}</p>
+            <p>Position: {{profile_info.position}}</p>
+            <p>Email: {{profile_info.email}}</p>
+        </div>
+    </div>
+
+
+<body>
+   <div class = "surroundLists">
+       <div class="projectinformation">
+        <p>Projects:</p>
+
+            {% for project in usersProjects.project %}
+                <li>{{ project.name }}</li>
+            {% endfor %}
+        </div>
+        <div class="teaminformation">
+        <p>Teams:</p>
+            {% for team in usersTeams %}
+                <li>{{ team.name }}</li>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class = "surroundLists">
+       <div class="information">
+        <p>Skills:</p>
+
+            {% for skill in usersSkills %}
+                <li>{{ skill.name }}</li>
+            {% endfor %}
+        </div>
+
+
+</body>
+{% endblock %}
+</html>
