@@ -155,12 +155,16 @@ def project_maker(request):
             if request.method == 'POST':
                 print(request.POST)
                 project_name    = request.POST['project_name']
-                project_owner   = request.POST['project_owner']
+                project_owner   = request.POST['project_lead']
                 shrt_desc       = request.POST["short_description"]
                 long_desc       = request.POST["long_description"]
-                project_type    = request.POST["type"],
-                projected_end   = request.POST["projected_end_date"],
+                project_type    = request.POST["type"]
+                projected_end   = request.POST["projected_end_date"]
                 project_start   = request.POST["start_date"]
+                teams_attached_list = request.POST.getlist("team_to_attach_id")
+
+                print(project_start)
+                print(projected_end)
 
                 if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
                         return render(request, 'project_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
@@ -175,6 +179,10 @@ def project_maker(request):
                     projected_end_date=projected_end
                 )
                 createdProject.save()
+
+                for team in teams_attached_list:
+                    currentTeam = Teams.objects.get(id=team)
+                    currentTeam.team_projects.add(createdProject)
 
                 return render(request, 'project_maker.html', {'success': "Project " + createdProject.name + " Created"})
 
@@ -255,6 +263,22 @@ def get_users(request):
         dictionary = {
             "value": person.first_name + " " + person.last_name,
             "data": person.id
+        }
+        jsonResponseData["suggestions"] += [dictionary]
+
+    return JsonResponse(jsonResponseData, safe=False)
+
+def get_teams_autocomplete(request):
+    teamToSearch = request.GET['query']
+    teamsOfInterest = []
+
+    teamsOfInterest = list(Teams.objects.filter(name__istartswith=teamToSearch))
+
+    jsonResponseData = {"suggestions": []}
+    for team in teamsOfInterest:
+        dictionary = {
+            "value": team.name,
+            "data": team.id
         }
         jsonResponseData["suggestions"] += [dictionary]
 
