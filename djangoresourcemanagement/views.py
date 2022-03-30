@@ -477,9 +477,15 @@ def display_user(request, id):
 
         projID = []
         usersTeams = []
+        userSkills = []
         usersProjects = {
             "project": []
         }
+
+        for skill in UserToSkill.objects.all():
+            if skill.user_id == id and skill.skill_status == "APP":
+                userSkills.append(TechSkill.objects.get(id=skill.skill_id))
+
 
         for team in Teams.objects.all():
             for u in usersSquads:
@@ -502,8 +508,9 @@ def display_user(request, id):
             "id": displayeduser.id
         }
 
+       
         return render(request, 'user_display.html', {"profile_info": information, "usersTeams": usersTeams, "usersProjects":
-        usersProjects})
+        usersProjects, "usersSkills": userSkills})
 
     return redirect('login')
 

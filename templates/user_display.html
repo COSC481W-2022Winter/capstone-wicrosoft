@@ -43,6 +43,15 @@
         </div>
     </div>
 
+    <div class = "surroundLists">
+       <div class="information">
+        <p>Skills:</p>
+
+            {% for skill in usersSkills %}
+                <li>{{ skill.name }}</li>
+            {% endfor %}
+        </div>
+
 
 </body>
 {% endblock %}
