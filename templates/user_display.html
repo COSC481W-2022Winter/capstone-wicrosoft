@@ -16,31 +16,26 @@
 
 {% block content %}
 <body>
-   <div class = "surroundBody">
+   <div class = "surroundTitle">
        <div class="information">
-        <p>Name: {{profile_info.name}}</p>
-        <p>ID: {{profile_info.id}}</p>
-        <p>Position: {{profile_info.position}}</p>
-        <p>Address: {{profile_info.address}}</p>
+            <p>Name: {{profile_info.name}}</p>
+            <p>ID: {{profile_info.id}}</p>
+            <p>Position: {{profile_info.position}}</p>
+            <p>Email: {{profile_info.email}}</p>
         </div>
     </div>
 
 
 <body>
-   <div class = "surroundBody">
-       <div class="information">
+   <div class = "surroundLists">
+       <div class="projectinformation">
         <p>Projects:</p>
 
             {% for project in usersProjects.project %}
                 <li>{{ project.name }}</li>
             {% endfor %}
         </div>
-    </div>
-
-
-<body>
-   <div class = "surroundBody">
-       <div class="information">
+        <div class="teaminformation">
         <p>Teams:</p>
             {% for team in usersTeams %}
                 <li>{{ team.name }}</li>
