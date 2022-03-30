@@ -61,6 +61,10 @@ def profile_page(request):
         return redirect('login')
 
 
+def get_project_team(request,project_id):
+    project = Projects.objects.filter(id=project_id)
+    return render(request, 'edit_project.html', {'project': project})
+
 def logout_user(request):
     if request.user.is_authenticated:
         logout(request)

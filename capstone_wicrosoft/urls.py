@@ -28,6 +28,7 @@ urlpatterns = [
     path('teammaker/get_projects/', views.get_projects),
     path('projectmaker/', views.project_maker, name='projectmaker'),
     path('projectmaker/get_users/', views.get_users),
+    path('projectmaker/edit/<int:project_id>', views.get_project_team),
     path('projectmaker/get_teams/', views.get_teams_autocomplete),
     path('importusers/', views.import_users, name='import'),
     path('skills/', views.skills, name='skills'),
