@@ -1,0 +1,26 @@
+{% extends 'nav.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% block content %}
+    <body>
+
+    <p>Name:{{team_information.name}}</p>
+    <p>Description:{{team_information.short_description}}</p>
+
+    <p>Team Members:</p>
+    {% for member in teamMembers %}
+      <li>{{member.first_name}} {{member.last_name}}</li>
+    {% endfor %}
+
+
+    <p>Team Projects:</p>
+     {% for project in teamProjects %}
+      <li>{{project.name}}</li>
+    {% endfor %}
+    </body>
+{% endblock %}
+</html>
