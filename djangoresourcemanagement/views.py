@@ -479,7 +479,7 @@ def import_users(request):
 def display_project(request, id):
     if request.user.is_authenticated:
         displayed_project = Projects.objects.get(id = id)
-
+        owner = Users.objects.get(id=displayed_project.project_owner_id)
         projectsTeams = []
 
         for team in Teams.objects.all():
@@ -489,6 +489,8 @@ def display_project(request, id):
                         projectsTeams.append(team)
 
         information = {
+            "owner": owner.first_name + " " + owner.last_name,
+            "owner_id": owner.id,
             "id": displayed_project.id,
             "short_description": displayed_project.short_description,
             "description": displayed_project.description,
