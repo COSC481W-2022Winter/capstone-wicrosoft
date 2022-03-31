@@ -1,5 +1,7 @@
 {% extends 'nav.html' %}
 
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,7 @@
 
 
 {% for team in projectTeams %}
- <li>{{team.name}}</li>
+ <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
 {% endfor %}
 
 
