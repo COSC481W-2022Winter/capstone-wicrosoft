@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{% static 'css/teamForm.css' %}">
         <link rel="stylesheet" href="{% static 'css/utilities/validator.css' %}">
         <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
-        <script src="{% static 'js/projectmaker/projectmaker.js' %}"></script>
+        <script src="{% static 'js/projectmaker/edit_projectmaker.js' %}"></script>
         <script src="{% static 'js/projectmaker/main_form_validator.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Project Maker</title>{% endblock %}
@@ -84,9 +84,9 @@
 
                 <div class="d-flex flex-md-column align-items-center">
                     <label for="start_date">Start Date</label><br>
-                    <input type="date" name="start_date" id="start_date0" value="{{project.0.start_date}}" class="date" min="{% now "Y-m-d" %}">
+                    <input type="date" name="start_date" id="start_date0" value="{{project.0.start_date|date:"Y-m-d" }}" class="date">
                     <label for="projected_end_date">Projected End Date</label><br>
-                    <input type="date" name="projected_end_date" value="{{project.0.projected_end_date}}" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
+                    <input type="date" name="projected_end_date" value="{{project.0.projected_end_date|date:"Y-m-d"}}" id="projected_end_date" class="date">
                 </div>
             </div>
 
