@@ -32,13 +32,13 @@
         <p>Projects:</p>
 
             {% for project in usersProjects.project %}
-                <li>{{ project.name }}</li>
+                <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
             {% endfor %}
         </div>
         <div class="teaminformation">
         <p>Teams:</p>
             {% for team in usersTeams %}
-                <li>{{ team.name }}</li>
+                <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
             {% endfor %}
         </div>
     </div>
