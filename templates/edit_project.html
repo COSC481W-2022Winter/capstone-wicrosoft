@@ -55,21 +55,21 @@
                     <tr>
                         <td>
                             <label for="project_name" >Project Name:</label> <br>
-                            <input id="project_name" type="text" name="project_name" class="text_input" required>
+                            <input id="project_name" type="text" name="project_name" value="{{project.0.name}}" class="text_input" required>
                         </td>
                         <td>
                             <label for="project_owner">Project Owner:</label> <br>
-                            <input id="project_owner" type="text" name="project_owner" class="text_input" required>
+                            <input id="project_owner" type="text" name="project_owner" value="{{project.0.project_owner.first_name}} {{project.0.project_owner.last_name}}" class="text_input" required>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label for="short_description">Short Description:</label> <br>
-                            <input id="short_description" type="text" name="short_description" class="text_input">
+                            <input id="short_description" type="text" name="short_description" class="text_input" value="{{project.0.short_description}}">
                         </td>
                         <td>
                             <label for="long_description">Long Description:</label> <br>
-                            <input id="long_description" type="text" name="long_description" class="text_input">
+                            <input id="long_description" type="text" name="long_description"  value="{{project.0.description}}" class="text_input">
                         </td>
                     </tr>
 
@@ -77,16 +77,16 @@
 
 
                 <label for="type">Type:</label>
-                <select name="type" id="type">
+                <select name="type" value="{{project.0.type}}" id="type">
                     <option value="PUB">Public</option>
                     <option value="PRI">Private</option>
                 </select>
 
                 <div class="d-flex flex-md-column align-items-center">
                     <label for="start_date">Start Date</label><br>
-                    <input type="date" name="start_date" id="start_date0" class="date" min="{% now "Y-m-d" %}">
+                    <input type="date" name="start_date" id="start_date0" value="{{project.0.start_date}}" class="date" min="{% now "Y-m-d" %}">
                     <label for="projected_end_date">Projected End Date</label><br>
-                    <input type="date" name="projected_end_date" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
+                    <input type="date" name="projected_end_date" value="{{project.0.projected_end_date}}" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
                 </div>
             </div>
 
