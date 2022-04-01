@@ -1,0 +1,32 @@
+html {
+
+}
+.surroundTitle {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    padding-top: 100px;
+    justify-content: center;
+    text-align: center;
+}
+
+.surroundLists {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    padding: 100px;
+
+}
+
+.teaminformation {
+    border: 0px solid blue;
+    padding-right: 200px;
+    text-align: center;
+    justify-content: right;
+}
+.projectinformation {
+    border: 0px solid blue;
+    padding-left: 200px;
+    text-align: center;
+    justify-content: left;
+}
