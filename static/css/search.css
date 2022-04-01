@@ -106,4 +106,18 @@ label[for=search_box]{
     border: 1px solid rgb(0,0,0,.2);
     text-align: center;
     margin: 2px;
+    color: black;
+    text-decoration: none;
+}
+.user_team:hover{
+    color: white;
+    background-color: #5680e9;
+    text-decoration: none;
+}
+.title_link{
+    color: white;
+    text-decoration: none;
+}
+.title_link:hover{
+    color: white;
 }
