@@ -76,8 +76,13 @@ $(document).ready(function(){
             let bodyCont = $("<div>").attr("class","card-body");
             let title = $("<h5>").attr("class","card-title");
             let desc = $("<p>").attr("class","card-text");
+            let a_link = $("<a>").attr({
+                "class" : "title_link",
+                "href" : "/teamDisplay/" + team.id
+            });
 
-            inCont[0].innerText = team.name;
+            a_link[0].innerText = team.name;
+            inCont[0].appendChild(a_link[0]);
             title[0].innerText = "Members: " + team.member_count;
             desc[0].innerText = team.short_desc;
 
@@ -99,8 +104,13 @@ $(document).ready(function(){
             let bodyCont = $("<div>").attr("class","card-body");
             let title = $("<h5>").attr("class","card-title");
             let desc = $("<p>").attr("class","card-text");
+            let a_link = $("<a>").attr({
+                "class" : "title_link",
+                "href" : "/projectDisplay/" + project.id
+            });
 
-            inCont[0].innerText = project.name;
+            a_link[0].innerText = project.name;
+            inCont[0].appendChild(a_link[0]);
             title[0].innerText = "Teams Attached: " + project.team_count;
             desc[0].innerText = project.short_desc;
 
@@ -126,8 +136,13 @@ $(document).ready(function(){
             let title = $("<h5>").attr("class","card-title");
             let teamCont = $("<div>").attr("class","d-flex flex-md-column",);
             let desc = $("<h6>").attr("style","margin-bottom:3px;font-weight:500;font-size:1.05em;");
+            let a_link = $("<a>").attr({
+                "class" : "title_link",
+                "href" : "/userDisplay/" + person.id
+            });
 
-            inCont[0].innerText = person.name;
+            a_link[0].innerText = person.name;
+            inCont[0].appendChild(a_link[0]);
             title[0].innerText = person.position;
             desc[0].innerText = "Teams:";
 
@@ -135,7 +150,10 @@ $(document).ready(function(){
 
             for (let i = 0; i < person.teams.length; i++){
                 if (i === 2) break;
-                let teamElement = $('<p>').attr('class','user_team');
+                let teamElement = $('<a>').attr({
+                    'class' :'user_team',
+                    'href' : '/teamDisplay/' + person.teams[i].id
+                });
                 teamElement[0].innerText = person.teams[i].name;
                 teamCont[0].appendChild(teamElement[0]);
             }
