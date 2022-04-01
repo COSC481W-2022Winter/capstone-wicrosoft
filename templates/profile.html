@@ -41,7 +41,9 @@
                     {% for team in usersTeams %}
                         <div class="holder">
                             <button class="btn btn-primary teams mb-2" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
-                            <a href="/teammaker/edit/{{ team.id }}" class="team_edit_link">edit</a>
+                            {% if user.permission == 'MNGR' %}
+                                <a href="/teammaker/edit/{{ team.id }}" class="team_edit_link">edit</a>
+                            {% endif %}
                             <div class="collapse multi-collapse" id="{{ team.id }}">
                                 <div class="card card-body">
                                     {% if team.leader != null %}
