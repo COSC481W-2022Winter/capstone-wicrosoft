@@ -384,6 +384,55 @@ def skills(request):
     return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList})
 
 
+def skill_acceptance(request):
+
+    if not request.user.is_authenticated or not request.user.permission == "MNGR":
+        raise PermissionDenied
+    user = request.user
+    successMessage = ""
+    if request.POST:
+        print(request.POST)
+
+        for key in request.POST.items():
+            if not key[0] == 'csrfmiddlewaretoken' :
+                #this looks weird but otherwise Django returns a single item even though it's a list
+                #print(key)
+                #print(request.POST.getlist(key[0]))
+                list = request.POST.getlist(key[0])
+                if list:
+                    if  list[0] == 'APP' or  list[0] == 'REJ':
+                        if len(list) == 2:
+                            skillToUpdate = UserToSkill.objects.get(id=key[0])
+                            skillToUpdate.skill_status = list[0]
+                            #print(list[1])
+                            skillToUpdate.skill_status_reason = list[1]
+                            skillToUpdate.save()
+                        else:
+                            skillToUpdate = UserToSkill.objects.get(id=key[0])
+                            skillToUpdate.skill_status = list[0]
+                            skillToUpdate.save()
+                    successMessage = "Skills have been updated for users and saved"
+
+
+
+
+    employees = []
+    for u in Users.objects.all():
+        if u.supervisor_id == user.id:
+            employees.append(u)
+
+    listOfPendingSkills = []
+    for employee in employees:
+        for skill in UserToSkill.objects.all():
+            if skill.skill_status == "PEN" and skill.user_id == employee.id:
+                listOfPendingSkills.append(skill)
+
+    if successMessage is "":
+        return render(request, 'skill_acceptance.html', {'pendingSkills' : listOfPendingSkills})
+    else:
+        return render(request, 'skill_acceptance.html', {'pendingSkills': listOfPendingSkills, 'successMessage': successMessage})
+
+
 def import_users(request):
     # print(request.method)
     # print(request.FILES.keys())
