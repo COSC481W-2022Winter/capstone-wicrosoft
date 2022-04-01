@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
+from datetime import datetime
 import pyexcel as p
 import pyexcel_xls
 import pyexcel_xlsx
@@ -122,6 +123,7 @@ def search_utility(request, query="", filters=""):
 def nav(request):
     return render(request, 'nav.html')
 
+
 def login_page(request):
     if request.user.is_authenticated:
         return redirect('profile')
@@ -145,7 +147,6 @@ def login_page(request):
 def profile_page(request):
     user = request.user
 
-
     if user.is_authenticated:
         profile_info = {"first_name": user.first_name,
                         "last_name": user.last_name,
@@ -153,9 +154,6 @@ def profile_page(request):
                         "permission": user.permission}
 
         usersTeams = get_teams(request)
-
-
-
 
         return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams})
 
@@ -168,8 +166,10 @@ def logout_user(request):
         logout(request)
         return redirect('login')
 
+
 def team(request):
     return render(request, 'team.html')
+
 
 def get_teams(request):
     userInTeam = request.user
@@ -193,7 +193,8 @@ def get_teams(request):
         jsonResponseData['response'] += dictionary
 
     return usersTeams
-        ##JsonResponse(jsonResponseData, safe=False)
+    ##JsonResponse(jsonResponseData, safe=False)
+
 
 def team_maker(request):
     if request.user.is_authenticated:
@@ -249,6 +250,48 @@ def team_maker(request):
 
     return redirect("login")
 
+def project_maker(request):
+    if request.user.is_authenticated:
+        if Users.objects.get(id=request.user.id).permission != 'MNGR':
+            return redirect('profile')
+        else:
+            if request.method == 'POST':
+                print(request.POST)
+                project_name    = request.POST['project_name']
+                project_owner   = request.POST['project_lead']
+                shrt_desc       = request.POST["short_description"]
+                long_desc       = request.POST["long_description"]
+                project_type    = request.POST["type"]
+                projected_end   = request.POST["projected_end_date"]
+                project_start   = request.POST["start_date"]
+                teams_attached_list = request.POST.getlist("team_to_attach_id")
+
+                print(project_start)
+                print(projected_end)
+
+                if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
+                        return render(request, 'project_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
+
+                createdProject = Projects(
+                    name=project_name,
+                    project_owner=Users.objects.get(id=project_owner),
+                    short_description=shrt_desc,
+                    description=long_desc,
+                    type=project_type,
+                    start_date=project_start,
+                    projected_end_date=projected_end
+                )
+                createdProject.save()
+
+                for team in teams_attached_list:
+                    currentTeam = Teams.objects.get(id=team)
+                    currentTeam.team_projects.add(createdProject)
+
+                return render(request, 'project_maker.html', {'success': "Project " + createdProject.name + " Created"})
+
+            return render(request, 'project_maker.html')
+
+    return redirect("login")
 
 def get_skill_request(request):
     if request.user.is_authenticated and request.user.permission == "MNGR":
@@ -279,6 +322,7 @@ def get_skill_request(request):
         return JsonResponse(jsonResponseData, safe=False)
 
     return redirect("login")
+
 
 def project(request):
     return render(request, 'project.html')
@@ -328,22 +372,36 @@ def get_users(request):
 
     return JsonResponse(jsonResponseData, safe=False)
 
+def get_teams_autocomplete(request):
+    teamToSearch = request.GET['query']
+    teamsOfInterest = []
+
+    teamsOfInterest = list(Teams.objects.filter(name__istartswith=teamToSearch))
+
+    jsonResponseData = {"suggestions": []}
+    for team in teamsOfInterest:
+        dictionary = {
+            "value": team.name,
+            "data": team.id
+        }
+        jsonResponseData["suggestions"] += [dictionary]
+
+    return JsonResponse(jsonResponseData, safe=False)
+
 
 def save_skills(request):
-
-    #print(request.body)
+    # print(request.body)
     newSkills = json.loads(request.body)
     print(newSkills)
     for newSkill in newSkills['skills']:
-        skillName=newSkill[0]
-        skillLevel=newSkill[1]
+        skillName = newSkill[0]
+        skillLevel = newSkill[1]
 
-        techSkill= TechSkill.objects.all().filter(name=skillName)
+        techSkill = TechSkill.objects.all().filter(name=skillName)
 
         techSkill = techSkill[0]
 
         profLevel = ProficiencyLevels.objects.all().filter(level_name=skillLevel)[0]
-
 
         # print(skill)
         # print(skill[0])
@@ -356,20 +414,19 @@ def save_skills(request):
         )
         newSkill.save()
 
-    return render(request,  'skills.html')
+    return render(request, 'skills.html')
 
 
 def get_new_skills(request):
-
     jsonResposnseData = {"suggestions": []}
 
     user = request.user
     userSkillsList = UserToSkill.objects.all().filter(user=user)
     allSkillsList = TechSkill.objects.all()
 
-    #I've tried this every way I can think of and am getting a non iterable object
-    #for i in ProficiencyLevels.level_name.LEVELS:
-      #  print(i[0])
+    # I've tried this every way I can think of and am getting a non iterable object
+    # for i in ProficiencyLevels.level_name.LEVELS:
+    #  print(i[0])
 
     for userSkill in userSkillsList:
         if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
@@ -377,7 +434,7 @@ def get_new_skills(request):
 
     for possibleNewSkill in allSkillsList:
         dictionary = {
-            "skillName" : possibleNewSkill.name
+            "skillName": possibleNewSkill.name
         }
         jsonResposnseData["suggestions"] += [dictionary]
     print(jsonResposnseData)
@@ -387,17 +444,15 @@ def get_new_skills(request):
 def project(request):
     return render(request, 'project.html')
 
-def skills(request):
 
+def skills(request):
     print(request.GET)
 
-
-    if not request.user.is_authenticated :
+    if not request.user.is_authenticated:
         raise PermissionDenied
     user = request.user
-    #user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
-    #user = authenticate(request, username='jack123', password='cosc481w')
-
+    # user = authenticate(request, username = 'marySm1th', password = 'cosc481w')
+    # user = authenticate(request, username='jack123', password='cosc481w')
 
     login(request, user)
     if not request.user.is_authenticated:
@@ -408,9 +463,8 @@ def skills(request):
     allSkillsList = TechSkill.objects.all()
 
     # I've tried this every way I can think of and am getting a non iterable object
-     #for i in ProficiencyLevels.:
+    # for i in ProficiencyLevels.:
     #  print(i[0])
-
 
     for userSkill in userSkillsList:
         if userSkill.skill_status == "App" or userSkill.skill_status == "Approved" or userSkill.skill_status == "PEN" or userSkill.skill_status == "Pending":
@@ -427,21 +481,68 @@ def skills(request):
         print(request.GET)
         if request.GET["success"][0] == "1":
             print("got to success")
-            return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList, "message": "The skills were added successfully!"})
+            return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList,
+                                                   "message": "The skills were added successfully!"})
+
+    return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList})
+
+
+def skill_acceptance(request):
+
+    if not request.user.is_authenticated or not request.user.permission == "MNGR":
+        raise PermissionDenied
+    user = request.user
+    successMessage = ""
+    if request.POST:
+        print(request.POST)
+
+        for key in request.POST.items():
+            if not key[0] == 'csrfmiddlewaretoken' :
+                #this looks weird but otherwise Django returns a single item even though it's a list
+                #print(key)
+                #print(request.POST.getlist(key[0]))
+                list = request.POST.getlist(key[0])
+                if list:
+                    if  list[0] == 'APP' or  list[0] == 'REJ':
+                        if len(list) == 2:
+                            skillToUpdate = UserToSkill.objects.get(id=key[0])
+                            skillToUpdate.skill_status = list[0]
+                            #print(list[1])
+                            skillToUpdate.skill_status_reason = list[1]
+                            skillToUpdate.save()
+                        else:
+                            skillToUpdate = UserToSkill.objects.get(id=key[0])
+                            skillToUpdate.skill_status = list[0]
+                            skillToUpdate.save()
+                    successMessage = "Skills have been updated for users and saved"
 
 
 
-    return render(request,  'skills.html', {'skills' : return_skills, "newSkills" : allSkillsList})
 
+    employees = []
+    for u in Users.objects.all():
+        if u.supervisor_id == user.id:
+            employees.append(u)
+
+    listOfPendingSkills = []
+    for employee in employees:
+        for skill in UserToSkill.objects.all():
+            if skill.skill_status == "PEN" and skill.user_id == employee.id:
+                listOfPendingSkills.append(skill)
+
+    if successMessage is "":
+        return render(request, 'skill_acceptance.html', {'pendingSkills' : listOfPendingSkills})
+    else:
+        return render(request, 'skill_acceptance.html', {'pendingSkills': listOfPendingSkills, 'successMessage': successMessage})
 
 
 def import_users(request):
     # print(request.method)
     # print(request.FILES.keys())
     # Next three lines are for testing demo purposes, remove at deploy
-    #user = authenticate(request, username = 'jack123', password = 'cosc481w')
+    # user = authenticate(request, username = 'jack123', password = 'cosc481w')
     # user = authenticate(request, username='jimboTheBro', password='cosc481w')
-    #login(request, user)
+    # login(request, user)
     RegexStrings = {
         'Password': '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
         'Email': '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
@@ -578,6 +679,110 @@ def import_users(request):
         return render(request, 'importusers.html', {'values': excel, 'Output': invalidindicies})
     else:
         return render(request, 'importusers.html', {'values': []})
+
+
+def display_project(request, id):
+    if request.user.is_authenticated:
+        displayed_project = Projects.objects.get(id = id)
+        owner = Users.objects.get(id=displayed_project.project_owner_id)
+        projectsTeams = []
+
+        for team in Teams.objects.all():
+            for proj in team.team_projects.all():
+                if proj.id == id:
+                    if not projectsTeams.__contains__(team):
+                        projectsTeams.append(team)
+
+        information = {
+            "owner": owner.first_name + " " + owner.last_name,
+            "owner_id": owner.id,
+            "id": displayed_project.id,
+            "short_description": displayed_project.short_description,
+            "description": displayed_project.description,
+        }
+
+        return render(request, 'project_display.html', {"info": information, "projectTeams": projectsTeams})
+
+
+
+def display_team(request, id):
+    if request.user.is_authenticated:
+        displayedTeam = Teams.objects.get(id=id)
+        squadMembers = SquadMembers.objects.filter(team_id=displayedTeam.id)
+        teamMembers = []
+        doesContain = False
+        teamProjects = []
+
+
+        for x in squadMembers:
+            if x.user_id == request.user.id:
+                doesContain = True
+            temp = Users.objects.get(id = x.user_id)
+            if not teamMembers.__contains__(temp):
+                teamMembers.append(temp)
+
+        for p in displayedTeam.team_projects.all():
+            teamProjects.append(p)
+
+        if request.user.permission == 'MNGR' or displayedTeam.type == 'PUB' or doesContain:
+
+            information = {
+                "name": displayedTeam.name,
+                "short_description": displayedTeam.short_description
+            }
+
+            # Name of Team
+            # Short Description
+            return render(request, 'display_team.html',
+                          {"team_information": information, "teamMembers": teamMembers, "teamProjects": teamProjects})
+
+        else:
+            return redirect('profile')
+
+def display_user(request, id):
+    if request.user.is_authenticated:
+        displayeduser = Users.objects.get(id=id)
+        usersSquads = SquadMembers.objects.filter(user_id=id)
+
+        projID = []
+        usersTeams = []
+        userSkills = []
+        usersProjects = {
+            "project": []
+        }
+
+        for skill in UserToSkill.objects.all():
+            if skill.user_id == id and skill.skill_status == "APP":
+                userSkills.append(TechSkill.objects.get(id=skill.skill_id))
+
+
+        for team in Teams.objects.all():
+            for u in usersSquads:
+                if team.id == u.team_id:
+                    if not usersTeams.__contains__(team):
+                        usersTeams.append(team)
+                        for project in team.team_projects.all():
+                            if not projID.__contains__(project.id):
+                                projID.append(project.id)
+                                usersProjects["project"] += [{
+                                    "name": project.name,
+                                    "id": project.id
+                                }]
+
+        information = {
+            "name": displayeduser.first_name + " " + displayeduser.last_name,
+            "email": displayeduser.email,
+            "position": displayeduser.position,
+            "address": displayeduser.address,
+            "id": displayeduser.id
+        }
+
+       
+        return render(request, 'user_display.html', {"profile_info": information, "usersTeams": usersTeams, "usersProjects":
+        usersProjects, "usersSkills": userSkills})
+
+
+    return redirect('login')
 
 # Username 0
 # Password 1
