@@ -39,17 +39,20 @@
                     <!-- content loaded from db -->
                     {% if user.is_authenticated %}
                     {% for team in usersTeams %}
-                        <button class="btn btn-primary teams mb-2" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
-                        <div class="collapse multi-collapse" id="{{ team.id }}">
-                            <div class="card card-body">
-                                {% if team.leader != null %}
-                                    <p>{{ team.leader }} (Lead)</p>
-                                {% endif %}
-                                {% for member in team.team_members.all %}
-                                    {% if member != team.leader %}
-                                        <p>{{member}}</p>
+                        <div class="holder">
+                            <button class="btn btn-primary teams mb-2" data-toggle="collapse" data-target="#{{ team.id }}">{{ team.name }}</button>
+                            <a href="/teammaker/edit/{{ team.id }}" class="team_edit_link">edit</a>
+                            <div class="collapse multi-collapse" id="{{ team.id }}">
+                                <div class="card card-body">
+                                    {% if team.leader != null %}
+                                        <p>{{ team.leader }} (Lead)</p>
                                     {% endif %}
-                                {% endfor %}
+                                    {% for member in team.team_members.all %}
+                                        {% if member != team.leader %}
+                                            <p>{{member}}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
