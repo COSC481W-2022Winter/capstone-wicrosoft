@@ -6,6 +6,7 @@ $(document).ready(function(){
 
     function updateNotificationCount(data)
     {
+        console.log(data);
         let count = data.suggestions.length;
         if (count === 0)  { return; }
 
