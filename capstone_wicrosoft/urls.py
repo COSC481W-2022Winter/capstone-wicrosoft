@@ -28,6 +28,9 @@ urlpatterns = [
     path('teammaker/get_projects/', views.get_projects),
     path('teammaker/edit/<int:team_id>', views.get_edit_team),
     path('project/', views.project, name='project'),
+    path('projectmaker/', views.project_maker, name='projectmaker'),
+    path('projectmaker/get_users/', views.get_users),
+    path('projectmaker/get_teams/', views.get_teams_autocomplete),
     path('importusers/', views.import_users, name='import'),
     path('skills/', views.skills, name='skills'),
     path('skills/success<int:num>', views.skills),
@@ -35,4 +38,8 @@ urlpatterns = [
     path('skills/save_skills/', views.save_skills),
     path('nav/', views.nav),
     path('getNotifications', views.get_skill_request),
+    path('projectDisplay/<int:id>/', views.display_project, name='displayProject'),
+    path('teamDisplay/<int:id>/', views.display_team, name='displayUser'),
+    path('userDisplay/<int:id>/', views.display_user, name='displayUser'),
+    path('skillAcceptance/', views.skill_acceptance, name='skillAcceptance'),
 ]
