@@ -65,6 +65,7 @@ def search_utility(request, query="", filters=""):
 
             for teamInter in scopeTeam:
                 teamsForUser['teams'] += [{
+                    "id" : teamInter.id,
                     "name": teamInter.name,
                     "members": teamInter.squadmembers_set.count()
                 }]
@@ -107,6 +108,7 @@ def search_utility(request, query="", filters=""):
 
             for teamInter in scopeTeam:
                 teamsForUser['teams'] += [{
+                    "id": teamInter.id,
                     "name": teamInter.name,
                     "members": teamInter.squadmembers_set.count()
                 }]
