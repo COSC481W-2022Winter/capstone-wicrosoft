@@ -1,0 +1,108 @@
+{% extends 'nav.html' %}
+
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/utilities/spinner.boot.css' %}">
+        <link rel="stylesheet" href="{% static 'css/search.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <script src="{% static 'js/search/search.js' %}"></script>
+    {% endblock %}
+    {% block title %}<title>Search Utility</title>{% endblock %}
+    {% block search_page %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'search' %}">Search</a>
+        </li>
+    {% endblock %}
+</head>
+{% block content %}
+<body>
+
+    <div id="page_title_container">
+        <div id="page_title_info">
+            <h2 class="page_title">Search Utility</h2>
+            <p class="page_summary">Allows user to search through all the public teams, projects, and employees within the company.</p>
+        </div>
+    </div>
+
+    <div id="search_parent">
+        <div id="search_container">
+            <div id="filter_container">
+                <span class="filter_button">Teams</span>
+                <span class="filter_button">Projects</span>
+                <span class="filter_button">Employees</span>
+            </div>
+            <input type="text" name="search_input" id="search_box">
+            <img class="search_icon" src="{% static 'images/components/search-grey.svg' %}">
+        </div>
+    </div>
+
+    <div id="entity_container">
+
+{#        <div class="card bg-light mb-3 team rounded-0" style="max-width: 18rem;">#}
+{#            <div class="card-header search_card_name rounded-0"><a class="title_link" href="#">The Dragon Slayers</a></div>#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">Light card title</h5>#}
+{#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="card bg-light mb-3 project rounded-0" style="max-width: 18rem;">#}
+{#            <div class="card-header search_card_name rounded-0">DashBoard Display</div>#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">Light card title</h5>#}
+{#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="card bg-light mb-3 user rounded-0" style="max-width: 18rem;">#}
+{#            <div class="card-header search_card_name rounded-0">Brian Simmons</div>#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">Light card title</h5>#}
+{#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="card bg-light mb-3 user rounded-0" style="max-width: 18rem;">#}
+{#            <div class="card-header search_card_name rounded-0">Jacoby Kirkland</div>#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">Light card title</h5>#}
+{#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="card bg-light mb-3 user rounded-0" style="max-width: 18rem;">#}
+{#            <div class="card-header search_card_name rounded-0">DevOps Team</div>#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">Light card title</h5>#}
+{#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="card bg-light mb-3 user rounded-0" style="width: 300px;height:200px;">#}
+{#            <div class="card-header search_card_name rounded-0">Django.py Coders</div>#}
+{#            <div class="card-body" style="padding-top:8px;padding-bottom: 8px;">#}
+{#                <h5 style="margin-bottom: 3px;" class="card-title">Software Developer</h5>#}
+{#                <div class="d-flex flex-md-column">#}
+{#                    <h6 style="margin-bottom:3px;font-weight:500;font-size:1.05em;">Teams:</h6>#}
+{#                    <a href="#" class="user_team">Team Name</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+
+{#        <div class="d-flex justify-content-center">#}
+{#            <div class="spinner-border" role="status">#}
+{#                <span class="visually-hidden">Loading...</span>#}
+{#            </div>#}
+{#        </div>#}
+
+    </div>
+
+</body>
+{% endblock %}
+</html>
