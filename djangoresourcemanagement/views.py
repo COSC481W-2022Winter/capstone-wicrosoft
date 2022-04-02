@@ -268,6 +268,78 @@ def get_edit_team(request,team_id):
                 'role_name': SquadMembers.objects.get(team=team, user=member).role.name
             }]
 
+        if Users.objects.get(id=request.user.id).permission != 'MNGR':
+            return redirect('profile')
+        else:
+            if request.method == 'POST':
+                print(request.POST)
+                team_name = request.POST['team_name']
+                team_leader = request.POST['team_lead']
+                shrt_desc = request.POST["short_description"]
+                long_desc = request.POST["long_description"]
+                team_type = request.POST["type"]
+                projects_list = request.POST.getlist("proj")
+                squadmember_list = request.POST.getlist("personID")
+                roles_to_squadmembers = request.POST.getlist("roles")
+                members_to_delete = request.POST.getlist("member_to_delete_id")
+                projects_to_delete = request.POST.getlist("project_to_delete_id")
+
+                # if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(
+                #         projects_list) == 0 or len(squadmember_list) == 0:
+                #     return render(request, 'edit_team.html', {'Fail': "Invalid input, Make sure all fields are input",
+                #     'team': team, 'members_and_roles': members_and_roles})
+
+                editedTeam = Teams.objects.get(id=team_id)
+
+                editedTeam.name = team_name
+                editedTeam.leader = Users.objects.get(id=team_leader)
+                editedTeam.short_description = shrt_desc
+                editedTeam.description = long_desc
+                editedTeam.type = team_type
+                editedTeam.save()
+
+                print(editedTeam)
+
+                for project in projects_list:
+                    editedTeam.team_projects.add(Projects.objects.get(id=project))
+
+                for member in squadmember_list:
+                    print(member)
+                    squadMemberToAdd = SquadMembers(
+                        user=Users.objects.get(id=member),
+                        team=editedTeam,
+                        role=Roles.objects.get(id=1),
+                        description="Blank For Now"
+                    )
+                    squadMemberToAdd.save()
+
+                # deletion of members
+                for memberToDelete in members_to_delete:
+                    squadEntity = SquadMembers.objects.get(user=memberToDelete,team=team)
+                    squadEntity.delete()
+
+                # deletion of projects
+                for projectToDelete in projects_to_delete:
+                    project = Projects.objects.get(id=projectToDelete)
+                    project.teams_set.remove(team)
+
+                members_and_roles = {
+                    'members': [],
+                }
+                team = Teams.objects.get(id=team_id)
+                for member in team.team_members.all():
+                    members_and_roles['members'] += [{
+                        'member_id': member.id,
+                        'name': member.first_name + " " + member.last_name,
+                        'role_id': SquadMembers.objects.get(team=team, user=member).role.id,
+                        'role_name': SquadMembers.objects.get(team=team, user=member).role.name
+                    }]
+
+                return render(request, 'edit_team.html', {'success': "Team " + editedTeam.name + " Edited",
+                                                          'team': team, 'members_and_roles': members_and_roles})
+
+        return render(request, 'edit_team.html', {'team' : team, 'members_and_roles' : members_and_roles})
+
 def project_maker(request):
     if request.user.is_authenticated:
         if Users.objects.get(id=request.user.id).permission != 'MNGR':
