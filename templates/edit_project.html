@@ -55,21 +55,21 @@
                     <tr>
                         <td>
                             <label for="project_name" >Project Name:</label> <br>
-                            <input id="project_name" type="text" name="project_name" value="{{project.0.name}}" class="text_input" required>
+                            <input id="project_name" type="text" name="project_name" value="{{project.name}}" class="text_input" required>
                         </td>
                         <td>
                             <label for="project_owner">Project Owner:</label> <br>
-                            <input id="project_owner" type="text" name="project_owner" value="{{project.0.project_owner.first_name}} {{project.0.project_owner.last_name}}" class="text_input" required>
+                            <input id="project_owner" type="text" name="project_owner" value="{{project.project_owner.first_name}} {{project.project_owner.last_name}}" class="text_input" required>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label for="short_description">Short Description:</label> <br>
-                            <input id="short_description" type="text" name="short_description" class="text_input" value="{{project.0.short_description}}">
+                            <input id="short_description" type="text" name="short_description" class="text_input" value="{{project.short_description}}">
                         </td>
                         <td>
                             <label for="long_description">Long Description:</label> <br>
-                            <input id="long_description" type="text" name="long_description"  value="{{project.0.description}}" class="text_input">
+                            <input id="long_description" type="text" name="long_description"  value="{{project.description}}" class="text_input">
                         </td>
                     </tr>
 
@@ -84,9 +84,9 @@
 
                 <div class="d-flex flex-md-column align-items-center">
                     <label for="start_date">Start Date</label><br>
-                    <input type="date" name="start_date" id="start_date0" value="{{project.0.start_date|date:"Y-m-d" }}" class="date">
+                    <input type="date" name="start_date" id="start_date0" value="{{project.start_date|date:"Y-m-d" }}" class="date">
                     <label for="projected_end_date">Projected End Date</label><br>
-                    <input type="date" name="projected_end_date" value="{{project.0.projected_end_date|date:"Y-m-d"}}" id="projected_end_date" class="date">
+                    <input type="date" name="projected_end_date" value="{{project.projected_end_date|date:"Y-m-d"}}" id="projected_end_date" class="date">
                 </div>
             </div>
 
@@ -102,6 +102,14 @@
                     <span id="add_team_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
 
                 </div>
+
+                {% for team in teams %}
+                      <div class="member_relation mt-3 d-flex flex-md-row justify-content-around w-50 border bg-light align-items-center p-2">
+                          <p class="name_association m-0">{{team.name}}</p>
+                          <span class="current_member_delete rounded-circle bg-white border">X</span>
+                          <input type="hidden" name="current_member_id" value="{{team.id}}">
+                      </div>
+                    {% endfor %}
 
             </div>
 
