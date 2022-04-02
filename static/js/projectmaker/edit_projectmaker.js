@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
+    const projectOwner = $("#project_owner");
     const team = $("#team_search");
     team[0].value = "";
 
     projectOwner.devbridgeAutocomplete({
-    serviceUrl: 'get_users',
+    serviceUrl: '/projectmaker/get_users',
     showNoSuggestionNotice: true,
     onSelect: function (suggestion) {
         const leader_element = document.getElementById("project_lead");
@@ -22,7 +23,7 @@ $(document).ready(function(){
     });
 
     team.devbridgeAutocomplete({
-    serviceUrl: 'get_teams/',
+    serviceUrl: '/projectmaker/get_teams/',
     showNoSuggestionNotice: true,
     onSelect: function (suggestion) {
         const teamInput = document.getElementById("team_attach")
