@@ -62,8 +62,9 @@ def profile_page(request):
 
 
 def get_project_team(request,project_id):
-    project = Projects.objects.filter(id=project_id)
-    return render(request, 'edit_project.html', {'project': project})
+    project = Projects.objects.get(id=project_id)
+    teamsInTheProject = Teams.objects.filter(team_projects=project)
+    return render(request, 'edit_project.html', {'project': project, 'teams' : teamsInTheProject})
 
 def logout_user(request):
     if request.user.is_authenticated:
