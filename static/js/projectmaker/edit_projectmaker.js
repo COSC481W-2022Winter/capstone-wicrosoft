@@ -39,6 +39,30 @@ $(document).ready(function(){
     }
     });
 
+        /*
+        Event when a user clicks the x button on a team to delete
+        The method first checks if the team has the class .delete on their
+        container, and if so then we remove that class meaning that a person
+        does not want to delete that member.
+        Else that means if the .delete is not on the team and a user clicks
+        the delete x button then we add .delete which makes the team opaque
+        and add a hidden id that takes the id of that current member to delete.
+     */
+    $(".current_team_delete").on("click", function() {
+        if ($(this.parentElement).hasClass("delete")){
+            this.parentElement.children[3].remove();
+            $(this.parentElement).removeClass("delete");
+        } else {
+            let hiddenIdPerson = ($('<input>').attr({
+                "type": "hidden",
+                "name": "team_to_delete_id",
+                "value": this.parentElement.children[2].value
+            }));
+            $(this.parentElement).addClass("delete");
+            $(this.parentElement).append(hiddenIdPerson);
+        }
+    });
+
     $('#add_team_assignment').on( "click", addRoleRelation);
 
     function addRoleRelation(){
