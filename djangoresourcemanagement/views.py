@@ -51,20 +51,68 @@ def profile_page(request):
                         "permission": user.permission}
 
         usersTeams = get_teams(request)
+        userProjects = Projects.objects.filter(teams__squadmembers__user=user)
+        print(userProjects)
 
 
-
-
-        return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams})
+        return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams, "userProjects": userProjects})
 
     else:
         return redirect('login')
 
 
 def get_project_team(request,project_id):
-    project = Projects.objects.get(id=project_id)
-    teamsInTheProject = Teams.objects.filter(team_projects=project)
-    return render(request, 'edit_project.html', {'project': project, 'teams' : teamsInTheProject})
+    if request.user.is_authenticated:
+        project = Projects.objects.get(id=project_id)
+        teamsInTheProject = Teams.objects.filter(team_projects=project)
+        if Users.objects.get(id=request.user.id).permission != 'MNGR':
+            return redirect('profile')
+        else:
+            project = Projects.objects.get(id=project_id)
+            teamsInTheProject = Teams.objects.filter(team_projects=project)
+            if request.method == 'POST':
+                print(request.POST)
+                project_name = request.POST['project_name']
+                project_owner = request.POST['project_lead']
+                shrt_desc = request.POST["short_description"]
+                long_desc = request.POST["long_description"]
+                project_type = request.POST["type"]
+                projected_end = request.POST["projected_end_date"]
+                project_start = request.POST["start_date"]
+                teams_attached_list = request.POST.getlist("team_to_attach_id")
+                teams_delete_attached_list = request.POST.getlist("team_to_delete_id")
+
+                print(request.POST)
+
+                # if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
+                #     return render(request, 'edit_project.html', {'Fail': "Invalid input, Make sure all fields are input",'project': project, 'teams': teamsInTheProject})
+
+                editedProject = Projects.objects.get(id=project_id)
+
+                editedProject.name = project_name
+                editedProject.project_owner = Users.objects.get(id=project_owner)
+                editedProject.short_description = shrt_desc
+                editedProject.description = long_desc
+                editedProject.type = project_type
+                editedProject.start_date = project_start
+                editedProject.projected_end_date = projected_end
+                editedProject.save()
+
+                for team in teams_delete_attached_list:
+                    project.teams_set.remove(team)
+
+                for team in teams_attached_list:
+                    currentTeam = Teams.objects.get(id=team)
+                    currentTeam.team_projects.add(editedProject)
+
+                project = Projects.objects.get(id=project_id)
+                teamsInTheProject = Teams.objects.filter(team_projects=project)
+
+                return render(request, 'edit_project.html', {'success': "Project " + editedProject.name + " Saved",'project': project, 'teams' : teamsInTheProject})
+
+            return render(request, 'edit_project.html', {'project': project, 'teams' : teamsInTheProject})
+
+    return redirect("login")
 
 def logout_user(request):
     if request.user.is_authenticated:
