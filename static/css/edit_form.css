@@ -1,0 +1,16 @@
+.delete{
+    opacity: .5;
+}
+.current_member_delete{
+    font-size: 1em;
+    cursor: pointer;
+    padding: 0 8px;
+    font-weight: 501;
+}
+.delete_project {
+    position: relative;
+    left: 24px;
+    border: 1px solid;
+    padding: 0 8px 0px 8px;
+    cursor: pointer;
+}

@@ -1,0 +1,146 @@
+{% extends 'nav.html' %}
+
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/utilities/autocomplete.css' %}">
+        <link rel="stylesheet" href="{% static 'css/teamForm.css' %}">
+        <link rel="stylesheet" href="{% static 'css/edit_form.css' %}">
+        <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
+        <script src="{% static 'js/teammaker/teameditor_autocomplete.js' %}"></script>
+        <script src="{% static 'js/utilities/form_validator.js' %}"></script>
+    {% endblock %}
+    {% block title %}<title>Team Editor</title>{% endblock %}
+    {% block builders_pages %}
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Builders
+            </a>
+            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" style="background-color: #f8f9fa;" href="{% url 'teammaker' %}">Team Builder</a>
+                <div class="dropdown-divider m-0"></div>
+                <a class="dropdown-item" href="#">Project Builder</a>
+            </div>
+        </li>
+    {% endblock %}
+</head>
+{% block content %}
+<body>
+
+    <div  class="h-100 d-flex flex-md-column align-items-center">
+        {% if Fail %}
+            <div class="alert alert-danger" role="alert">
+                {{ Fail }}
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="alert alert-success" role="alert">
+                {{ success }}
+            </div>
+        {% endif %}
+
+
+        <form id="team_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
+            <input type="hidden" id="team_lead" name="team_lead" value={{ team.leader_id }}>
+            {% csrf_token %}
+
+            <div class="border d-flex flex-md-column align-items-center w-100 pb-2">
+                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Information</h2>
+
+                <table>
+                    <tr>
+                        <td>
+                            <label for="team_name" >Team Name:</label> <br>
+                            <input id="team_name" type="text" name="team_name" value="{{team.name}}">
+                        </td>
+                        <td>
+                            <label for="team_leader">Team Leader:</label> <br>
+                            <input id="team_leader" type="text" name="team_leader" value="{{team.leader.first_name}} {{team.leader.last_name}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="short_description">Short Description:</label> <br>
+                            <input id="short_description" type="text" name="short_description" value="{{team.short_description}}">
+                        </td>
+                        <td>
+                            <label for="long_description">Long Description:</label> <br>
+                            <input id="long_description" type="text" name="long_description"  value="{{team.description}}">
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <label for="type">Type:</label>
+                <select name="type" id="type"  value="{{team.type}}">
+                    <option value="PUB">Public</option>
+                    <option value="PRI">Private</option>
+                </select>
+
+
+                <div class="d-flex flex-md-column align-items-center">
+                    <label for="projects">Projects:</label>
+                    <input type="text" name="projects" id="projects">
+                    {% for project in team.team_projects.all %}
+                       <div class="border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1">
+                           <p class="single_project m-0">{{project.name}}</p>
+                           <input type="hidden" name="current_proj" value="{{project.id}}">
+                           <span class="delete_project">x</span>
+                       </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="border d-flex flex-md-column align-items-center w-100 mt-2 pb-4">
+                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Assigner</h2>
+
+                <div class="d-flex flex-md-row w-100 justify-content-center align-items-center">
+
+                    <div class="d-flex flex-md-column mr-5">
+                        <label for="role">Role</label>
+                        <select name="role" id="role">
+                            <option value="NOCHOICE" selected>Choose Role</option>
+                            <option value="FRO">Front-End Developer</option>
+                            <option value="UX">User Experience Specialist</option>
+                            <option value="SYSENG">System Engineer</option>
+                            <option value="DBADMIN">Database Administrator</option>
+                            <option value="BAD">Backend Developer</option>
+                            <option value="SCRUM">SCRUM Master</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex flex-md-column mr-1">
+                        <label for="squadmember">Squad Member</label>
+                        <input type="text" id="squadmember" name="squadmember">
+                    </div>
+                    <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
+                </div>
+
+                {% for member in members_and_roles.members %}
+                      <div class="member_relation mt-3 d-flex flex-md-row justify-content-around w-50 border bg-light align-items-center p-2">
+                          <p class="role_association m-0">{{member.role_name}}</p>
+                          <p class="name_association m-0">{{member.name}}</p>
+                          <span class="current_member_delete rounded-circle bg-white border">X</span>
+                          <input type="hidden" name="current_member_id" value="{{member.member_id}}">
+                          <input type="hidden" name="current_member_roles_id" value="{{member.role_id}}">
+                      </div>
+                    {% endfor %}
+
+            </div>
+
+            <div id="submit_group" class="mt-3 w-75 d-flex flex-md-row justify-content-center">
+                <input type="submit" value="Save Changes" class="btn btn-primary w-50 mr-2" disabled>
+                <span id="cancel_create" class="btn btn-outline-secondary w-50 ml-2">Cancel</span>
+            </div>
+        </form>
+    </div>
+
+</body>
+{% endblock %}
+</html>
