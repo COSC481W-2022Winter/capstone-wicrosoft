@@ -819,6 +819,8 @@ def display_project(request, id):
 
         return render(request, 'project_display.html', {"info": information, "projectTeams": projectsTeams})
 
+    return redirect('login')
+
 
 
 def display_team(request, id):
@@ -854,6 +856,8 @@ def display_team(request, id):
 
         else:
             return redirect('profile')
+
+    return redirect('login')
 
 def display_user(request, id):
     if request.user.is_authenticated:
