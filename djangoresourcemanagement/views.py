@@ -151,11 +151,13 @@ def profile_page(request):
                         "position": user.position,
                         "permission": user.permission}
 
+        teamLeadTeams = Teams.objects.filter(leader=user)
+        print(teamLeadTeams)
         usersTeams = get_teams(request)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
 
 
-        return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams, "userProjects": userProjects})
+        return render(request, 'profile.html', {"profile_info": profile_info,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects})
 
     else:
         return redirect('login')
