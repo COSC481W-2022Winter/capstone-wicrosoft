@@ -3,7 +3,14 @@ from .models import *
 
 
 def valid_date(date):
-    date = date.split("-")
+
+    if date[2]=="-":
+        date = date.split("-")
+    else:
+        date = date.split("/")
+    print(date)
+
+
 
     try:
         datetime.datetime(day=int(date[1]), month=int(date[0]), year=int(date[2]))

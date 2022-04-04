@@ -779,7 +779,11 @@ def import_users(request):
                     row[10] = Users.objects.all().filter(username=row[10])[0]
                 if row[11] is not None:
                     row[11] = Users.objects.all().filter(username=row[11])[0]
-                django_date = row[5].split("-")
+                if(row[5][2]=="-"):
+                    django_date = row[5].split("-")
+                else:
+                    django_date = row[5].split("/")
+
                 django_date_format = django_date[2] + '-' + django_date[0] + '-' + django_date[1] + ' 00:00'
                 row[5] = django_date_format
                 user = Users.objects.create_user(row[0], row[2], helper.create__valid_work_email(row[3] + row[4]),
