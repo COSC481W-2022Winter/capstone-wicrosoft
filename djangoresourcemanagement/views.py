@@ -69,7 +69,6 @@ def search_utility(request, query="", filters=""):
                     "name": teamInter.name,
                     "members": teamInter.squadmembers_set.count()
                 }]
-            print(user.id, user.position)
             finalResponse['users'] += [{
                 "id": user.id,
                 "name": user.first_name + " " + user.last_name,
@@ -112,7 +111,6 @@ def search_utility(request, query="", filters=""):
                     "name": teamInter.name,
                     "members": teamInter.squadmembers_set.count()
                 }]
-            print(user.id,user.position)
             finalResponse['users'] += [{
                 "id": user.id,
                 "name": user.first_name + " " + user.last_name,
@@ -134,10 +132,8 @@ def login_page(request):
         username = request.POST['login_username']
         password = request.POST['login_password']
         user = authenticate(request, username=username, password=password)
-        print("auth")
         if user is not None:
             login(request, user)
-            print("log")
             return redirect('profile')
         else:
             messages.add_message(request, 50, 'Incorrect password or username')
@@ -157,7 +153,6 @@ def profile_page(request):
 
         usersTeams = get_teams(request)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
-        print(userProjects)
 
 
         return render(request, 'profile.html', {"profile_info": profile_info, "usersTeams": usersTeams, "userProjects": userProjects})
@@ -176,7 +171,6 @@ def get_project_team(request,project_id):
             project = Projects.objects.get(id=project_id)
             teamsInTheProject = Teams.objects.filter(team_projects=project)
             if request.method == 'POST':
-                print(request.POST)
                 project_name = request.POST['project_name']
                 project_owner = request.POST['project_lead']
                 shrt_desc = request.POST["short_description"]
@@ -186,8 +180,6 @@ def get_project_team(request,project_id):
                 project_start = request.POST["start_date"]
                 teams_attached_list = request.POST.getlist("team_to_attach_id")
                 teams_delete_attached_list = request.POST.getlist("team_to_delete_id")
-
-                print(request.POST)
 
                 # if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
                 #     return render(request, 'edit_project.html', {'Fail': "Invalid input, Make sure all fields are input",'project': project, 'teams': teamsInTheProject})
@@ -260,7 +252,6 @@ def team_maker(request):
             return redirect('profile')
         else:
             if request.method == 'POST':
-                print(request.POST)
                 team_name = request.POST['team_name']
                 team_leader = request.POST['team_lead']
                 shrt_desc = request.POST["short_description"]
@@ -292,7 +283,6 @@ def team_maker(request):
                 #              description="Blank For Now").save()
 
                 for member in squadmember_list:
-                    print(member)
                     squadEntity = SquadMembers(
                         user=Users.objects.get(id=member),
                         team=createdTeam,
@@ -300,7 +290,6 @@ def team_maker(request):
                         description="Blank For Now"
                     )
                     squadEntity.save()
-                    print(squadEntity)
 
                 return render(request, 'team_maker.html', {'success': "Team" + createdTeam.name + "Created"})
 
@@ -328,7 +317,6 @@ def get_edit_team(request,team_id):
             return redirect('profile')
         else:
             if request.method == 'POST':
-                print(request.POST)
                 team_name = request.POST['team_name']
                 team_leader = request.POST['team_lead']
                 shrt_desc = request.POST["short_description"]
@@ -354,13 +342,11 @@ def get_edit_team(request,team_id):
                 editedTeam.type = team_type
                 editedTeam.save()
 
-                print(editedTeam)
 
                 for project in projects_list:
                     editedTeam.team_projects.add(Projects.objects.get(id=project))
 
                 for member in squadmember_list:
-                    print(member)
                     squadMemberToAdd = SquadMembers(
                         user=Users.objects.get(id=member),
                         team=editedTeam,
@@ -402,7 +388,6 @@ def project_maker(request):
             return redirect('profile')
         else:
             if request.method == 'POST':
-                print(request.POST)
                 project_name    = request.POST['project_name']
                 project_owner   = request.POST['project_lead']
                 shrt_desc       = request.POST["short_description"]
@@ -412,8 +397,6 @@ def project_maker(request):
                 project_start   = request.POST["start_date"]
                 teams_attached_list = request.POST.getlist("team_to_attach_id")
 
-                print(project_start)
-                print(projected_end)
 
                 if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
                         return render(request, 'project_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
@@ -479,7 +462,6 @@ def get_projects(request):
 
     projectsOfInterest = list(Projects.objects.filter(name__icontains=projectToSearch))
 
-    print(projectsOfInterest)
 
     jsonResponseData = {"suggestions": []}
     for project in projectsOfInterest:
@@ -531,9 +513,7 @@ def get_teams_autocomplete(request):
 
 
 def save_skills(request):
-    # print(request.body)
     newSkills = json.loads(request.body)
-    print(newSkills)
     for newSkill in newSkills['skills']:
         skillName = newSkill[0]
         skillLevel = newSkill[1]
@@ -578,7 +558,6 @@ def get_new_skills(request):
             "skillName": possibleNewSkill.name
         }
         jsonResposnseData["suggestions"] += [dictionary]
-    print(jsonResposnseData)
     return JsonResponse(jsonResposnseData, safe='False')
 
 
@@ -587,7 +566,6 @@ def project(request):
 
 
 def skills(request):
-    print(request.GET)
 
     if not request.user.is_authenticated:
         raise PermissionDenied
@@ -619,9 +597,7 @@ def skills(request):
         return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
 
     if request.GET:
-        print(request.GET)
         if request.GET["success"][0] == "1":
-            print("got to success")
             return render(request, 'skills.html', {'skills': return_skills, "newSkills": allSkillsList,
                                                    "message": "The skills were added successfully!"})
 
@@ -635,8 +611,6 @@ def skill_acceptance(request):
     user = request.user
     successMessage = ""
     if request.POST:
-        print(request.POST)
-
         for key in request.POST.items():
             if not key[0] == 'csrfmiddlewaretoken' :
                 #this looks weird but otherwise Django returns a single item even though it's a list
@@ -696,7 +670,6 @@ def import_users(request):
     if not request.user.is_authenticated or request.user.permission == 'EMP' or request.user.permission == 'LEAD':
         raise PermissionDenied
     if request.method == 'POST' and 'userfile' in request.FILES:
-        print("got here")
         filename = request.FILES['userfile'].name
         extension = filename.split(".")[-1]
         content = request.FILES['userfile'].read()
