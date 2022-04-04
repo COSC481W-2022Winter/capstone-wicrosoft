@@ -286,10 +286,10 @@ def team_maker(request):
                 for project in projects_list:
                     createdTeam.team_projects.add(Projects.objects.get(id=project))
 
-                SquadMembers(user=Users.objects.get(id=team_leader),
-                             team=createdTeam,
-                             role=Roles.objects.get(id=1),
-                             description="Blank For Now").save()
+                # SquadMembers(user=Users.objects.get(id=team_leader),
+                #              team=createdTeam,
+                #              role=Roles.objects.get(id=1),
+                #              description="Blank For Now").save()
 
                 for member in squadmember_list:
                     print(member)
