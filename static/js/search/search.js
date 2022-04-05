@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     $('#search_box').on("input paste",function (){
         if (this.value === "") {
+            currentQuery = this.value;
             removeEnitites();
             return;
         }
