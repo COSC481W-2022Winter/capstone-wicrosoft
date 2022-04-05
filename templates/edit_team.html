@@ -14,7 +14,7 @@
         <script src="{% static 'js/teammaker/teameditor_autocomplete.js' %}"></script>
         <script src="{% static 'js/utilities/form_validator.js' %}"></script>
     {% endblock %}
-    {% block title %}<title>Team Editor</title>{% endblock %}
+    {% block title %}<title>Team Editor | {{ team.name }}</title>{% endblock %}
     {% block builders_pages %}
         <li class="nav-item active dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -15,7 +15,7 @@
         <script src="{% static 'js/projectmaker/edit_projectmaker.js' %}"></script>
         <script src="{% static 'js/projectmaker/main_form_validator.js' %}"></script>
     {% endblock %}
-    {% block title %}<title>Project Maker</title>{% endblock %}
+    {% block title %}<title>Project Maker | {{ project.name }}</title>{% endblock %}
     {% block builders_pages %}
         <li class="nav-item active dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
