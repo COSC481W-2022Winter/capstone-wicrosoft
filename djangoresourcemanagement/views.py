@@ -155,9 +155,10 @@ def profile_page(request):
         print(teamLeadTeams)
         usersTeams = get_teams(request)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
+        userProjectsOwner = Projects.objects.filter(project_owner=user)
 
 
-        return render(request, 'profile.html', {"profile_info": profile_info,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects})
+        return render(request, 'profile.html', {"profile_info": profile_info,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects, "userProjectsOwned" : userProjectsOwner})
 
     else:
         return redirect('login')
@@ -814,6 +815,7 @@ def display_project(request, id):
                         projectsTeams.append(team)
 
         information = {
+            "name" : displayed_project.name,
             "owner": owner.first_name + " " + owner.last_name,
             "owner_id": owner.id,
             "id": displayed_project.id,
