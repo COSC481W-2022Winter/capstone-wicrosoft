@@ -152,7 +152,6 @@ def profile_page(request):
                         "permission": user.permission}
 
         teamLeadTeams = Teams.objects.filter(leader=user)
-        print(teamLeadTeams)
         usersTeams = get_teams(request)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
         userProjectsOwner = Projects.objects.filter(project_owner=user)
