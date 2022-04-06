@@ -166,7 +166,12 @@ def profile_page(request):
 
 def get_project_team(request,project_id):
     if request.user.is_authenticated:
-        project = Projects.objects.get(id=project_id)
+
+        try:
+            project = Projects.objects.get(id=project_id)
+        except:
+            return redirect("profile")
+
         teamsInTheProject = Teams.objects.filter(team_projects=project)
         if Users.objects.get(id=request.user.id).permission != 'MNGR':
             return redirect('profile')
@@ -306,8 +311,10 @@ def get_edit_team(request,team_id):
         members_and_roles = {
             'members': [],
         }
-        team = Teams.objects.get(id=team_id)
-
+        try:
+            team = Teams.objects.get(id=team_id)
+        except:
+            return redirect("profile")
         for member in team.team_members.all():
             members_and_roles['members'] += [{
                 'member_id': member.id,
@@ -804,7 +811,10 @@ def import_users(request):
 
 def display_project(request, id):
     if request.user.is_authenticated:
-        displayed_project = Projects.objects.get(id = id)
+        try:
+            displayed_project = Projects.objects.get(id = id)
+        except:
+            return redirect('profile')
         owner = Users.objects.get(id=displayed_project.project_owner_id)
         projectsTeams = []
 
@@ -831,7 +841,10 @@ def display_project(request, id):
 
 def display_team(request, id):
     if request.user.is_authenticated:
-        displayedTeam = Teams.objects.get(id=id)
+        try:
+            displayedTeam = Teams.objects.get(id=id)
+        except:
+            return redirect('profile')
         squadMembers = SquadMembers.objects.filter(team_id=displayedTeam.id)
         teamMembers = []
         doesContain = False
@@ -867,7 +880,12 @@ def display_team(request, id):
 
 def display_user(request, id):
     if request.user.is_authenticated:
-        displayeduser = Users.objects.get(id=id)
+        try:
+            displayeduser = Users.objects.get(id=id)
+        except:
+            return redirect('profile')
+
+
         usersSquads = SquadMembers.objects.filter(user_id=id)
 
         projID = []
