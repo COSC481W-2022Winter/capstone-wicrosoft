@@ -683,6 +683,9 @@ def import_users(request):
         extension = filename.split(".")[-1]
         content = request.FILES['userfile'].read()
         excel = p.get_array(file_type=extension, file_content=content)
+        
+        excel = helper.trimarray(excel)
+
         invalidindicies = []
         userdata = []
         for count, row in enumerate(excel):

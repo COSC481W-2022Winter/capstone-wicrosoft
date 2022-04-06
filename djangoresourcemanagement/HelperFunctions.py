@@ -1,6 +1,12 @@
 import datetime
 from .models import *
+def trimarray(array):
+    for i in range(len(array)):
+        for j in range(len(array[i])):
+            if type(array[i][j]) is not int:
+                array[i][j] = array[i][j].strip()
 
+    return array
 
 def valid_date(date):
 
