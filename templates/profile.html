@@ -91,7 +91,7 @@
 {#                    {% if user.is_authenticated %}#}
                     {% for project in userProjects %}
                         <div class="holder">
-                            <button class="btn btn-primary projects mb-2" data-toggle="collapse" data-target="#{{ project.id }}">{{ project.name }}</button>
+                            <button class="btn btn-primary projects mb-2">{{ project.name }}</button>
                              {% if user.permission == 'MNGR' %}
                                  <a href="/projectmaker/edit/{{ project.id }}" class="team_edit_link">edit</a>
                              {% endif %}
@@ -99,7 +99,7 @@
                     {% endfor %}
                     {% for project in userProjectsOwned %}
                         <div class="holder">
-                            <button class="btn btn-primary projects mb-2" data-toggle="collapse" data-target="#{{ project.id }}">{{ project.name }}</button>
+                            <button class="btn btn-primary projects mb-2">{{ project.name }}</button>
                              {% if user.permission == 'MNGR' %}
                                  <a href="/projectmaker/edit/{{ project.id }}" class="team_edit_link">edit</a>
                              {% endif %}
