@@ -46,6 +46,7 @@
                             {% endif %}
                             <div class="collapse multi-collapse" id="{{ team.id }}">
                                 <div class="card card-body">
+                                    <a href="/teamDisplay/{{team.id}}" class="team_display_link">Team Profile Page</a>
                                     {% if team.leader != null %}
                                         <p>{{ team.leader }} (Lead)</p>
                                     {% endif %}
@@ -91,7 +92,7 @@
 {#                    {% if user.is_authenticated %}#}
                     {% for project in userProjects %}
                         <div class="holder">
-                            <button class="btn btn-primary projects mb-2">{{ project.name }}</button>
+                            <button class="btn btn-primary projects mb-2" value ="{{project.id}}">{{ project.name }}</button>
                              {% if user.permission == 'MNGR' %}
                                  <a href="/projectmaker/edit/{{ project.id }}" class="team_edit_link">edit</a>
                              {% endif %}
@@ -99,7 +100,7 @@
                     {% endfor %}
                     {% for project in userProjectsOwned %}
                         <div class="holder">
-                            <button class="btn btn-primary projects mb-2">{{ project.name }}</button>
+                            <button class="btn btn-primary projects mb-2" value ="{{project.id}}">{{ project.name }}</button>
                              {% if user.permission == 'MNGR' %}
                                  <a href="/projectmaker/edit/{{ project.id }}" class="team_edit_link">edit</a>
                              {% endif %}
