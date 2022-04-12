@@ -3,6 +3,7 @@ const csrf = Cookies.get('csrftoken');
 $(document).ready(function() {
 
     addStatusCircles();
+    $('.btn.popoverReason').popover();
 
 
 
@@ -88,7 +89,20 @@ function addStatusCircles(){
             rowStatus.textContent = '' ;
             rowStatus.append(circle1);
             let rowStatusInline = document.createElement('p');
-            rowStatusInline.setAttribute("class", "skillStatus")
+
+            rowStatusInline.setAttribute("class", "btn popoverReason");
+
+            rowStatusInline.setAttribute("id" ,"popoverReason");
+            if(rowStatus.getAttribute("value") === 'None')
+                rowStatusInline.setAttribute("data-content", "No reason provided by manager, Contact them directly for further information");
+            else
+                rowStatusInline.setAttribute("data-content", rowStatus.getAttribute("value"));
+
+            rowStatusInline.setAttribute("data-placement", "right");
+            rowStatusInline.setAttribute("data-original-title", "Reason");
+            rowStatusInline.setAttribute("rel", "popover")
+            rowStatusInline.setAttribute("data-trigger", "hover");
+
             rowStatusInline.textContent = ' Approved';
             rowStatus.append(rowStatusInline);
 
@@ -102,7 +116,17 @@ function addStatusCircles(){
             rowStatus.textContent = ' ' ;
             rowStatus.append(circle1);
             let rowStatusInline = document.createElement('p');
-            rowStatusInline.setAttribute("class", "skillStatus")
+            rowStatusInline.setAttribute("class", "btn popoverReason");
+
+            rowStatusInline.setAttribute("id" ,"popoverReason");
+
+            rowStatusInline.setAttribute("data-content", "Upon approval or rejection, manager reason if given will be displayed here");
+
+            rowStatusInline.setAttribute("data-placement", "right");
+            rowStatusInline.setAttribute("data-original-title", "Pending skill");
+            rowStatusInline.setAttribute("rel", "popover")
+            rowStatusInline.setAttribute("data-trigger", "hover");
+
             rowStatusInline.textContent = ' Pending';
             rowStatus.append(rowStatusInline);
 
@@ -113,7 +137,18 @@ function addStatusCircles(){
             rowStatus.textContent = ' ' ;
             rowStatus.append(circle1);
             let rowStatusInline = document.createElement('p');
-            rowStatusInline.setAttribute("class", "skillStatus")
+            rowStatusInline.setAttribute("class", "btn popoverReason");
+
+            rowStatusInline.setAttribute("id" ,"popoverReason");
+            if(rowStatus.getAttribute("value") === 'None')
+                rowStatusInline.setAttribute("data-content", "No reason provided by manager, Contact them directly for further information");
+            else
+                rowStatusInline.setAttribute("data-content", rowStatus.getAttribute("value"));
+
+            rowStatusInline.setAttribute("data-placement", "right");
+            rowStatusInline.setAttribute("data-original-title", "Reason");
+            rowStatusInline.setAttribute("rel", "popover")
+            rowStatusInline.setAttribute("data-trigger", "hover");
             rowStatusInline.textContent = ' Rejected';
             rowStatus.append(rowStatusInline);
 

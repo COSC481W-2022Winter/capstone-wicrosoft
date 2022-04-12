@@ -41,7 +41,7 @@
     <tr>
       <th scope="col">Skill Name</th>
       <th scope="col">Skill Proficiency</th>
-      <th scope="col">Status</th>
+      <th scope="col">Status(Hover over for reason, if provided)</th>
     </tr>
 
   </thead>
@@ -51,11 +51,11 @@
         <th colspan="3"> There are no records available for this user</th>
     </tr>
     {% endif %}
-    {% for i in skills %}
+    {% for skill in skills %}
     <tr>
-        <td>{{i.0}}</td>
-        <td>{{i.1}}</td>
-        <td class="statsCol">{{i.2}}</td>
+        <td>{{skill.skill.name}}</td>
+        <td>{{skill.proficiency.level_name}}</td>
+        <td class="statsCol" value = "{{skill.skill_status_reason}}">{{skill.skill_status}}</td>
     </tr>
     {% endfor %}
   </tbody>
