@@ -1,9 +1,72 @@
-.table {
-width: 90%; margin-left: auto; margin-right: auto; /*! margin-top: 50px; */
+body { padding-right: 0 !important }
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p{
+    margin: 0;
+}
+
+#skillsTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1.7px solid rgb(0,0,0,.2);
+}
+
+#skillsTable td, #skillsTable th {
+    border: 1px solid #ddd;
+    padding: 9px;
+}
+
+#skillsTable tr:hover {background-color: #ddd;}
+
+#skillsTable th {
+    text-align: left;
+    background-color: #5680e9;
+    color: white;
+    border: 0px;
+    padding-left: 5px;
+}
+
+tr{
+    border: 1px solid black;
 }
 
 .thead {
     background-color: #005cbf; color: white;
+    border-bottom: 1.7px solid rgb(0,0,0,.2);
+}
+
+#newSkillsTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 1px black;
+}
+
+#newSkillsTable td, #newSkillsTable th {
+    border: 1px solid #ddd;
+    padding: 9px;
+}
+
+#newSkillsTable tr:hover {background-color: #ddd;}
+
+#newSkillsTable th {
+    text-align: left;
+    background-color: #5680e9;
+    color: white;
+    border: 0px;
+    padding-left: 5px;
+}
+
+#newSkillsTable > tbody > tr{
+    border: 1px solid black;
 }
 
 .skillStatus{
@@ -11,8 +74,11 @@ width: 90%; margin-left: auto; margin-right: auto; /*! margin-top: 50px; */
 }
 .top-right{
 
-    margin: 0 auto 0 auto;
+    margin: 0 auto 5px auto;
     width: 90%;
+    position: relative;
+    display: flex;
+    justify-content: end;
 }
 .pendingCircle {
     height: 15px;
