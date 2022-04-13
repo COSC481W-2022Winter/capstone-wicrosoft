@@ -20,11 +20,13 @@ $(document).ready(function() {
 function saveSkills(){
 
     let skillList = {skills :[]};
-    console.log($('#newSkillsTable').children());
-   $('#newSkillsTable').children().each(function(index, element){
+    console.log($('#newSkillsTable'));
+    console.log($('.newSkillsTable'));
+   $('.newSkillsTable').children().each(function(index, element){
         // Check if each row is checked to be added
        console.log($('.form-check-input')[index].checked);
        if ($('.form-check-input')[index].checked){
+           console.log(element)
            let skill_to_add = element.children[0].textContent;
            console.log(skill_to_add);
            let skillLevel_to_add = $('.skillLevel')[index].value;

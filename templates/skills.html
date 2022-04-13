@@ -60,7 +60,7 @@
         <td style="padding-left:9px;">{{skill.skill.name}}</td>
         <td style="padding-left:9px;">{{skill.proficiency.level_name}}</td>
         <td style="padding-left:9px;" class="statsCol" value = "{{skill.skill_status_reason}}">{{skill.skill_status}}</td>
-        
+
     </tr>
     {% endfor %}
   </tbody>
@@ -77,8 +77,7 @@
       </div>
       <div class="modal-body" id ="modal-body">
           <table id="newSkillsTable">
-              <tbody class="newSkillsTable">
-
+             <tbody >
               <thead class = "thead">
                 <tr>
                   <th scope="col">Skill Name</th>
@@ -86,6 +85,10 @@
                 </tr>
 
               </thead>
+            </tbody>
+              <tbody class="newSkillsTable">
+
+
           {% for skill in newSkills %}
             <tr>
                 <td class="skillName">{{skill.name}}</td>
