@@ -46,4 +46,5 @@ urlpatterns = [
     path('teamDisplay/<int:id>/', views.display_team, name='displayUser'),
     path('userDisplay/<int:id>/', views.display_user, name='displayUser'),
     path('skillAcceptance/', views.skill_acceptance, name='skillAcceptance'),
+    path('directory/', views.directory, name='directory'),
 ]

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>Teams:</p>
+{% for team in TeamList %}
+    <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
+{% endfor %}
+
+<p>Users:</p>
+{% for user in UserList %}
+    <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}}{{user.last_name}}</a></li>
+{% endfor %}
+
+
+<p>Projects:</p>
+{% for project in ProjectList %}
+ <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
+{% endfor %}
+
+
+</body>
+</html>
