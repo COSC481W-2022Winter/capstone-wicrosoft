@@ -602,15 +602,10 @@ def skills(request):
 
     return_skills = userskills
 
-<<<<<<< HEAD
+
     #for row in userskills:
      #   return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
-=======
-    for row in userskills:
-        return_skills.append((row.skill.name, row.proficiency.get_level_name_display(), row.skill_status))
 
-    print(return_skills)
->>>>>>> main
 
     if request.GET:
         if request.GET["success"][0] == "1":

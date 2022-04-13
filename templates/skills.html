@@ -56,15 +56,11 @@
     {% endif %}
     {% for skill in skills %}
     <tr>
-<<<<<<< HEAD
-        <td>{{skill.skill.name}}</td>
-        <td>{{skill.proficiency.level_name}}</td>
-        <td class="statsCol" value = "{{skill.skill_status_reason}}">{{skill.skill_status}}</td>
-=======
-        <td style="padding-left:9px;">{{i.0}}</td>
-        <td style="padding-left:9px;">{{i.1}}</td>
-        <td style="padding-left:9px;" class="statsCol">{{i.2}}</td>
->>>>>>> main
+
+        <td style="padding-left:9px;">{{skill.skill.name}}</td>
+        <td style="padding-left:9px;">{{skill.proficiency.level_name}}</td>
+        <td style="padding-left:9px;" class="statsCol" value = "{{skill.skill_status_reason}}">{{skill.skill_status}}</td>
+        
     </tr>
     {% endfor %}
   </tbody>
