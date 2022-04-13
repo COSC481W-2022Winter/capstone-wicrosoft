@@ -1,6 +1,13 @@
 html {
 
 }
+.mainClass {
+    display: flex;
+    justify-content: center;
+    border-style: solid;
+    flex-direction: column;
+    margin-top: 10px;
+}
 .surroundTitle {
     display: flex;
     align-content: center;

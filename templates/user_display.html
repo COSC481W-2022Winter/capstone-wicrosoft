@@ -8,50 +8,67 @@
     {% block title %}<title>{{ profile_info.name }}</title>{% endblock %}
     {% load static %}
     {% block styling %}
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/user_display.css' %}">
-        <script src="{% static 'js/teams/teamview.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_display.css' %}">
+    <script src="{% static 'js/teams/teamview.js' %}"></script>
     {% endblock %}
 </head>
 
 {% block content %}
 <body>
-   <div class = "surroundTitle">
-       <div class="information">
-            <p>Name: {{profile_info.name}}</p>
-            <p>ID: {{profile_info.id}}</p>
-            <p>Position: {{profile_info.position}}</p>
-            <p>Email: {{profile_info.email}}</p>
+<div style=";
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-style: solid;
+    width:400px">
+    <div style="width: 400px">
+        <div>
+            <p style="font-weight: bold; text-align: center;">{{profile_info.name}}</p>
+            <hr>
+            <div>
+                <p style="font-weight: bold">Position: </p>
+                <p style="margin-left: 10px"> {{profile_info.position}}</p>
+            </div>
+            <div>
+                <p style="font-weight: bold">Email: </p>
+                <p style="margin-left: 10px">{{profile_info.email}}</p>
+            </div>
+
         </div>
-    </div>
+        <div>
+            <div>
+                <p style="font-weight: bold">Projects Attached:</p>
 
+                {% for project in usersProjects.project %}
+                <button><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
+                {% endfor %}
+            </div>
+            <div>
+                <p style="font-weight: bold">Teams Attached:</p>
+                {% for team in usersTeams %}
+                <button><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></button>
+                <br>
+                {% endfor %}
+            </div>
+            <div>
+                <p style="font-weight: bold">Skills:</p>
 
-<body>
-   <div class = "surroundLists">
-       <div class="projectinformation">
-        <p>Projects:</p>
-
-            {% for project in usersProjects.project %}
-                <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-            {% endfor %}
-        </div>
-        <div class="teaminformation">
-        <p>Teams:</p>
-            {% for team in usersTeams %}
-                <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
-            {% endfor %}
-        </div>
-    </div>
-
-    <div class = "surroundLists">
-       <div class="information">
-        <p>Skills:</p>
-
-            {% for skill in usersSkills %}
+                {% for skill in usersSkills %}
                 <li>{{ skill.name }}</li>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
+    </div>
 
+
+    <div>
+
+    </div>
+</div>
 
 </body>
 {% endblock %}
