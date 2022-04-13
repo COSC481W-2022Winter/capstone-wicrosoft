@@ -1,9 +1,23 @@
+{% extends 'nav.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {% load static %}
+    {% block styling %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    {% endblock %}
+    {% block title %}<title>Directory</title>{% endblock %}
+    {% block profile_page %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'profile' %}">Profile <span class="sr-only">(current)</span></a>
+        </li>
+    {% endblock %}
 </head>
+
+{% block content %}
 <body>
 
 <p>Teams:</p>
@@ -11,12 +25,13 @@
     <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
 {% endfor %}
 
+<br><br>
 <p>Users:</p>
 {% for user in UserList %}
     <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}}{{user.last_name}}</a></li>
 {% endfor %}
 
-
+<br><br>
 <p>Projects:</p>
 {% for project in ProjectList %}
  <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
@@ -24,4 +39,5 @@
 
 
 </body>
+{% endblock %}
 </html>
