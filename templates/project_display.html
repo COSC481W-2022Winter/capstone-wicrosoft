@@ -6,34 +6,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% block title %}<title>{{ info.name }}</title>{% endblock %}
+   {% block title %}<title>{{ info.name }}</title>{% endblock %}
+    {% load static %}
+    {% block styling %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project_display.css' %}">
+    {% endblock %}
 </head>
 {% block content %}
-<body style="font-size: large">
-<div style="display: flex; justify-content: center;">
-    <div style="width: 600px; padding: 30px; margin-top: 10px; border-style: solid; box-shadow: 10px 10px 10px 10px grey;">
+<body>
+<div class="mainDiv">
+    <div class = "boxDesign">
         <div>
-            <p style="font-weight: bold">Owner: </p>
-            <p style="margin-left: 10px"> {{info.owner}}</p>
+            <p class="heading">Owner: </p>
+            <p class="paragraph"> {{info.owner}}</p>
         </div>
         <div>
-            <p style="font-weight: bold">ID:</p>
-            <p style="margin-left: 10px"> {{info.id}}</p>
+            <p class="heading">ID:</p>
+            <p class="paragraph"> {{info.id}}</p>
         </div>
             <div>
-                 <p style="font-weight: bold">Short Description: </p>
-                 <p style="margin-left: 10px"> {{info.short_description}}</p>
+                 <p class="heading">Short Description: </p>
+                 <p class="paragraph"> {{info.short_description}}</p>
             </div>
 
             <div>
-                 <p style="font-weight: bold">Description: </p>
-                 <p style="margin-left: 10px"> {{info.description}}</p>
+                 <p class="heading">Description: </p>
+                 <p class="paragraph"> {{info.description}}</p>
             </div>
 
 
         <div>
             {% for team in projectTeams %}
-            <button style="width: 20em; margin: 10px auto; display: flex; justify-content: center"> <a href="/teamDisplay/{{team.id}}/">{{team.name}}</a> </button>
+            <button class="buttonDesign"> <a href="/teamDisplay/{{team.id}}/">{{team.name}}</a> </button>
             {% endfor %}
         </div>
 
