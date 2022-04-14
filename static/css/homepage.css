@@ -1,0 +1,39 @@
+#main_container{
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+#teams_container{
+    color: black;
+    width: 95%;
+    margin: 15px auto 0 auto;
+}
+.team_entity{
+    background: rgb(193,200,228,.15);
+    border: 1px solid rgba(0, 0, 0, .3);
+}
+.team_name{
+    color: #5680E9;
+    margin: 0 0px 0 15px;
+    font-size: 1.7em;
+    font-weight: 505;
+}
+.team_expand{
+    background: white;
+    display: flex;
+}
+.left_side{
+    color: black;
+    width: 70%;
+}
+.right_side{
+    color: black;
+    width: 30%;
+}
+.sub_heading{
+    color: #5680E9;
+    margin: 0;
+    background: rgb(193,200,228,.15);
+    border: 1px solid rgba(0, 0, 0, .3);
+    padding-left: 16px;
+    font-size: 1.1em;
+}
