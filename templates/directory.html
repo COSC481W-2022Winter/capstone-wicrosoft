@@ -7,7 +7,7 @@
     {% load static %}
     {% block styling %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+        <link rel="stylesheet" href="{% static 'css/directory.css' %}">
     {% endblock %}
     {% block title %}<title>Directory</title>{% endblock %}
     {% block profile_page %}
@@ -20,7 +20,7 @@
 {% block content %}
 <body>
 
-<p>Teams:</p>
+<!-- <p>Teams:</p>
 {% for team in TeamList %}
     <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
 {% endfor %}
@@ -35,7 +35,31 @@
 <p>Projects:</p>
 {% for project in ProjectList %}
  <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-{% endfor %}
+{% endfor %} -->
+
+
+<div class="surroundBody">
+    <div class="leftBar">
+        <p>Teams:</p>
+            {% for team in TeamList %}
+                <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
+            {% endfor %}
+    </div>
+
+    <div class="middleBar">
+        <p>Users:</p>
+            {% for user in UserList %}
+                <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}}{{user.last_name}}</a></li>
+            {% endfor %}
+    </div>
+
+    <div class="rightBar">
+        <p>Projects:</p>
+            {% for project in ProjectList %}
+             <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
+            {% endfor %}
+    </div>
+</div>
 
 
 </body>

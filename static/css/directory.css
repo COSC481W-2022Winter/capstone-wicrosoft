@@ -1,0 +1,33 @@
+.surroundBody {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    padding: 100px;
+}
+
+.teamFlex {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.leftBar {
+    border: 1px solid black;
+    padding: 15px;
+    width: 300px;
+    height: 500px;
+}
+
+.middleBar {
+    border: 1px solid black;
+    padding: 15px;
+    width: 300px;
+    height: 500px;
+}
+
+.rightBar {
+    border: 1px solid black;
+    padding: 15px;
+    width: 300px;
+    height: 500px;
+}
