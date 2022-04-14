@@ -1,39 +1,31 @@
 html {
 
 }
-.mainClass {
-    display: flex;
-    justify-content: center;
-    border-style: solid;
-    flex-direction: column;
+
+.mainDiv {
+    display: flex; justify-content: center;
+}
+.mainHead {
+    font-weight: bold; text-align: center; font-size: x-large
+}
+.boxDesign {
+    width: 600px;
+    padding: 30px;
     margin-top: 10px;
+    border-style: solid;
+    box-shadow: 10px 10px 10px 10px grey;
 }
-.surroundTitle {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding-top: 100px;
-    justify-content: center;
-    text-align: center;
+.heading {
+    font-weight: bold
 }
-
-.surroundLists {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding: 100px;
-
+.headingMargin {
+    font-weight: bold; margin-top: 10px
+}
+.paragraph {
+    margin-left: 10px
 }
 
-.teaminformation {
-    border: 0px solid blue;
-    padding-right: 200px;
-    text-align: center;
-    justify-content: right;
+.buttonDesign {
+    width: 20em; margin: 0 auto; display: flex; justify-content: center
 }
-.projectinformation {
-    border: 0px solid blue;
-    padding-left: 200px;
-    text-align: center;
-    justify-content: left;
-}
+

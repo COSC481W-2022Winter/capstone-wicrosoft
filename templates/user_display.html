@@ -16,36 +16,36 @@
 
 {% block content %}
 <body>
-<div style="display: flex; justify-content: center;">
-    <div style="width: 600px; padding: 30px; margin-top: 10px; border-style: solid; box-shadow: 10px 10px 10px 10px grey;">
+<div class = "mainDiv">
+    <div class = "boxDesign">
             <div>
-                <p style="font-weight: bold; text-align: center; font-size: x-large">{{profile_info.name}}</p>
+                <p class = "mainHead">{{profile_info.name}}</p>
             </div>
             <hr>
             <div>
-                <p style="font-weight: bold">Position: </p>
-                <p style="margin-left: 10px"> {{profile_info.position}}</p>
+                <p class = "heading">Position: </p>
+                <p class = "paragraph"> {{profile_info.position}}</p>
             </div>
             <div>
-                <p style="font-weight: bold">Email: </p>
-                <p style="margin-left: 10px">{{profile_info.email}}</p>
+                <p class = "heading">Email: </p>
+                <p class = "paragraph">{{profile_info.email}}</p>
             </div>
             <div >
-                <p style="font-weight: bold">Projects Attached:</p>
+                <p class = "heading">Projects Attached:</p>
 
                 {% for project in usersProjects.project %}
-                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
+                <button class="buttonDesign"><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
                 {% endfor %}
             </div>
             <div>
-                <p style="font-weight: bold; margin-top: 10px">Teams Attached:</p>
+                <p class="headingMargin">Teams Attached:</p>
                 {% for team in usersTeams %}
-                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></button>
+                <button class="buttonDesign"><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></button>
                 <br>
                 {% endfor %}
             </div>
          <div>
-                <p style="font-weight: bold">Skills:</p>
+                <p class = "heading">Skills:</p>
 
                 {% for skill in usersSkills %}
                 <li>{{ skill.name }}</li>
