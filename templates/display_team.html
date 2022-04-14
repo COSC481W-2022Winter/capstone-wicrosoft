@@ -6,21 +6,40 @@
     {% block title %}<title>{{ team_information.name }}</title>{% endblock %}
 </head>
 {% block content %}
-    <body>
+    <body style="font-size: large">
 
-    <p>Name:{{team_information.name}}</p>
-    <p>Description:{{team_information.short_description}}</p>
+    <div style="display: flex; justify-content: center;">
+        <div style="width: 600px; padding: 30px; margin-top: 10px; border-style: solid; box-shadow: 10px 10px 10px 10px grey;">
+            <div>
+                <p style="font-weight: bold; text-align: center; font-size: x-large">{{team_information.name}}</p>
+            </div>
+             <hr>
+            <div>
+                 <p style="font-weight: bold">Description:</p>
+                 <p style="margin-left: 10px"> {{team_information.short_description}}</p>
+            </div>
+            <div>
+                <p style="font-weight: bold">Team Projects:</p>
+                {% for project in teamProjects %}
+                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
+                {% endfor %}
+            </div>
+            <div>
+                 <p style="font-weight: bold; margin-top: 10px">Team Members:</p>
+                {% for member in teamMembers %}
+                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/userDisplay/{{member.id}}/">{{member.first_name}} {{member.last_name}}</a></button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-    <p>Team Members:</p>
-    {% for member in teamMembers %}
-      <li><a href="/userDisplay/{{member.id}}/">{{member.first_name}} {{member.last_name}}</a></li>
-    {% endfor %}
 
 
-    <p>Team Projects:</p>
-     {% for project in teamProjects %}
-      <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-    {% endfor %}
+
+
+
+
+
     </body>
 {% endblock %}
 </html>
