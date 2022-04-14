@@ -9,17 +9,36 @@
     {% block title %}<title>{{ info.name }}</title>{% endblock %}
 </head>
 {% block content %}
-<body>
-<p>Owner: {{info.owner}}</p>
-<p>ID: {{info.id}}</p>
-<p>Short Description: {{info.short_description}}</p>
-<p>Description: {{info.description}}</p>
+<body style="font-size: large">
+<div style="display: flex; justify-content: center;">
+    <div style="width: 600px; padding: 30px; margin-top: 10px; border-style: solid; box-shadow: 10px 10px 10px 10px grey;">
+        <div>
+            <p style="font-weight: bold">Owner: </p>
+            <p style="margin-left: 10px"> {{info.owner}}</p>
+        </div>
+        <div>
+            <p style="font-weight: bold">ID:</p>
+            <p style="margin-left: 10px"> {{info.id}}</p>
+        </div>
+            <div>
+                 <p style="font-weight: bold">Short Description: </p>
+                 <p style="margin-left: 10px"> {{info.short_description}}</p>
+            </div>
+
+            <div>
+                 <p style="font-weight: bold">Description: </p>
+                 <p style="margin-left: 10px"> {{info.description}}</p>
+            </div>
 
 
-{% for team in projectTeams %}
- <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
-{% endfor %}
+        <div>
+            {% for team in projectTeams %}
+            <button style="width: 20em; margin: 10px auto; display: flex; justify-content: center"> <a href="/teamDisplay/{{team.id}}/">{{team.name}}</a> </button>
+            {% endfor %}
+        </div>
 
+    </div>
+</div>
 
 </body>
 {% endblock %}
