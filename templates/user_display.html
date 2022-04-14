@@ -16,18 +16,11 @@
 
 {% block content %}
 <body>
-<div style=";
-    padding: 0;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    border-style: solid;
-    width:400px">
-    <div style="width: 400px">
-        <div>
-            <p style="font-weight: bold; text-align: center;">{{profile_info.name}}</p>
+<div style="display: flex; justify-content: center;">
+    <div style="width: 600px; padding: 30px; margin-top: 10px; border-style: solid; box-shadow: 10px 10px 10px 10px grey;">
+            <div>
+                <p style="font-weight: bold; text-align: center; font-size: x-large">{{profile_info.name}}</p>
+            </div>
             <hr>
             <div>
                 <p style="font-weight: bold">Position: </p>
@@ -37,37 +30,30 @@
                 <p style="font-weight: bold">Email: </p>
                 <p style="margin-left: 10px">{{profile_info.email}}</p>
             </div>
-
-        </div>
-        <div>
-            <div>
+            <div >
                 <p style="font-weight: bold">Projects Attached:</p>
 
                 {% for project in usersProjects.project %}
-                <button><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
+                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
                 {% endfor %}
             </div>
             <div>
-                <p style="font-weight: bold">Teams Attached:</p>
+                <p style="font-weight: bold; margin-top: 10px">Teams Attached:</p>
                 {% for team in usersTeams %}
-                <button><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></button>
+                <button style="width: 20em; margin: 0 auto; display: flex; justify-content: center"><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></button>
                 <br>
                 {% endfor %}
             </div>
-            <div>
+         <div>
                 <p style="font-weight: bold">Skills:</p>
 
                 {% for skill in usersSkills %}
                 <li>{{ skill.name }}</li>
                 {% endfor %}
             </div>
-        </div>
     </div>
 
 
-    <div>
-
-    </div>
 </div>
 
 </body>
