@@ -8,10 +8,11 @@
     {% block styling %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
         <script src="{% static 'js/teams/teamview.js' %}"></script>
         <script src="{% static 'js/utilities/bootstrap.js' %}"></script>
         <script src="{% static 'js/home/team_expansion.js' %}"></script>
-
+        <script src="{% static 'js/home/project_expansion.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Profile</title>{% endblock %}
     {% block profile_page %}
@@ -25,6 +26,14 @@
 
         <div id="main_container">
 
+            <div id="page_title_container" style="width: initial;">
+                <div id="page_title_info" style="margin-bottom: 5px;width:100%;">
+                    <h2 class="page_title">Resource Management Tool (RMT)</h2>
+                    <p class="page_summary">Welcome to the Resource Management Tool. A tool designed to allow you to view your squad members, along with a
+                    suite of features to increase team cohesion.</p>
+                </div>
+            </div>
+
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Teams</button>
@@ -36,6 +45,7 @@
 
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
                   <div id="teams_container">
 {#                  For team leads to see their teams.#}
                       {% for team in teamsForLead %}
@@ -78,9 +88,82 @@
                           </div>
                       </div>
                       {% endfor %}
+
+                  {% for team in usersTeams %}
+                      <div class="team_entity">
+                          <p class="team_name">
+                              {{ team.name }}
+                              <span class="expansion_activator arrow down"></span>
+                              {% if user.permission == 'MNGR' %}
+                                <a href="/teammaker/edit/{{ team.id }}" class="edit_button">Edit</a>
+                              {% endif %}
+                          </p>
+                          <div class="team_expand d-none">
+                              <div class="left_side">
+                                  <p class="sub_heading">Team Members</p>
+                                  <div class="member_container">
+                                      {% for member in team.team_members.all %}
+                                      <div class="member">
+                                          <a href="/userDisplay/{{ member.id }}" class="member_name">{{ member.first_name }} {{ member.last_name }}</a>
+                                          <p>{{ team.name }}</p>
+                                          <p>{{ member.position }}</p>
+                                      </div>
+                                      {% empty %}
+                                          <p>No members are in this team.</p>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                              <div class="right_side">
+                                  <p class="sub_heading">Team Details</p>
+                                  <div class="team_meta_container">
+                                      <div class="team_description">
+                                          <p class="team_meta_title">Team Description</p>
+                                          <p class="team_meta_content">{{ team.short_description|truncatechars:100 }}</p>
+                                      </div>
+                                      <div class="team_projects">
+                                          <p class="team_meta_title">Team Projects</p>
+                                          <p class="team_meta_content">Should be link</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      {% endfor %}
+
+
                   </div>
+
               </div>
-              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Projects</div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                  <div id="project_container">
+                      <p class="blue_heading">Projects</p>
+
+                    {% for teamprojects in teamsandprojects %}
+                          <div class="project_individual_container">
+                              <p class="project_team_name">{{ teamprojects.team_name }}</p>
+                              <div class="projects d-none">
+                              {% for project in teamprojects.projects %}
+                                  <div class="project_and_edit">
+                                      <a href="/projectDisplay/{{ project.project_id }}" class="project_link">
+                                          {{ project.project_name }}
+                                      </a>
+                                      {% if user.permission == 'MNGR' %}
+                                          <a href="/projectmaker/edit/{{ project.project_id }}" class="edit_button_project">Edit</a>
+                                      {% endif %}
+                                  </div>
+                              {% endfor %}
+                              </div>
+
+                          </div>
+                    {% empty %}
+                        <p>No teams and/or projects</p>
+
+                  {% endfor %}
+
+                  </div>
+
+              </div>
             </div>
 
         </div>
