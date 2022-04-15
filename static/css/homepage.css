@@ -137,9 +137,98 @@
     position: relative;
     top: 6px;
 }
-.edit_button:hover{
+.edit_button:hover, .edit_button_project:hover{
     color: white;
     background-color: #5680e9;
     text-decoration: none;
 }
 /* Team Tab CSS END*/
+/* Project Tab CSS START*/
+#project_container{
+    color: black;
+    border: 1px solid rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    margin: 15px auto 0 auto;
+    width: 95%;
+}
+.blue_heading{
+    color: #5680e9;
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 505;
+    padding: 5px 0;
+    background: rgb(193,200,228,.15);
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    width: 100%;
+}
+.projects{
+    color: black;
+    width: 70%;
+    text-align: center;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+.projects > *{
+    margin: 0;
+}
+.project_individual_container{
+    color: black;
+    width: 80%;
+    border: 1px solid rgba(0,0,0,.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.project_team_name{
+    color: #5680e9;
+    margin: 0;
+    text-align: center;
+    background: rgb(193,200,228,.15);
+    border-bottom: 1px solid rgba(0,0,0,.3);
+    font-size: 1.2em;
+    padding: 4px 0;
+    width: 100%;
+    font-weight: 505;
+    cursor:pointer;
+}
+.project_link{
+    color: black;
+    border: 1px solid rgba(0,0,0,.3);
+    background: rgb(193,200,228,.15);
+    padding: 5px 0;
+    cursor: pointer;
+    width: 90%;
+    margin-right: 4px;
+}
+.project_link:hover{
+    background-color: #5680e9;
+    color: white;
+    text-decoration: none;
+}
+.project_active{
+    background-color: #5680e9;
+    color: white;
+}
+.project_and_edit{
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.edit_button_project{
+    color: #5680e9;
+    border: 2px solid #5680e9;
+    font-size: 1em;
+    border-radius: 15px;
+    padding: 0 10px;
+    font-weight: 505;
+    height: 30px;
+}
