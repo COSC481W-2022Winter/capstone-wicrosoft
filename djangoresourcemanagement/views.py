@@ -152,12 +152,42 @@ def profile_page(request):
                         "permission": user.permission}
 
         teamLeadTeams = Teams.objects.filter(leader=user)
-        usersTeams = get_teams(request)
+        usersTeams = Teams.objects.filter(squadmembers__user=user)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
         userProjectsOwner = Projects.objects.filter(project_owner=user)
 
+        teamsAndTheirProjects = []
+        for team_search in teamLeadTeams:
+            projectsWithTeam = Projects.objects.filter(teams=team_search)
+            if not projectsWithTeam.exists():
+                continue
+            interimTeam = { "team_name" : team_search.name, "projects" : []}
+            for projects in projectsWithTeam:
+                interimDict = {
+                    "project_id" : projects.id,
+                    "project_name" : projects.name
+                }
+                interimTeam["projects"] += [interimDict]
+            teamsAndTheirProjects += [interimTeam]
 
-        return render(request, 'profile.html', {"profile_info": profile_info,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects, "userProjectsOwned" : userProjectsOwner})
+        for team_search in usersTeams:
+            projectsWithTeam = Projects.objects.filter(teams=team_search)
+            print(projectsWithTeam)
+            if not projectsWithTeam.exists():
+                continue
+            interimTeam = {"team_name": team_search.name, "projects": []}
+            for projects in projectsWithTeam:
+                interimDict = {
+                    "project_id": projects.id,
+                    "project_name": projects.name
+                }
+                interimTeam["projects"] += [interimDict]
+            teamsAndTheirProjects += [interimTeam]
+
+        # print(teamsAndTheirProjects)
+        # print(usersTeams)
+
+        return render(request, 'profile.html', {"profile_info": profile_info,"teamsandprojects" : teamsAndTheirProjects,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects, "userProjectsOwned" : userProjectsOwner})
 
     else:
         return redirect('login')
