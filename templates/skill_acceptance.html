@@ -49,28 +49,30 @@
 
                     {% for skill in pendingSkills %}
                         <div class="emp_name_container">
-                            <span style="user-select: none;">{{ skill.user.first_name }} {{ skill.user.last_name }}</span>
+                            <span style="user-select: none;">{{ skill.emp_name }}</span>
                         </div>
                         <div class="individual_skills_container d-none">
-                            <div class="individual_skill_info">
-                                <p>{{ skill.skill.name }}</p>
-                                <p>{{ skill.proficiency.get_level_name_display }}</p>
-                                <div class="radio_group">
-                                    <input class="" type="radio" name='1' id="Approve" value="APP">
-                                    <label class="" for="Approve">Approve</label>
-                                    <input class="" type="radio" name='1' id="Reject" value="REJ">
-                                    <label class="" for="Reject">Reject</label>
-                                </div>
-                                <span class="button_for_comment">Add Reason</span>
-                                <div class="textarea_modal d-none">
-                                    <div class="d-flex justify-content-between align-items-center pl-1 mb-1">
-                                        <p class="modal_title">Reason:</p>
-                                        <span class="close_button" aria-hidden="true">&times</span>
+                            {% for skills in skill.skills %}
+                                <div class="individual_skill_info">
+                                    <p>{{ skills.skill.name }}</p>
+                                    <p>{{ skills.proficiency.get_level_name_display }}</p>
+                                    <div class="radio_group">
+                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Approve" value="APP">
+                                        <label class="" for="Approve">Approve</label>
+                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Reject" value="REJ">
+                                        <label class="" for="Reject">Reject</label>
                                     </div>
-                                    <textarea class="popup_modal" rows="4" cols="40"></textarea>
-                                    <span class="done">Add Reason</span>
+                                    <span class="button_for_comment">Add Reason</span>
+                                    <div class="textarea_modal d-none">
+                                        <div class="d-flex justify-content-between align-items-center pl-1 mb-1">
+                                            <p class="modal_title">Reason:</p>
+                                            <span class="close_button" aria-hidden="true">&times</span>
+                                        </div>
+                                        <textarea class="popup_modal" name="{{skills.id}}reason" rows="4" cols="40"></textarea>
+                                        <span class="done">Add Reason</span>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     {% endfor %}
 
