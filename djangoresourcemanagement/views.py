@@ -655,24 +655,23 @@ def skill_acceptance(request):
         for key in request.POST.items():
             if not key[0] == 'csrfmiddlewaretoken' :
                 #this looks weird but otherwise Django returns a single item even though it's a list
-                #print(key)
-                #print(request.POST.getlist(key[0]))
-                list = request.POST.getlist(key[0])
-                if list:
-                    if  list[0] == 'APP' or  list[0] == 'REJ':
-                        if len(list) == 2:
-                            skillToUpdate = UserToSkill.objects.get(id=key[0])
-                            skillToUpdate.skill_status = list[0]
-                            #print(list[1])
-                            skillToUpdate.skill_status_reason = list[1]
-                            skillToUpdate.save()
+                if key[1] != '':
+                    if int(key[0]):
+                        skillToUpdate = UserToSkill.objects.get(id=int(key[0]))
+                        skillToUpdate.skill_status = key[1]
+                        skillToUpdate.save()
+                    else:
+                        usertoskill_id = key[0][0]
+                        if usertoskill_id not in UserToSkill.objects.filter(id=usertoskill_id):
+                            continue
+                        if UserToSkill.objects.get(id=usertoskill_id).skill_status == "PEN":
+                            continue
                         else:
-                            skillToUpdate = UserToSkill.objects.get(id=key[0])
-                            skillToUpdate.skill_status = list[0]
+                            skillToUpdate = UserToSkill.objects.get(id=int(usertoskill_id))
+                            skillToUpdate.skill_status_reason = key[1]
                             skillToUpdate.save()
-                    successMessage = "Skills have been updated for users and saved"
 
-
+                successMessage = "Skills have been updated for users and saved"
 
 
     employees = []
@@ -680,11 +679,19 @@ def skill_acceptance(request):
         if u.supervisor_id == user.id:
             employees.append(u)
 
+
+    employeeNameAndSkills = []
     listOfPendingSkills = []
-    for employee in employees:
-        for skill in UserToSkill.objects.all():
-            if skill.skill_status == "PEN" and skill.user_id == employee.id:
-                listOfPendingSkills.append(skill)
+    users = Users.objects.filter(supervisor=user)
+    for emp in users:
+        empSkills = UserToSkill.objects.filter(user=emp, skill_status="PEN")
+        if (len(empSkills) == 0): continue
+        interim = {
+            "emp_id" : emp.id,
+            "emp_name" : emp.first_name + " " + emp.last_name,
+            "skills" : empSkills
+        }
+        listOfPendingSkills += [interim]
 
     if successMessage is "":
         return render(request, 'skill_acceptance.html', {'pendingSkills' : listOfPendingSkills})
