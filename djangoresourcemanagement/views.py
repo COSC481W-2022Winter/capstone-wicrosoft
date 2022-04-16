@@ -690,11 +690,12 @@ def import_users(request):
 
         invalidindicies = []
         userdata = []
+        #start loop counter at -1 to add at the start of each loop
         count = -1
 
         for row in excel:
             #checks to see if row is entirely empty, skips if true
-            print(row)
+
             if not any(row):
                 pass
             else:
@@ -743,7 +744,7 @@ def import_users(request):
                 else:
                     if len(row[5]) == 9: #if date is one character short of a valid string, try it with a 0 added to the front
                         row[5] = '0' + row[5]
-                    print(row[5])
+                    
                     if not re.match(RegexStrings['ValidDate'], row[5]):
                         invalidindicies.append((count + 1, 6, 'Improperly formatted date, must be in mm-dd-yyyy or mm/dd/yyyy'))
                     elif not helper.valid_date(row[5]):
