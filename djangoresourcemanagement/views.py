@@ -298,8 +298,7 @@ def team_maker(request):
                 squadmember_list = request.POST.getlist("personID")
                 roles_to_squadmembers = request.POST.getlist("roles")
 
-                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(
-                        projects_list) == 0 or len(squadmember_list) == 0:
+                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "":
                     return render(request, 'team_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
 
                 createdTeam = Teams(
@@ -311,22 +310,19 @@ def team_maker(request):
                 )
                 createdTeam.save()
 
-                for project in projects_list:
-                    createdTeam.team_projects.add(Projects.objects.get(id=project))
+                if len(projects_list) != 0:
+                    for project in projects_list:
+                        createdTeam.team_projects.add(Projects.objects.get(id=project))
 
-                # SquadMembers(user=Users.objects.get(id=team_leader),
-                #              team=createdTeam,
-                #              role=Roles.objects.get(id=1),
-                #              description="Blank For Now").save()
-
-                for member in squadmember_list:
-                    squadEntity = SquadMembers(
-                        user=Users.objects.get(id=member),
-                        team=createdTeam,
-                        role=Roles.objects.get(id=1),
-                        description="Blank For Now"
-                    )
-                    squadEntity.save()
+                if len(squadmember_list) != 0:
+                    for member in squadmember_list:
+                        squadEntity = SquadMembers(
+                            user=Users.objects.get(id=member),
+                            team=createdTeam,
+                            role=Roles.objects.get(id=1),
+                            description="Blank For Now"
+                        )
+                        squadEntity.save()
 
                 return render(request, 'team_maker.html', {'success': "Team" + createdTeam.name + "Created"})
 
@@ -656,13 +652,13 @@ def skill_acceptance(request):
             if not key[0] == 'csrfmiddlewaretoken' :
                 #this looks weird but otherwise Django returns a single item even though it's a list
                 if key[1] != '':
-                    if int(key[0]):
+                    if key[0].isdigit():
                         skillToUpdate = UserToSkill.objects.get(id=int(key[0]))
                         skillToUpdate.skill_status = key[1]
                         skillToUpdate.save()
                     else:
                         usertoskill_id = key[0][0]
-                        if usertoskill_id not in UserToSkill.objects.filter(id=usertoskill_id):
+                        if len(UserToSkill.objects.filter(id=usertoskill_id)) == 0:
                             continue
                         if UserToSkill.objects.get(id=usertoskill_id).skill_status == "PEN":
                             continue
