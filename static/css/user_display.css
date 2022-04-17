@@ -1,32 +1,31 @@
 html {
 
 }
-.surroundTitle {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding-top: 100px;
-    justify-content: center;
-    text-align: center;
+
+.mainDiv {
+    display: flex; justify-content: center;
+}
+.mainHead {
+    font-weight: bold; text-align: center; font-size: x-large
+}
+.boxDesign {
+    width: 600px;
+    padding: 30px;
+    margin-top: 10px;
+    border-style: solid;
+    box-shadow: 10px 10px 10px 10px grey;
+}
+.heading {
+    font-weight: bold
+}
+.headingMargin {
+    font-weight: bold; margin-top: 10px
+}
+.paragraph {
+    margin-left: 10px
 }
 
-.surroundLists {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding: 100px;
-
+.buttonDesign {
+    width: 20em; margin: 0 auto; display: flex; justify-content: center
 }
 
-.teaminformation {
-    border: 0px solid blue;
-    padding-right: 200px;
-    text-align: center;
-    justify-content: right;
-}
-.projectinformation {
-    border: 0px solid blue;
-    padding-left: 200px;
-    text-align: center;
-    justify-content: left;
-}
