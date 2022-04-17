@@ -78,7 +78,15 @@ $(document).ready(function(){
     /*  EVENT SECTION */
 
     //Event when a user clicks the add button for adding members and roles.
-    $('#add_role_assignment').on( "click", addRoleRelation);
+    $('#add_role_assignment').on( "click", function(){
+        let role_select = document.getElementById("role");
+        let squadmember_textbox = document.getElementById("squadmember");
+        if (role_select.selectedIndex === 0 || squadmember_textbox.value === ""){
+            alert("Must choose a role and specify member.")
+            return;
+        }
+        addRoleRelation(this);
+    });
 
     /*
         Event when a member clicks the x button on a member to delete
@@ -144,18 +152,19 @@ $(document).ready(function(){
         Used to create the grey container that has the role and the member when a
         user clicks the add button.
      */
-    function addRoleRelation(){
-        const containerParent = this.parentElement.parentElement;
-        const role_holder = this.parentElement.children[0].children[1];
+
+    function addRoleRelation(passed){
+        const containerParent = passed.parentElement.parentElement;
+        const role_holder = passed.parentElement.children[0].children[1];
 
         let role_value = role_holder.selectedOptions[0].value;
         let role_name = role_holder.selectedOptions[0].innerText;
 
-        const squadmate = this.parentElement.children[1].children[1];
+        const squadmate = passed.parentElement.children[1].children[1];
         let squadmate_name = squadmate.value;
 
-        let userid = this.previousElementSibling.children[1].children[0].value;
-        this.previousElementSibling.children[1].children[0].remove();
+        let userid = passed.previousElementSibling.children[1].children[0].value;
+        passed.previousElementSibling.children[1].children[0].remove();
         squadmate.value = "";
         role[0].selectedIndex = 0;
 
@@ -179,7 +188,7 @@ $(document).ready(function(){
             "value": role_value
         }));
         let closeButton = ($('<span>')).attr({
-            "class" : "making_delete rounded-circle bg-white border"
+            "class" : "making_delete bg-white border"
         });
 
         p1[0].innerText = role_name;

@@ -40,16 +40,23 @@ $(document).ready(function(){
     }
     });
 
-    $('#add_team_assignment').on( "click", addRoleRelation);
+    $('#add_team_assignment').on( "click", function(){
+        let team_search = document.getElementById("team_search");
+        if (team_search.value === ""){
+            alert("Must specify a team.")
+            return;
+        }
+        addRoleRelation(this)
+    });
 
-    function addRoleRelation(){
-        const containerParent = this.parentElement.parentElement;
+    function addRoleRelation(passed){
+        const containerParent = passed.parentElement.parentElement;
 
-        const teamEle = this.parentElement.children[0].children[1];
+        const teamEle = passed.parentElement.children[0].children[1];
         let team_name = teamEle.value;
 
-        let teamid = this.previousElementSibling.children[1].children[0].value;
-        this.previousElementSibling.children[1].children[0].remove();
+        let teamid = passed.previousElementSibling.children[1].children[0].value;
+        passed.previousElementSibling.children[1].children[0].remove();
         teamEle.value = "";
 
         let cont = $('<div>').attr({
