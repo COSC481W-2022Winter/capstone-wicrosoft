@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
         <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
         <script src="{% static 'js/teams/teamview.js' %}"></script>
-        <script src="{% static 'js/utilities/bootstrap.js' %}"></script>
         <script src="{% static 'js/home/team_expansion.js' %}"></script>
         <script src="{% static 'js/home/project_expansion.js' %}"></script>
     {% endblock %}
@@ -75,13 +74,13 @@
                               <div class="right_side">
                                   <p class="sub_heading">Team Details</p>
                                   <div class="team_meta_container">
+                                      <div class="team_leader">
+                                          <p class="team_meta_title">Team Leader</p>
+                                          <a href="/userDisplay/{{ team.leader.id }}" class="team_meta_content" style="color: #0a53be">{{ team.leader.first_name }} {{ team.leader.last_name }}</a>
+                                      </div>
                                       <div class="team_description">
                                           <p class="team_meta_title">Team Description</p>
                                           <p class="team_meta_content">{{ team.short_description|truncatechars:100 }}</p>
-                                      </div>
-                                      <div class="team_projects">
-                                          <p class="team_meta_title">Team Projects</p>
-                                          <p class="team_meta_content">Should be link</p>
                                       </div>
                                   </div>
                               </div>
