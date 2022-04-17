@@ -13,9 +13,19 @@
         <script src="{% static 'js/skill_acceptance/employee_expander.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Skill Acceptance</title>{% endblock %}
-    {% block profile_page %}
-        <li class="nav-item active">
-            <a class="nav-link" href="{% url 'profile' %}">Profile <span class="sr-only">(current)</span></a>
+    {% block admin_tools %}
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="notification_indicator d-none"></span>
+            Admin Tools
+            </a>
+            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" style="background-color: #f8f9fa;" href="{% url 'skillAcceptance' %}">Skill Acceptance
+                    <span id="skill_notification_count" class="badge badge-primary ml-1 d-none"></span>
+                </a>
+                <div class="dropdown-divider m-0"></div>
+                <a class="dropdown-item" href="{% url 'import' %}">Employee Creation</a>
+            </div>
         </li>
     {% endblock %}
 </head>
@@ -43,7 +53,10 @@
             <form method="POST" style="color: black;width: 75%;margin: 0 auto;">
             {% csrf_token %}
 
-                <div class="expandall_collapseall_container"></div>
+                <div class="d-flex justify-content-end">
+                    <span id="expand_all" class="btn rounded-0" style="border: 1px solid black;">Expand All</span>
+                    <span id="collapse_all" class="btn rounded-0 ml-2" style="border: 1px solid black;">Collapse All</span>
+                </div>
 
                 <div id="all_skills_container">
 
