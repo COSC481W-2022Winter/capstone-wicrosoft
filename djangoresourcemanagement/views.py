@@ -630,12 +630,12 @@ def skills(request):
 
     userskills = UserToSkill.objects.all().filter(user=request.user)
 
-    return_skills = []
+    return_skills = userskills
 
-    for row in userskills:
-        return_skills.append((row.skill.name, row.proficiency.get_level_name_display(), row.skill_status))
 
-    print(return_skills)
+    #for row in userskills:
+     #   return_skills.append((row.skill.name, row.proficiency.level_name, row.skill_status))
+
 
     if request.GET:
         if request.GET["success"][0] == "1":
