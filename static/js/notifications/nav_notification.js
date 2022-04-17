@@ -35,11 +35,11 @@ $(document).ready(function(){
         let popoverDOMelement = document.getElementById("clipboard_notify");
 
         if (count === 0)
-            $(popoverDOMelement).attr("data-content","No Skill Review Requests");
+            $(popoverDOMelement).attr("data-bs-content","No Skill Review Requests");
         else if (count === 1)
-            $(popoverDOMelement).attr("data-content",count+" employee has skills that need review.");
+            $(popoverDOMelement).attr("data-bs-content",count+" employee has skills that need review.");
         else
-            $(popoverDOMelement).attr("data-content",count+" employees have skills that need review.")
+            $(popoverDOMelement).attr("data-bs-content",count+" employees have skills that need review.")
     }
 
     function initPopover() {
