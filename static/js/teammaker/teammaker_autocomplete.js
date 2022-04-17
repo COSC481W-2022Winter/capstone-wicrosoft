@@ -75,20 +75,28 @@ $(document).ready(function(){
 
     }
 
-    $('#add_role_assignment').on( "click", addRoleRelation);
+    $('#add_role_assignment').on( "click", function(){
+        let role_select = document.getElementById("role");
+        let squadmember_textbox = document.getElementById("squadmember");
+        if (role_select.selectedIndex === 0 || squadmember_textbox.value === ""){
+            alert("Must choose a role and specify member.")
+            return;
+        }
+        addRoleRelation(this);
+    });
 
-    function addRoleRelation(){
-        const containerParent = this.parentElement.parentElement;
-        const role_holder = this.parentElement.children[0].children[1];
+    function addRoleRelation(passed){
+        const containerParent = passed.parentElement.parentElement;
+        const role_holder = passed.parentElement.children[0].children[1];
 
         let role_value = role_holder.selectedOptions[0].value;
         let role_name = role_holder.selectedOptions[0].innerText;
 
-        const squadmate = this.parentElement.children[1].children[1];
+        const squadmate = passed.parentElement.children[1].children[1];
         let squadmate_name = squadmate.value;
 
-        let userid = this.previousElementSibling.children[1].children[0].value;
-        this.previousElementSibling.children[1].children[0].remove();
+        let userid = passed.previousElementSibling.children[1].children[0].value;
+        passed.previousElementSibling.children[1].children[0].remove();
         squadmate.value = "";
         role[0].selectedIndex = 0;
 

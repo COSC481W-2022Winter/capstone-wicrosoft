@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/utilities/autocomplete.css' %}">
         <link rel="stylesheet" href="{% static 'css/teamForm.css' %}">
         <link rel="stylesheet" href="{% static 'css/edit_form.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
         <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
         <script src="{% static 'js/teammaker/teameditor_autocomplete.js' %}"></script>
         <script src="{% static 'js/utilities/form_validator.js' %}"></script>
@@ -44,61 +45,59 @@
             </div>
         {% endif %}
 
+        <div id="page_title_info" style="margin-bottom:0px;">
+            <h2 class="page_title">Team Editor</h2>
+            <p class="page_summary">This is the Team Editor, it allows for editing of team data.</p>
+        </div>
 
-        <form id="team_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
+
+        <form id="team_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-1" style="width: 900px;">
             <input type="hidden" id="team_lead" name="team_lead" value={{ team.leader_id }}>
             {% csrf_token %}
 
             <div class="border d-flex flex-md-column align-items-center w-100 pb-2">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Information</h2>
+                <h3 class="bg-light border w-100 text-left pb-2 pt-1 pl-2 title">Team Information</h3>
 
-                <table>
-                    <tr>
-                        <td>
+                <div id="full_container">
+                    <div id="left_side">
                             <label for="team_name" >Team Name:</label> <br>
-                            <input id="team_name" type="text" name="team_name" value="{{team.name}}">
-                        </td>
-                        <td>
+                            <input id="team_name" class="left_text" type="text" name="team_name" value="{{team.name}}">
+
                             <label for="team_leader">Team Leader:</label> <br>
-                            <input id="team_leader" type="text" name="team_leader" value="{{team.leader.first_name}} {{team.leader.last_name}}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                            <input id="team_leader" class="left_text" type="text" name="team_leader" value="{{team.leader.first_name}} {{team.leader.last_name}}">
+
                             <label for="short_description">Short Description:</label> <br>
-                            <input id="short_description" type="text" name="short_description" value="{{team.short_description}}">
-                        </td>
-                        <td>
-                            <label for="long_description">Long Description:</label> <br>
-                            <input id="long_description" type="text" name="long_description"  value="{{team.description}}">
-                        </td>
-                    </tr>
+                            <textarea id="short_description" name="short_description" rows="3" cols="40">{{team.short_description}}</textarea>
 
-                </table>
+                            <label for="long_description">Verbose Description:</label> <br>
+                            <textarea id="long_description" name="long_description" rows="4" cols="40">{{team.description}}</textarea>
+                        </div>
 
+                        <div id="right_side">
+                            <label for="type">Type:</label>
+                            <select name="type" id="type" value="{{team.type}}">
+                                <option value="PUB">Public</option>
+                                <option value="PRI">Private</option>
+                            </select>
 
-                <label for="type">Type:</label>
-                <select name="type" id="type"  value="{{team.type}}">
-                    <option value="PUB">Public</option>
-                    <option value="PRI">Private</option>
-                </select>
-
-
-                <div class="d-flex flex-md-column align-items-center">
-                    <label for="projects">Projects:</label>
-                    <input type="text" name="projects" id="projects">
-                    {% for project in team.team_projects.all %}
-                       <div class="border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1">
-                           <p class="single_project m-0">{{project.name}}</p>
-                           <input type="hidden" name="current_proj" value="{{project.id}}">
-                           <span class="delete_project">x</span>
-                       </div>
-                    {% endfor %}
+                            <div class="d-flex flex-md-column align-items-left">
+                                <label for="projects">Projects:</label>
+                                <input type="text" name="projects" id="projects" placeholder="-Choose Projects-">
+                                {% for project in team.team_projects.all %}
+                                   <div class="border bg-light d-flex flex-md-row align-items-center w-100 justify-content-center mt-1">
+                                       <p class="single_project m-0">{{project.name}}</p>
+                                       <input type="hidden" name="current_proj" value="{{project.id}}">
+                                       <span class="delete_project">x</span>
+                                   </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                 </div>
             </div>
 
+
             <div class="border d-flex flex-md-column align-items-center w-100 mt-2 pb-4">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Assigner</h2>
+                <h3 class="bg-light border w-100 text-left pb-2 pt-1 pl-2 title">Team Assigner</h3>
 
                 <div class="d-flex flex-md-row w-100 justify-content-center align-items-center">
 
@@ -117,9 +116,9 @@
 
                     <div class="d-flex flex-md-column mr-1">
                         <label for="squadmember">Squad Member</label>
-                        <input type="text" id="squadmember" name="squadmember">
+                        <input type="text" id="squadmember" name="squadmember" placeholder="-Choose Member-">
                     </div>
-                    <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
+                    <span id="add_role_assignment" class="align-self-center border bg-primary pl-2 pr-2 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;margin-bottom: 8px;">Add</span>
                 </div>
 
                 {% for member in members_and_roles.members %}
