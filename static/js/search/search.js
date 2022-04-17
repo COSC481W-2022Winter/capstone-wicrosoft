@@ -69,7 +69,7 @@ $(document).ready(function(){
         teamArray.forEach((team) => {
             let cont = $("<div>").attr({
             'class' : 'card bg-light mb-3 team rounded-0',
-            'style' : 'width: 300px;height:200px;'
+            'style' : 'width: 300px;height:200px;overflow:auto;'
             });
             let inCont = $("<div>").attr({
             'class' : 'card-header search_card_name rounded-0'
@@ -97,7 +97,7 @@ $(document).ready(function(){
         projectArray.forEach((project) => {
             let cont = $("<div>").attr({
             'class' : 'card bg-light mb-3 team rounded-0',
-            'style' : 'width: 300px;height:200px;'
+            'style' : 'width: 300px;height:200px;overflow:auto;'
             });
             let inCont = $("<div>").attr({
             'class' : 'card-header search_card_name rounded-0'
@@ -125,7 +125,7 @@ $(document).ready(function(){
         personArray.forEach((person) => {
             let cont = $("<div>").attr({
             'class' : 'card bg-light mb-3 team rounded-0',
-            'style' : 'width: 300px;height:200px;'
+            'style' : 'width: 300px;height:200px;overflow:auto;'
             });
             let inCont = $("<div>").attr({
             'class' : 'card-header search_card_name rounded-0'
