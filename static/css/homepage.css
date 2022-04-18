@@ -1,0 +1,234 @@
+#main_container{
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+/* Team Tab CSS START */
+
+/* Styling for arrow design START*/
+.arrow {
+    border: solid #5680e9;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 6px;
+    float: right;
+    position: relative;
+    margin-right: 15px;
+}
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    top: 17px;
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    top: 10px;
+}
+.expansion_activator{
+    cursor: pointer;
+}
+/* Styling for arrow design END*/
+
+#teams_container{
+    color: black;
+    width: 95%;
+    margin: 15px auto 0 auto;
+}
+.team_entity{
+    background: rgb(193,200,228,.15);
+    border: 1px solid rgba(0, 0, 0, .3);
+    margin-bottom: 3px;
+}
+.team_name{
+    color: #5680E9;
+    margin: 0 0px 0 8px;
+    font-size: 1.7em;
+    font-weight: 505;
+}
+.team_expand{
+    background: white;
+    display: flex;
+}
+.left_side{
+    color: black;
+    width: 60%;
+    border-right: 1px solid rgb(0,0,0,.3);
+}
+.right_side{
+    color: black;
+    width: 40%;
+}
+.sub_heading{
+    color: #5680E9;
+    margin: 0;
+    background: rgb(193,200,228,.15);
+    border: 1px solid rgba(0, 0, 0, .3);
+    padding-left: 9px;
+    font-size: 1.1em;
+    font-weight: 505;
+    letter-spacing: 0.3px;
+}
+.member_container{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 5px 5px 5px;
+}
+.member{
+    color: black;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+}
+.member > p{
+    margin: 0;
+}
+.member_name{
+    color: white;
+    width: 100%;
+    text-align: center;
+    background: #5680e9;
+    border-bottom: 1px solid black;
+    font-weight: 505;
+    text-shadow: 1px 1px 1px black;
+    text-decoration: none;
+}
+.member_name:hover{
+    color: white;
+}
+.team_meta_container{
+    color: black;
+    margin-top: 5px;
+}
+.team_meta_container > div{
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+.team_meta_container > div > p {
+    margin: 0;
+}
+.team_meta_title{
+    color: black;
+    font-size: 1.2em;
+    font-weight: 505;
+    text-decoration: underline;
+}
+.team_meta_content{
+    color: black;
+}
+.team_description{
+    color: black;
+}
+.team_projects{
+    color: black;
+}
+.edit_button{
+    display: inline;
+    color: #5680e9;
+    float: right;
+    border: 2px solid #5680e9;
+    font-size: .6em;
+    margin-right: 15px;
+    border-radius: 15px;
+    padding: 0 10px;
+    font-weight: 505;
+    position: relative;
+    top: 6px;
+}
+.edit_button:hover, .edit_button_project:hover{
+    color: white;
+    background-color: #5680e9;
+    text-decoration: none;
+}
+/* Team Tab CSS END*/
+/* Project Tab CSS START*/
+#project_container{
+    color: black;
+    border: 1px solid rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    margin: 15px auto 0 auto;
+    width: 95%;
+}
+.blue_heading{
+    color: #5680e9;
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 505;
+    padding: 5px 0;
+    background: rgb(193,200,228,.15);
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    width: 100%;
+}
+.projects{
+    color: black;
+    width: 70%;
+    text-align: center;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+.projects > *{
+    margin: 0;
+}
+.project_individual_container{
+    color: black;
+    width: 80%;
+    border: 1px solid rgba(0,0,0,.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.project_team_name{
+    color: #5680e9;
+    margin: 0;
+    text-align: center;
+    background: rgb(193,200,228,.15);
+    border-bottom: 1px solid rgba(0,0,0,.3);
+    font-size: 1.2em;
+    padding: 4px 0;
+    width: 100%;
+    font-weight: 505;
+    cursor:pointer;
+}
+.project_link{
+    color: black;
+    border: 1px solid rgba(0,0,0,.3);
+    background: rgb(193,200,228,.15);
+    padding: 5px 0;
+    cursor: pointer;
+    width: 90%;
+    margin-right: 4px;
+}
+.project_link:hover{
+    background-color: #5680e9;
+    color: white;
+    text-decoration: none;
+}
+.project_active{
+    background-color: #5680e9;
+    color: white;
+}
+.project_and_edit{
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.edit_button_project{
+    color: #5680e9;
+    border: 2px solid #5680e9;
+    font-size: 1em;
+    border-radius: 15px;
+    padding: 0 10px;
+    font-weight: 505;
+    height: 30px;
+}

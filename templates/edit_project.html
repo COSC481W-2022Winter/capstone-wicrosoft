@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/utilities/autocomplete.css' %}">
         <link rel="stylesheet" href="{% static 'css/teamForm.css' %}">
         <link rel="stylesheet" href="{% static 'css/edit_frm.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
         <link rel="stylesheet" href="{% static 'css/utilities/validator.css' %}">
         <script src="{% static 'js/utilities/jquery.autocomplete.js' %}"></script>
         <script src="{% static 'js/projectmaker/edit_projectmaker.js' %}"></script>
@@ -45,63 +46,60 @@
             </div>
         {% endif %}
 
+        <div id="page_title_info" style="margin-bottom:0px;">
+            <h2 class="page_title">Project Editor</h2>
+            <p class="page_summary">This is the Project Editor, it allows for editing of project data.</p>
+        </div>
 
-        <form id="project_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-5 w-75">
+        <form id="project_form" action="" method="post" class="d-flex flex-md-column align-items-center h-100 mt-1" style="width: 900px;">
             <input type="hidden" id="project_lead" name="project_lead" value={{ project.project_owner.id }}>
             {% csrf_token %}
 
             <div class="border d-flex flex-md-column align-items-center w-100 pb-2">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Project Information</h2>
-
-                <table>
-                    <tr>
-                        <td>
-                            <label for="project_name" >Project Name:</label> <br>
-                            <input id="project_name" type="text" name="project_name" value="{{project.name}}" class="text_input" required>
-                        </td>
-                        <td>
-                            <label for="project_owner">Project Owner:</label> <br>
-                            <input id="project_owner" type="text" name="project_owner" value="{{project.project_owner.first_name}} {{project.project_owner.last_name}}" class="text_input" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="short_description">Short Description:</label> <br>
-                            <input id="short_description" type="text" name="short_description" class="text_input" value="{{project.short_description}}">
-                        </td>
-                        <td>
-                            <label for="long_description">Long Description:</label> <br>
-                            <input id="long_description" type="text" name="long_description"  value="{{project.description}}" class="text_input">
-                        </td>
-                    </tr>
-
-                </table>
+                <h3 class="bg-light border w-100 text-left pb-2 pt-1 pl-2 title">Project Information</h3>
 
 
-                <label for="type">Type:</label>
-                <select name="type" value="{{project.type}}" id="type">
-                    <option value="PUB">Public</option>
-                    <option value="PRI">Private</option>
-                </select>
+                <div id="full_container">
+                    <div id="left_side">
+                        <label for="project_name" >Project Name:</label> <br>
+                        <input id="project_name" type="text" name="project_name" value="{{project.name}}" class="left_text" required>
 
-                <div class="d-flex flex-md-column align-items-center">
-                    <label for="start_date">Start Date</label><br>
-                    <input type="date" name="start_date" id="start_date0" value="{{project.start_date|date:"Y-m-d" }}" class="date">
-                    <label for="projected_end_date">Projected End Date</label><br>
-                    <input type="date" name="projected_end_date" value="{{project.projected_end_date|date:"Y-m-d"}}" id="projected_end_date" class="date">
+                        <label for="project_leader">Project Owner:</label> <br>
+                        <input id="project_owner" type="text" name="project_owner" class="left_text" value="{{project.project_owner.first_name}} {{project.project_owner.last_name}}" placeholder="-Choose Owner-" required>
+
+                        <label for="short_description">Short Description:</label> <br>
+                        <textarea id="short_description" name="short_description" rows="3" cols="40">{{project.short_description}}</textarea>
+
+                        <label for="long_description">Verbose Description:</label> <br>
+                        <textarea id="long_description" name="long_description" rows="4" cols="40">{{project.description}}</textarea>
+                    </div>
+
+                    <div id="right_side">
+                        <label for="type">Type:</label>
+                        <select name="type" id="type" value="{{project.type}}">
+                            <option value="PUB">Public</option>
+                            <option value="PRI">Private</option>
+                        </select>
+
+                        <label for="start_date">Start Date</label><br>
+                        <input type="date" name="start_date" id="start_date0" value="{{project.start_date|date:"Y-m-d" }}" class="date">
+                        <label for="projected_end_date">Projected End Date</label><br>
+                        <input type="date" name="projected_end_date" id="projected_end_date" value="{{project.projected_end_date|date:"Y-m-d"}}" class="date">
+                    </div>
                 </div>
+
             </div>
 
             <div class="border d-flex flex-md-column align-items-center w-100 mt-2 pb-4">
-                <h2 class="bg-light border w-100 text-center pb-2 pt-1">Team Assigner</h2>
+                <h3 class="bg-light border w-100 text-left pb-2 pt-1 pl-2 title">Team Assigner</h3>
 
                 <div class="d-flex flex-md-row w-100 justify-content-center align-items-center">
 
-                    <div class="d-flex flex-md-column mr-1">
+                    <div class="d-flex flex-md-column mr-1" style="width: 40%;">
                         <label for="team_search">Team</label>
-                        <input type="text" id="team_search" name="team_search_value">
+                        <input type="text" id="team_search" name="team_search_value" placeholder="-Choose Team-">
                     </div>
-                    <span id="add_team_assignment" class="align-self-center border bg-primary pl-2 pr-2 pt-1 pb-1 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;">Add</span>
+                    <span id="add_team_assignment" class="align-self-center border bg-primary pl-2 pr-2 mt-auto text-white" style="text-shadow: 1px 1px 2px black;cursor:pointer;margin-bottom: 8px;">Add</span>
 
                 </div>
 
@@ -115,9 +113,9 @@
 
             </div>
 
-            <div id="submit_group" class="mt-3 w-75 d-flex flex-md-row justify-content-center">
-                <input type="submit" value="Save Changes" class="btn btn-primary w-50 mr-2">
-                <a id="cancel_create" class="btn btn-outline-secondary w-50 ml-2" href="{% url 'profile' %}">Cancel</a>
+            <div id="submit_group" class="mt-3 mb-2 w-100 d-flex flex-md-row justify-content-center">
+                <input type="submit" value="Save Changes" class="btn btn-primary w-50 mr-2 rounded-0" style="background: #5680e9;color:white;font-size: 1.1em;font-weight: 505;text-shadow: 1px 1px 0 black;">
+                <a id="cancel_create" class="btn btn-outline-secondary w-50 ml-2 rounded-0" href="{% url 'profile' %}">Cancel</a>
             </div>
         </form>
     </div>

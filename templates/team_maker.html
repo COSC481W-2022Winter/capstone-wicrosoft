@@ -64,7 +64,7 @@
                         <input id="team_leader" class="left_text" type="text" name="team_leader" placeholder="-Choose Leader-">
 
                         <label for="short_description">Short Description:</label> <br>
-                        <textarea id="short_description" name="short_description" rows="2" cols="40"></textarea>
+                        <textarea id="short_description" name="short_description" rows="3" cols="40"></textarea>
 
                         <label for="long_description">Verbose Description:</label> <br>
                         <textarea id="long_description" name="long_description" rows="4" cols="40"></textarea>
@@ -115,7 +115,8 @@
             </div>
 
             <div id="submit_group" class="mt-3 w-100 d-flex flex-md-row justify-content-center">
-                <input type="submit" value="Create Team" class="btn btn-primary w-100" style="border-radius: 0;background-color: #5680e9;font-size: 1.1em;font-weight: 505;text-shadow: 1px 1px 0 black;">
+                <input type="submit" value="Create Team" class="btn btn-primary w-50" style="border-radius: 0;background-color: #5680e9;font-size: 1.1em;font-weight: 505;text-shadow: 1px 1px 0 black;">
+                <a id="cancel_create" class="btn btn-outline-secondary w-50 ml-2 rounded-0" href="{% url 'profile' %}">Cancel</a>
             </div>
         </form>
     </div>

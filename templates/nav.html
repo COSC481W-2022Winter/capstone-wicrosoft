@@ -1,7 +1,7 @@
 {% load static %}
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/utilities/bootstrap.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/js.cookie.js' %}"></script>
     <script src="{% static 'js/notifications/nav_notification.js' %}"></script>
@@ -90,7 +90,7 @@
 
         </div>
         {% if user.permission == "MNGR" %}
-            <img id="clipboard_notify" src="{% static 'images/components/clipboard-off-white.svg' %}" class="mr-1" data-toggle="popover" title="Skill Notifications" style="height: 1em; width: 1em;font-size: 1.7em;cursor: pointer;">
+            <img id="clipboard_notify" src="{% static 'images/components/clipboard-off-white.svg' %}" class="mr-1" data-toggle="popover" data-popper-placement="left" title="Skill Notifications" style="height: 1em; width: 1em;font-size: 1.7em;cursor: pointer;">
             <span id="notification_count" class="counter_indicator d-none"></span>
         {% endif %}
     </nav>

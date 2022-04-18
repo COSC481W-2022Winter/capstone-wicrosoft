@@ -152,12 +152,42 @@ def profile_page(request):
                         "permission": user.permission}
 
         teamLeadTeams = Teams.objects.filter(leader=user)
-        usersTeams = get_teams(request)
+        usersTeams = Teams.objects.filter(squadmembers__user=user)
         userProjects = Projects.objects.filter(teams__squadmembers__user=user)
         userProjectsOwner = Projects.objects.filter(project_owner=user)
 
+        teamsAndTheirProjects = []
+        for team_search in teamLeadTeams:
+            projectsWithTeam = Projects.objects.filter(teams=team_search)
+            if not projectsWithTeam.exists():
+                continue
+            interimTeam = { "team_name" : team_search.name, "projects" : []}
+            for projects in projectsWithTeam:
+                interimDict = {
+                    "project_id" : projects.id,
+                    "project_name" : projects.name
+                }
+                interimTeam["projects"] += [interimDict]
+            teamsAndTheirProjects += [interimTeam]
 
-        return render(request, 'profile.html', {"profile_info": profile_info,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects, "userProjectsOwned" : userProjectsOwner})
+        for team_search in usersTeams:
+            projectsWithTeam = Projects.objects.filter(teams=team_search)
+            print(projectsWithTeam)
+            if not projectsWithTeam.exists():
+                continue
+            interimTeam = {"team_name": team_search.name, "projects": []}
+            for projects in projectsWithTeam:
+                interimDict = {
+                    "project_id": projects.id,
+                    "project_name": projects.name
+                }
+                interimTeam["projects"] += [interimDict]
+            teamsAndTheirProjects += [interimTeam]
+
+        # print(teamsAndTheirProjects)
+        # print(usersTeams)
+
+        return render(request, 'profile.html', {"profile_info": profile_info,"teamsandprojects" : teamsAndTheirProjects,"teamsForLead" : teamLeadTeams, "usersTeams": usersTeams, "userProjects": userProjects, "userProjectsOwned" : userProjectsOwner})
 
     else:
         return redirect('login')
@@ -268,8 +298,7 @@ def team_maker(request):
                 squadmember_list = request.POST.getlist("personID")
                 roles_to_squadmembers = request.POST.getlist("roles")
 
-                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "" or len(
-                        projects_list) == 0 or len(squadmember_list) == 0:
+                if team_name == "" or team_leader == "" or shrt_desc == "" or long_desc == "" or team_type == "":
                     return render(request, 'team_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
 
                 createdTeam = Teams(
@@ -281,22 +310,19 @@ def team_maker(request):
                 )
                 createdTeam.save()
 
-                for project in projects_list:
-                    createdTeam.team_projects.add(Projects.objects.get(id=project))
+                if len(projects_list) != 0:
+                    for project in projects_list:
+                        createdTeam.team_projects.add(Projects.objects.get(id=project))
 
-                # SquadMembers(user=Users.objects.get(id=team_leader),
-                #              team=createdTeam,
-                #              role=Roles.objects.get(id=1),
-                #              description="Blank For Now").save()
-
-                for member in squadmember_list:
-                    squadEntity = SquadMembers(
-                        user=Users.objects.get(id=member),
-                        team=createdTeam,
-                        role=Roles.objects.get(id=1),
-                        description="Blank For Now"
-                    )
-                    squadEntity.save()
+                if len(squadmember_list) != 0:
+                    for member in squadmember_list:
+                        squadEntity = SquadMembers(
+                            user=Users.objects.get(id=member),
+                            team=createdTeam,
+                            role=Roles.objects.get(id=1),
+                            description="Blank For Now"
+                        )
+                        squadEntity.save()
 
                 return render(request, 'team_maker.html', {'success': "Team" + createdTeam.name + "Created"})
 
@@ -625,24 +651,23 @@ def skill_acceptance(request):
         for key in request.POST.items():
             if not key[0] == 'csrfmiddlewaretoken' :
                 #this looks weird but otherwise Django returns a single item even though it's a list
-                #print(key)
-                #print(request.POST.getlist(key[0]))
-                list = request.POST.getlist(key[0])
-                if list:
-                    if  list[0] == 'APP' or  list[0] == 'REJ':
-                        if len(list) == 2:
-                            skillToUpdate = UserToSkill.objects.get(id=key[0])
-                            skillToUpdate.skill_status = list[0]
-                            #print(list[1])
-                            skillToUpdate.skill_status_reason = list[1]
-                            skillToUpdate.save()
+                if key[1] != '':
+                    if key[0].isdigit():
+                        skillToUpdate = UserToSkill.objects.get(id=int(key[0]))
+                        skillToUpdate.skill_status = key[1]
+                        skillToUpdate.save()
+                    else:
+                        usertoskill_id = key[0][0]
+                        if len(UserToSkill.objects.filter(id=usertoskill_id)) == 0:
+                            continue
+                        if UserToSkill.objects.get(id=usertoskill_id).skill_status == "PEN":
+                            continue
                         else:
-                            skillToUpdate = UserToSkill.objects.get(id=key[0])
-                            skillToUpdate.skill_status = list[0]
+                            skillToUpdate = UserToSkill.objects.get(id=int(usertoskill_id))
+                            skillToUpdate.skill_status_reason = key[1]
                             skillToUpdate.save()
-                    successMessage = "Skills have been updated for users and saved"
 
-
+                successMessage = "Skills have been updated for users and saved"
 
 
     employees = []
@@ -650,11 +675,19 @@ def skill_acceptance(request):
         if u.supervisor_id == user.id:
             employees.append(u)
 
+
+    employeeNameAndSkills = []
     listOfPendingSkills = []
-    for employee in employees:
-        for skill in UserToSkill.objects.all():
-            if skill.skill_status == "PEN" and skill.user_id == employee.id:
-                listOfPendingSkills.append(skill)
+    users = Users.objects.filter(supervisor=user)
+    for emp in users:
+        empSkills = UserToSkill.objects.filter(user=emp, skill_status="PEN")
+        if (len(empSkills) == 0): continue
+        interim = {
+            "emp_id" : emp.id,
+            "emp_name" : emp.first_name + " " + emp.last_name,
+            "skills" : empSkills
+        }
+        listOfPendingSkills += [interim]
 
     if successMessage is "":
         return render(request, 'skill_acceptance.html', {'pendingSkills' : listOfPendingSkills})

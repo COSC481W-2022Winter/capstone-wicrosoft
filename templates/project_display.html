@@ -6,20 +6,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% block title %}<title>{{ info.name }}</title>{% endblock %}
+   {% block title %}<title>{{ info.name }}</title>{% endblock %}
+    {% load static %}
+    {% block styling %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project_display.css' %}">
+    {% endblock %}
 </head>
 {% block content %}
 <body>
-<p>Owner: {{info.owner}}</p>
-<p>ID: {{info.id}}</p>
-<p>Short Description: {{info.short_description}}</p>
-<p>Description: {{info.description}}</p>
+<div class="mainDiv">
+    <div class = "boxDesign">
+        <div>
+            <p class="heading">Owner: </p>
+            <p class="paragraph"> {{info.owner}}</p>
+        </div>
+        <div>
+            <p class="heading">ID:</p>
+            <p class="paragraph"> {{info.id}}</p>
+        </div>
+            <div>
+                 <p class="heading">Short Description: </p>
+                 <p class="paragraph"> {{info.short_description}}</p>
+            </div>
+
+            <div>
+                 <p class="heading">Description: </p>
+                 <p class="paragraph"> {{info.description}}</p>
+            </div>
 
 
-{% for team in projectTeams %}
- <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
-{% endfor %}
+        <div>
+            {% for team in projectTeams %}
+            <button class="buttonDesign"> <a href="/teamDisplay/{{team.id}}/">{{team.name}}</a> </button>
+            {% endfor %}
+        </div>
 
+    </div>
+</div>
 
 </body>
 {% endblock %}

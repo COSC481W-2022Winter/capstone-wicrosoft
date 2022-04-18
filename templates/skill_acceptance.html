@@ -8,13 +8,24 @@
     {% block styling %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-        <link rel="stylesheet" href="{% static 'css/skillAcceptance.css' %}">
-
+        <link rel="stylesheet" href="{% static 'css/skill_acceptance.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <script src="{% static 'js/skill_acceptance/employee_expander.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Skill Acceptance</title>{% endblock %}
-    {% block profile_page %}
-        <li class="nav-item active">
-            <a class="nav-link" href="{% url 'profile' %}">Profile <span class="sr-only">(current)</span></a>
+    {% block admin_tools %}
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="notification_indicator d-none"></span>
+            Admin Tools
+            </a>
+            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" style="background-color: #f8f9fa;" href="{% url 'skillAcceptance' %}">Skill Acceptance
+                    <span id="skill_notification_count" class="badge badge-primary ml-1 d-none"></span>
+                </a>
+                <div class="dropdown-divider m-0"></div>
+                <a class="dropdown-item" href="{% url 'import' %}">Employee Creation</a>
+            </div>
         </li>
     {% endblock %}
 </head>
@@ -28,58 +39,99 @@
     {% endif %}
     <div class="container h-100 d-flex flex-column align-content-center">
 
-        {% if pendingSkills %}
-            <form method="POST">
-                <table id="skillsTable" style="spacing: 15px">
-                    <thead>
+        <div id="page_title_container" style="width: initial;">
+            <div id="page_title_info" style="margin-bottom: 5px;width:100%;">
+                <h2 class="page_title">Skill Acceptance</h2>
+                <p class="page_summary">This is where managers can review the skill request of their employees. Approve or reject skill request depending on any criteria set forth. Each review
+                                        record is labeled: Skill name, their level in said skill, managers approval or rejection, and an optional reason for approval or rejection.</p>
+            </div>
+        </div>
 
-                        <th scope = "col">Employee Name        </th>
-                        <th scope = "col">User Name      </th>
-                        <th scope = "col">Skill Name      </th>
-                        <th scope = "col">Skill Level      </th>
-                       <th scope = "col">     </th>
-                    <th scope = "col">    </th>
-                    <th scope = "col">Rejection Reason(Optional)</th>
-                        </thead>
-                <tbody>
-                {% csrf_token %}
-            {% for skill in pendingSkills %}
-                    <tr>
-                    <!--- <input type="hidden" name="{{skill.id}}" id="{{forloop.counter0}}"> --->
-                        <td>
-                            {{skill.user.first_name}}  {{skill.user.last_name}}
-                        </td>
-                        <td>
-                    {{skill.user.username}}
-                            </td>
-                        <td>
-                    {{skill.skill.name}}
-                        </td>
-                        <td>
-                    {{skill.proficiency.get_level_name_display}}
-                            </td>
-                    <td>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name='{{skill.id}}' id="{{skill.id}}Approve" value="APP">
-                      <label class="form-check-label" for="{{skill.id}}Approve">Approve</label>
-                    </div>
-                    </td>
-                        <td>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio"name="{{skill.id}}" id="{{skill.id}}Reject" value="REJ">
-                      <label class="form-check-label" for="{{skill.id}}Reject">Reject</label>
-                    </div>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" name="{{skill.id}}" id="formGroupExampleInput" >
-                        </td>
-                    </tr>
-            {% endfor %}
-                </tbody>
-                </table>
-                <button type="submitt" class="btn btn-primary">Submit</button>
+
+        {% if pendingSkills %}
+
+            <form method="POST" style="color: black;width: 75%;margin: 0 auto;">
+            {% csrf_token %}
+
+                <div class="d-flex justify-content-end">
+                    <span id="expand_all" class="btn rounded-0" style="border: 1px solid black;">Expand All</span>
+                    <span id="collapse_all" class="btn rounded-0 ml-2" style="border: 1px solid black;">Collapse All</span>
+                </div>
+
+                <div id="all_skills_container">
+
+                    {% for skill in pendingSkills %}
+                        <div class="emp_name_container">
+                            <span style="user-select: none;">{{ skill.emp_name }}</span>
+                        </div>
+                        <div class="individual_skills_container d-none">
+                            {% for skills in skill.skills %}
+                                <div class="individual_skill_info">
+                                    <p>{{ skills.skill.name }}</p>
+                                    <p>{{ skills.proficiency.get_level_name_display }}</p>
+                                    <div class="radio_group">
+                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Approve" value="APP">
+                                        <label class="" for="Approve">Approve</label>
+                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Reject" value="REJ">
+                                        <label class="" for="Reject">Reject</label>
+                                    </div>
+                                    <span class="button_for_comment">Add Reason</span>
+                                    <div class="textarea_modal d-none">
+                                        <div class="d-flex justify-content-between align-items-center pl-1 mb-1">
+                                            <p class="modal_title">Reason:</p>
+                                            <span class="close_button" aria-hidden="true">&times</span>
+                                        </div>
+                                        <textarea class="popup_modal" name="{{skills.id}}reason" rows="4" cols="40"></textarea>
+                                        <span class="done">Add Reason</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <button type="submit" class="btn btn-primary float-right rounded-0 mt-3" style="background-color: #5680e9;">Submit</button>
             </form>
         {% endif %}
+
+{#        {% if pendingSkills %}#}
+{#            <form method="POST">#}
+{#                {% csrf_token %}#}
+{#            {% for skill in pendingSkills %}#}
+{#                    <tr>#}
+{#                    <!--- <input type="hidden" name="{{skill.id}}" id="{{forloop.counter0}}"> --->#}
+{#                        <td>#}
+{#                            {{skill.user.first_name}}  {{skill.user.last_name}}#}
+{#                        </td>#}
+{#                        <td>#}
+{#                    {{skill.user.username}}#}
+{#                            </td>#}
+{#                        <td>#}
+{#                    {{skill.skill.name}}#}
+{#                        </td>#}
+{#                        <td>#}
+{#                    {{skill.proficiency.get_level_name_display}}#}
+{#                            </td>#}
+{#                    <td>#}
+{#                    <div class="form-check form-check-inline">#}
+{#                      <input class="form-check-input" type="radio" name='{{skill.id}}' id="{{skill.id}}Approve" value="APP">#}
+{#                      <label class="form-check-label" for="{{skill.id}}Approve">Approve</label>#}
+{#                    </div>#}
+{#                    </td>#}
+{#                        <td>#}
+{#                    <div class="form-check form-check-inline">#}
+{#                      <input class="form-check-input" type="radio"name="{{skill.id}}" id="{{skill.id}}Reject" value="REJ">#}
+{#                      <label class="form-check-label" for="{{skill.id}}Reject">Reject</label>#}
+{#                    </div>#}
+{#                        </td>#}
+{#                        <td>#}
+{#                            <input type="text" class="form-control" name="{{skill.id}}" id="formGroupExampleInput" >#}
+{#                        </td>#}
+{#                    </tr>#}
+{#            {% endfor %}#}
+{#                <button type="submit" class="btn btn-primary">Submit</button>#}
+{#            </form>#}
+{#        {% endif %}#}
 
 
 </div>

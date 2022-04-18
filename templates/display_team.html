@@ -4,23 +4,39 @@
 <head>
     <meta charset="UTF-8">
     {% block title %}<title>{{ team_information.name }}</title>{% endblock %}
+    {% load static %}
+    {% block styling %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/team_display.css' %}">
+    {% endblock %}
 </head>
 {% block content %}
     <body>
 
-    <p>Name:{{team_information.name}}</p>
-    <p>Description:{{team_information.short_description}}</p>
-
-    <p>Team Members:</p>
-    {% for member in teamMembers %}
-      <li><a href="/userDisplay/{{member.id}}/">{{member.first_name}} {{member.last_name}}</a></li>
-    {% endfor %}
-
-
-    <p>Team Projects:</p>
-     {% for project in teamProjects %}
-      <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-    {% endfor %}
+    <div class = "mainDiv">
+        <div class="boxDesign">
+            <div>
+                <p class = "mainHead">{{team_information.name}}</p>
+            </div>
+             <hr>
+            <div>
+                 <p class = "heading">Description:</p>
+                 <p class = "paragraph"> {{team_information.short_description}}</p>
+            </div>
+            <div>
+                <p class = "heading">Team Projects:</p>
+                {% for project in teamProjects %}
+                <button class = "buttonDesign"><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></button>
+                {% endfor %}
+            </div>
+            <div>
+                 <p class = "headingMargin">Team Members:</p>
+                {% for member in teamMembers %}
+                <button class = "buttonDesign"><a href="/userDisplay/{{member.id}}/">{{member.first_name}} {{member.last_name}}</a></button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     </body>
 {% endblock %}
 </html>
