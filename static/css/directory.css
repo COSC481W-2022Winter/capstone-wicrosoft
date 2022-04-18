@@ -2,7 +2,9 @@
     display: flex;
     align-content: center;
     justify-content: space-evenly;
-    padding: 100px;
+    padding: 25px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
 
 .teamFlex {
@@ -13,21 +15,41 @@
 
 .leftBar {
     border: 1px solid black;
-    padding: 15px;
+    padding: 0;
     width: 300px;
     height: 500px;
 }
 
 .middleBar {
     border: 1px solid black;
-    padding: 15px;
+    padding: 0;
     width: 300px;
     height: 500px;
 }
 
 .rightBar {
     border: 1px solid black;
-    padding: 15px;
+    padding: 0;
     width: 300px;
     height: 500px;
+}
+
+.itemHeader {
+    background: blue;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 0;
+    margin: auto;
+    height: 40px;
+}
+
+.innerBar {
+    margin: 0;
+    padding: 15px;
+}
+
+.title {
+    padding: 15px;
+    margin: auto;
 }

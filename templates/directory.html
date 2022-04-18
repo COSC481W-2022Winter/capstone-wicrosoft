@@ -20,46 +20,42 @@
 {% block content %}
 <body>
 
-<!-- <p>Teams:</p>
-{% for team in TeamList %}
-    <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
-{% endfor %}
-
-<br><br>
-<p>Users:</p>
-{% for user in UserList %}
-    <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}}{{user.last_name}}</a></li>
-{% endfor %}
-
-<br><br>
-<p>Projects:</p>
-{% for project in ProjectList %}
- <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-{% endfor %} -->
 
 
+<h2 class="title">Company Directory</h2>
 <div class="surroundBody">
     <div class="leftBar">
-        <p>Teams:</p>
+        <div class="itemHeader"><p>Teams:</p></div>
+        <div class="innerBar">
             {% for team in TeamList %}
                 <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
             {% endfor %}
+        </div>
+
     </div>
 
     <div class="middleBar">
-        <p>Users:</p>
+        <div class="itemHeader"><p>Users:</p></div>
+        <div class="innerBar">
             {% for user in UserList %}
                 <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}}{{user.last_name}}</a></li>
             {% endfor %}
+        </div>
+
     </div>
 
     <div class="rightBar">
-        <p>Projects:</p>
+        <div class="itemHeader"><p>Projects:</p></div>
+        <div class="innerBar">
             {% for project in ProjectList %}
              <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
             {% endfor %}
+        </div>
+
     </div>
 </div>
+
+
 
 
 </body>
