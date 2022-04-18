@@ -3,8 +3,8 @@
     align-content: center;
     justify-content: space-evenly;
     padding: 25px;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 300px;
+    padding-right: 300px;
 }
 
 .teamFlex {
@@ -18,6 +18,8 @@
     padding: 0;
     width: 300px;
     height: 500px;
+    overflow: auto;
+    background: #F6F6F6;
 }
 
 .middleBar {
@@ -25,6 +27,8 @@
     padding: 0;
     width: 300px;
     height: 500px;
+    overflow: auto;
+    background: #F6F6F6;
 }
 
 .rightBar {
@@ -32,16 +36,23 @@
     padding: 0;
     width: 300px;
     height: 500px;
+    overflow: auto;
+    background: #F6F6F6;
 }
 
 .itemHeader {
-    background: blue;
+    background: #5680e9;
     text-align: center;
     color: white;
     font-weight: bold;
-    padding: 0;
+    padding: 5px 0 5px 0;
     margin: auto;
-    height: 40px;
+    text-shadow: 0px 1px 1px black;
+    font-size: 16pt;
+}
+
+.itemHeader > p {
+    margin: 0;
 }
 
 .innerBar {
@@ -52,4 +63,8 @@
 .title {
     padding: 15px;
     margin: auto;
+}
+
+a {
+    color:black;
 }
