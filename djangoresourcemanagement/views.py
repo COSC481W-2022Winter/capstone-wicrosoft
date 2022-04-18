@@ -977,6 +977,19 @@ def display_user(request, id):
 
     return redirect('login')
 
+def directory(request):
+    if request.user.is_authenticated:
+        projectlist = Projects.objects.all()
+        teamslist = Teams.objects.all()
+        userlist = Users.objects.all()
+
+        return render(request, 'directory.html',
+                      {"TeamList": teamslist, "ProjectList": projectlist, "UserList":
+                          userlist})
+
+
+    return redirect('login')
+
 # Username 0
 # Password 1
 # Email 2

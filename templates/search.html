@@ -14,9 +14,17 @@
     {% endblock %}
     {% block title %}<title>Search Utility</title>{% endblock %}
     {% block search_page %}
-        <li class="nav-item active">
-            <a class="nav-link" href="{% url 'search' %}">Search</a>
-        </li>
+       <li class="nav-item dropdown m-auto active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Company Index
+                            </a>
+                            <div class="dropdown-menu p-0 rounded-0" style="box-shadow: 1px 1px 2px black;" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item"  href="{% url 'search' %}">Search</a>
+                                </a>
+                                <div class="dropdown-divider m-0"></div>
+                                 <a class="dropdown-item"  href="{% url 'directory' %}">Directory</a>
+                            </div>
+                        </li>
     {% endblock %}
 </head>
 {% block content %}
