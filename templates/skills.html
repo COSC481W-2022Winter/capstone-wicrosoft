@@ -56,9 +56,9 @@
     {% endif %}
     {% for skill in skills %}
     <tr>
-        <td style="padding-left:9px;">{{i.skill.name}}</td>
-        <td style="padding-left:9px;">{{i.proficiency.get_level_name_display}}</td>
-        <td style="padding-left:9px;" class="statsCol">{{i.skill_status}}</td>
+        <td style="padding-left:9px;">{{skill.skill.name}}</td>
+        <td style="padding-left:9px;">{{skill.proficiency.get_level_name_display}}</td>
+        <td style="padding-left:9px;" class="statsCol">{{skill.skill_status}}</td>
     </tr>
     {% endfor %}
   </tbody>
