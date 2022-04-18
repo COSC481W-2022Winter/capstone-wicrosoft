@@ -7,6 +7,9 @@
     {% load static %}
     {% block styling %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/importusers.css' %}">
+        <script type="text/javascript" src="{% static 'js/importusers/importusers.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Import Users</title>{% endblock %}
     {% block admin_tools %}
@@ -42,32 +45,44 @@
         {% else %}
 
         {% endif %}
-            <h2 class="heading">Create Accounts</h2>
-            <p class="subheading">Please choose a file to create accounts</p>
+            <h2 class="page_title">Employee Account Creator</h2>
+            <p class="page_summary">This is where managers can add new Employees to the company's database. The Employee account creator takes the data from a valid Excel file or Comma Separated Value(CSV) file. Below are the rules that the Excel and CSV file must follow for successful Employee Creation.</p>
         </div>
+                <div class="row justify-content-between">
+                    <p class="row-cols-md-4 font-weight-bold">Please choose a valid file to upload</p>
+                    <p class="row-cols-md-4 font-weight-bold">*Order matters with Input file used*</p>
+                </div>
+            <form action = "" method="post" class="" enctype="multipart/form-data">
+                {% csrf_token %}
 
-        <form action = "" method="post" class="" enctype="multipart/form-data">
-            {% csrf_token %}
 
-            <div class="input-group mb-3">
-              <div class="custom-file">
-                <input type="file" name="userfile" class="custom-file-input" id="userfile">
-                <label class="custom-file-label" for="userfile">Choose file</label>
-              </div>
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Upload</button>
-              </div>
-            </div>
-            <script>
-            $('#userfile').on('change',function(){
-                //get the file name
-                var fileName = $(this).val().replace('C:\\fakepath\\', " ");
-                //replace the "Choose a file" label
-                $(this).next('.custom-file-label').html(fileName);
-            })
-        </script>
-        </form>
-        <table class = "table">
+                <div class="input-group mb-3">
+
+                  <div class="custom-file">
+                    <input type="file" name="userfile" class="custom-file-input" id="userfile">
+                    <label class="custom-file-label" for="userfile">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Upload</button>
+                  </div>
+                </div>
+
+                <script>
+                $('#userfile').on('change',function(){
+                    //get the file name
+                    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+                    //replace the "Choose a file" label
+                    $(this).next('.custom-file-label').html(fileName);
+                })
+            </script>
+            </form>
+
+        <div class="row font-weight-bold">Excel File Format Requirements</div>
+        <div class="btn-group mb-1">
+            <button class="btn btn-primary" type="button" value="ToggleList" id="ToggleList">List View</button>
+            <button class="btn btn-primary" type="button" value="ToggleTable" id="ToggleTable">Table View</button>
+        </div>
+        <table class = "table-responsive table-bordered table-striped table-hover caption-top" id="importUsersList">
             <thead>
             <th scope = "col"></th>
             <th scope = "col">UserName        </th>
@@ -116,6 +131,77 @@
             </tr>
             </tbody>
         </table>
+
+        <table class = "table-bordered table-striped table-hover caption-top" id="importUsersTable">
+            <thead>
+            <th scope = "col">Attribute</th>
+            <th scope = "col">Constraints</th>
+            <th scope = "col">Optional    </th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Username</td>
+                <td>Username must be Unique</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>Must contain one Uppercase, one Lower case, and one number.</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>Must be valid Email</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td>Alphabets only</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>Alphabets only</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Hire Date</td>
+                <td>Date format: mm-dd-yyyy</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>Must not contain invalid special characters</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Position</td>
+                <td>Any specified role in the company</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Marital Status</td>
+                <td>Alphabets only</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Pay rate</td>
+                <td>Numeric Format only</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Supervisor</td>
+                <td>Valid Employee username</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Mentor</td>
+                <td>Valid Employee username</td>
+                <td>Yes</td>
+            </tr>
+            </tbody>
+        </table>
+
         {% if Success == True %}
             {% for user in Output %}
             <ul> User : {{user.0}} Email : {{user.1}} Has been created </ul>
