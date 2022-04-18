@@ -11,29 +11,36 @@ $(document).ready(function(){
        if ($(this).hasClass("filter_active")) {
            $(this).removeClass("filter_active");
            filter.splice(filter.indexOf(this.innerText), 1);
+           doSearch(document.getElementById("search_box") , 2);
        }
        else{
            filter.push(this.innerText);
            $(this).addClass("filter_active");
+           doSearch(document.getElementById("search_box") , 2);
        }
     });
 
     $('#search_box').on("input paste",function (){
-        if (this.value === "") {
-            currentQuery = this.value;
+        doSearch(this, 1);
+    });
+
+    function doSearch(input, id){
+        if (input.value === "") {
+            currentQuery = input.value;
             removeEnitites();
             return;
         }
 
-        query = this.value;
+        query = input.value;
 
-        if (query === currentQuery)
+        if (query === currentQuery && id === 1)
             return;
 
         doRequest(query,combineFilter());
 
         currentQuery = query;
-    });
+    }
+
 
     function combineFilter(){
         let finalString = "";
