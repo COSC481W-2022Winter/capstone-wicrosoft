@@ -14,7 +14,7 @@ def valid_date(date):
         date = date.split("-")
     else:
         date = date.split("/")
-    print(date)
+
 
 
 
@@ -31,15 +31,15 @@ def create__valid_work_email(name):
     email = name + '@wicrosoft.com'
 
     if not Users.objects.all().filter(work_email=email).exists():
-        print('returning unedited email')
+
         return email
 
     counter = 1
 
     while counter != -1:
-        print('got to while loop')
+
         email = name + str(counter) + '@wicrosoft.com'
         if not Users.objects.all().filter(work_email=email).exists():
-            print('got to if in while')
+
             return email
         counter += 1

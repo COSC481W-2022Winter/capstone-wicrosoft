@@ -172,7 +172,7 @@ def profile_page(request):
 
         for team_search in usersTeams:
             projectsWithTeam = Projects.objects.filter(teams=team_search)
-            print(projectsWithTeam)
+
             if not projectsWithTeam.exists():
                 continue
             interimTeam = {"team_name": team_search.name, "projects": []}

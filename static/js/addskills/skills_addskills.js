@@ -95,7 +95,7 @@ function addStatusCircles(){
             rowStatusInline.setAttribute("class", "btn popoverReason");
 
             rowStatusInline.setAttribute("id" ,"popoverReason");
-            if(rowStatus.getAttribute("value") === null || 'null'|| '')
+            if(rowStatus.getAttribute("value") === null || rowStatus.getAttribute("value") === 'null' || rowStatus.getAttribute("value")=== '')
                 rowStatusInline.setAttribute("data-bs-content", "No reason provided by manager, Contact them directly for further information");
             else
                 rowStatusInline.setAttribute("data-bs-content", rowStatus.getAttribute("value"));
@@ -142,10 +142,9 @@ function addStatusCircles(){
             rowStatusInline.setAttribute("class", "btn popoverReason");
 
             rowStatusInline.setAttribute("id" ,"popoverReason");
-            if(rowStatus.getAttribute("value") === null || 'null' || '') {
-                console.log("got here");
+            if(rowStatus.getAttribute("value") === null || rowStatus.getAttribute("value") === 'null' || rowStatus.getAttribute("value")=== '')
                 rowStatusInline.setAttribute("data-bs-content", "No reason provided by manager, Contact them directly for further information");
-            }else
+            else
                 rowStatusInline.setAttribute("data-bs-content", rowStatus.getAttribute("value"));
 
             rowStatusInline.setAttribute("data-placement", "right");
