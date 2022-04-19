@@ -218,6 +218,11 @@ def get_project_team(request,project_id):
                 teams_attached_list = request.POST.getlist("team_to_attach_id")
                 teams_delete_attached_list = request.POST.getlist("team_to_delete_id")
 
+                try:
+                    no_end = request.POST["no_end_date"]
+                except:
+                    no_end = "false"
+
                 # if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
                 #     return render(request, 'edit_project.html', {'Fail': "Invalid input, Make sure all fields are input",'project': project, 'teams': teamsInTheProject})
 
@@ -229,7 +234,10 @@ def get_project_team(request,project_id):
                 editedProject.description = long_desc
                 editedProject.type = project_type
                 editedProject.start_date = project_start
-                editedProject.projected_end_date = projected_end
+                if no_end == 'true':
+                    editedProject.projected_end_date = datetime(9999, 12,31)
+                else:
+                    editedProject.projected_end_date = projected_end
                 editedProject.save()
 
                 for team in teams_delete_attached_list:
@@ -428,24 +436,46 @@ def project_maker(request):
                 shrt_desc       = request.POST["short_description"]
                 long_desc       = request.POST["long_description"]
                 project_type    = request.POST["type"]
-                projected_end   = request.POST["projected_end_date"]
+                try:
+                    projected_end   = request.POST["projected_end_date"]
+                except:
+                    projected_end = "EMPTY"
                 project_start   = request.POST["start_date"]
                 teams_attached_list = request.POST.getlist("team_to_attach_id")
 
+                try:
+                    no_end = request.POST["no_end_date"]
+                except:
+                    no_end = "false"
 
-                if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
+
+
+                if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or (projected_end == "" and no_end == "false") or project_start == "":
                         return render(request, 'project_maker.html', {'Fail': "Invalid input, Make sure all fields are input"})
 
-                createdProject = Projects(
-                    name=project_name,
-                    project_owner=Users.objects.get(id=project_owner),
-                    short_description=shrt_desc,
-                    description=long_desc,
-                    type=project_type,
-                    start_date=project_start,
-                    projected_end_date=projected_end
-                )
-                createdProject.save()
+                if no_end == 'true':
+                    createdProject = Projects(
+                        name=project_name,
+                        project_owner=Users.objects.get(id=project_owner),
+                        short_description=shrt_desc,
+                        description=long_desc,
+                        type=project_type,
+                        start_date=project_start,
+                        projected_end_date = datetime(9999, 12,31)
+                    )
+                    createdProject.save()
+
+                else:
+                    createdProject = Projects(
+                        name=project_name,
+                        project_owner=Users.objects.get(id=project_owner),
+                        short_description=shrt_desc,
+                        description=long_desc,
+                        type=project_type,
+                        start_date=project_start,
+                        projected_end_date=projected_end
+                    )
+                    createdProject.save()
 
                 for team in teams_attached_list:
                     currentTeam = Teams.objects.get(id=team)
