@@ -85,9 +85,14 @@
                         <input type="date" name="start_date" id="start_date0" value="{{project.start_date|date:"Y-m-d" }}" class="date">
                         <div class="projected_end">
                              <label for="projected_end_date">Projected End Date</label><br>
-                             <input type="date" name="projected_end_date" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
-                             <input type="checkbox" id="end_date_checker" name="no_end_date" value="true">
-                             <label for="end_date_checker" style="font-size: .8em;">No End Date</label>
+                            {% if project.projected_end_date|date:"Y" == "9999" %}
+                                <input type="date" name="projected_end_date" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
+                                <input type="checkbox" id="end_date_checker" name="no_end_date" value="true" checked>
+                            {% else %}
+                                <input type="date" name="projected_end_date" id="projected_end_date" class="date" value="{{ project.projected_end_date|date:"Y-m-d" }}">
+                                <input type="checkbox" id="end_date_checker" name="no_end_date" value="true">
+                            {% endif %}
+                            <label for="end_date_checker" style="font-size: .8em;">No End Date</label>
                         </div>
                     </div>
                 </div>

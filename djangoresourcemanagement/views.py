@@ -223,8 +223,8 @@ def get_project_team(request,project_id):
                 except:
                     no_end = "false"
 
-                # if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or projected_end == "" or project_start == "":
-                #     return render(request, 'edit_project.html', {'Fail': "Invalid input, Make sure all fields are input",'project': project, 'teams': teamsInTheProject})
+                if project_name == "" or project_owner == "" or shrt_desc == "" or long_desc == "" or project_type == "" or (projected_end == "" and no_end == "false") or project_start == "":
+                    return render(request, 'edit_project.html', {'Fail': "Invalid input, Make sure all fields are input",'project': project, 'teams': teamsInTheProject})
 
                 editedProject = Projects.objects.get(id=project_id)
 
