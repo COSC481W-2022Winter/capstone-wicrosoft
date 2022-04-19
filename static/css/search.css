@@ -39,7 +39,6 @@ label[for=search_box]{
 
 #search_parent {
     display: flex;
-    width: 1200px;
     margin: 10px auto 20px auto;
     justify-content: center;
 }
@@ -48,7 +47,7 @@ label[for=search_box]{
     color: black;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 60%;
     align-items: center;
 }
 

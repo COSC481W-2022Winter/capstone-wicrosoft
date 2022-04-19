@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/profile.css' %}">
         <link rel="stylesheet" href="{% static 'css/skill_acceptance.css' %}">
         <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_formatting.css' %}">
         <script src="{% static 'js/skill_acceptance/employee_expander.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Skill Acceptance</title>{% endblock %}
@@ -37,7 +38,8 @@
          {{successMessage}}
         </div>
     {% endif %}
-    <div class="container h-100 d-flex flex-column align-content-center">
+
+    <div id="main_container">
 
         <div id="page_title_container" style="width: initial;">
             <div id="page_title_info" style="margin-bottom: 5px;width:100%;">
@@ -46,7 +48,6 @@
                                         record is labeled: Skill name, their level in said skill, managers approval or rejection, and an optional reason for approval or rejection.</p>
             </div>
         </div>
-
 
         {% if pendingSkills %}
 
@@ -132,7 +133,6 @@
 {#                <button type="submit" class="btn btn-primary">Submit</button>#}
 {#            </form>#}
 {#        {% endif %}#}
-
 
 </div>
 

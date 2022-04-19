@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/utilities/spinner.boot.css' %}">
         <link rel="stylesheet" href="{% static 'css/search.css' %}">
         <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_formatting.css' %}">
         <script src="{% static 'js/search/search.js' %}"></script>
     {% endblock %}
     {% block title %}<title>Search Utility</title>{% endblock %}
@@ -30,26 +31,27 @@
 {% block content %}
 <body>
 
-    <div id="page_title_container">
-        <div id="page_title_info">
-            <h2 class="page_title">Search Utility</h2>
-            <p class="page_summary">Allows user to search through all the public teams, projects, and employees within the company.</p>
-        </div>
-    </div>
-
-    <div id="search_parent">
-        <div id="search_container">
-            <div id="filter_container">
-                <span class="filter_button">Teams</span>
-                <span class="filter_button">Projects</span>
-                <span class="filter_button">Employees</span>
+    <div id="main_container">
+        <div id="page_title_container" style="width: initial;">
+            <div id="page_title_info" style="margin-bottom: 5px;width:100%;">
+                <h2 class="page_title">Search Utility</h2>
+                <p class="page_summary">Allows user to search through all the public teams, projects, and employees within the company.</p>
             </div>
-            <input type="text" name="search_input" id="search_box">
-            <img class="search_icon" src="{% static 'images/components/search-grey.svg' %}">
         </div>
-    </div>
 
-    <div id="entity_container">
+        <div id="search_parent">
+            <div id="search_container">
+                <div id="filter_container">
+                    <span class="filter_button">Teams</span>
+                    <span class="filter_button">Projects</span>
+                    <span class="filter_button">Employees</span>
+                </div>
+                <input type="text" name="search_input" id="search_box">
+                <img class="search_icon" src="{% static 'images/components/search-grey.svg' %}">
+            </div>
+        </div>
+
+        <div id="entity_container">
 
 {#        <div class="card bg-light mb-3 team rounded-0" style="max-width: 18rem;">#}
 {#            <div class="card-header search_card_name rounded-0"><a class="title_link" href="#">The Dragon Slayers</a></div>#}
@@ -109,6 +111,7 @@
 {#            </div>#}
 {#        </div>#}
 
+        </div>
     </div>
 
 </body>

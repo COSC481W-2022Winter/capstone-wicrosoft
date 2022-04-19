@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/directory.css' %}">
         <link rel="stylesheet" href="{% static 'css/page_titles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/page_formatting.css' %}">
     {% endblock %}
     {% block title %}<title>Directory</title>{% endblock %}
    {% block search_page %}
@@ -28,43 +29,46 @@
 
 {% block content %}
 <body>
-    <div id="page_title_info" style="margin-bottom:0px;">
-        <h2 class="page_title">Company Directory</h2>
-        <p class="page_summary">This is the company directory. All teams, users, and projects are viewable from this list.</p>
+    <div id="main_container">
+        <div id="page_title_container" style="width: initial;">
+            <div id="page_title_info" style="margin-bottom: 5px;width:100%;">
+                <h2 class="page_title">Company Directory</h2>
+                <p class="page_summary">This is the company directory. All teams, users, and projects are viewable from this list.</p>
+            </div>
+        </div>
+
+        <div class="surroundBody">
+            <div class="leftBar">
+                <div class="itemHeader"><p>Teams:</p></div>
+                <div class="innerBar">
+                    {% for team in TeamList %}
+                        <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="middleBar">
+                <div class="itemHeader"><p>Users:</p></div>
+                <div class="innerBar">
+                    {% for user in UserList %}
+                        <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}} {{user.last_name}}</a></li>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="rightBar">
+                <div class="itemHeader"><p>Projects:</p></div>
+                <div class="innerBar">
+                    {% for project in ProjectList %}
+                     <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
     </div>
-
-    <div class="surroundBody">
-        <div class="leftBar">
-            <div class="itemHeader"><p>Teams:</p></div>
-            <div class="innerBar">
-                {% for team in TeamList %}
-                    <li><a href="/teamDisplay/{{team.id}}/">{{team.name}}</a></li>
-                {% endfor %}
-            </div>
-
-        </div>
-
-        <div class="middleBar">
-            <div class="itemHeader"><p>Users:</p></div>
-            <div class="innerBar">
-                {% for user in UserList %}
-                    <li><a href="/userDisplay/{{user.id}}/">{{user.first_name}} {{user.last_name}}</a></li>
-                {% endfor %}
-            </div>
-
-        </div>
-
-        <div class="rightBar">
-            <div class="itemHeader"><p>Projects:</p></div>
-            <div class="innerBar">
-                {% for project in ProjectList %}
-                 <li><a href="/projectDisplay/{{project.id}}/">{{project.name}}</a></li>
-                {% endfor %}
-            </div>
-
-        </div>
-    </div>
-
 
 </body>
 {% endblock %}
