@@ -687,7 +687,7 @@ def skill_acceptance(request):
                         skillToUpdate.skill_status = key[1]
                         skillToUpdate.save()
                     else:
-                        usertoskill_id = key[0][0]
+                        usertoskill_id = key[0].split(" ")[0]
                         if len(UserToSkill.objects.filter(id=usertoskill_id)) == 0:
                             continue
                         if UserToSkill.objects.get(id=usertoskill_id).skill_status == "PEN":
