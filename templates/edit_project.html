@@ -61,16 +61,16 @@
 
                 <div id="full_container">
                     <div id="left_side">
-                        <label for="project_name" >Project Name:</label> <br>
+                        <label for="project_name" >Project Name:</label>
                         <input id="project_name" type="text" name="project_name" value="{{project.name}}" class="left_text" required>
 
-                        <label for="project_leader">Project Owner:</label> <br>
+                        <label for="project_leader">Project Owner:</label>
                         <input id="project_owner" type="text" name="project_owner" class="left_text" value="{{project.project_owner.first_name}} {{project.project_owner.last_name}}" placeholder="-Choose Owner-" required>
 
-                        <label for="short_description">Short Description:</label> <br>
+                        <label for="short_description">Short Description:</label>
                         <textarea id="short_description" name="short_description" rows="3" cols="40">{{project.short_description}}</textarea>
 
-                        <label for="long_description">Verbose Description:</label> <br>
+                        <label for="long_description">Verbose Description:</label>
                         <textarea id="long_description" name="long_description" rows="4" cols="40">{{project.description}}</textarea>
                     </div>
 
@@ -84,7 +84,7 @@
                         <label for="start_date">Start Date</label><br>
                         <input type="date" name="start_date" id="start_date0" value="{{project.start_date|date:"Y-m-d" }}" class="date">
                         <div class="projected_end">
-                             <label for="projected_end_date">Projected End Date</label><br>
+                             <label for="projected_end_date">Projected End Date</label>
                             {% if project.projected_end_date|date:"Y" == "9999" %}
                                 <input type="date" name="projected_end_date" id="projected_end_date" class="date" min="{% now "Y-m-d" %}">
                                 <input type="checkbox" id="end_date_checker" name="no_end_date" value="true" checked>
