@@ -68,13 +68,15 @@
                         <div class="individual_skills_container d-none">
                             {% for skills in skill.skills %}
                                 <div class="individual_skill_info">
-                                    <p>{{ skills.skill.name }}</p>
-                                    <p>{{ skills.proficiency.get_level_name_display }}</p>
-                                    <div class="radio_group">
-                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Approve" value="APP">
-                                        <label class="" for="Approve">Approve</label>
-                                        <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Reject" value="REJ">
-                                        <label class="" for="Reject">Reject</label>
+                                    <div class="d-flex justify-content-around align-items-center w-75">
+                                        <p style="margin:0;">{{ skills.skill.name }}</p>
+                                        <p style="margin:0;">{{ skills.proficiency.get_level_name_display }}</p>
+                                        <div class="radio_group">
+                                            <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Approve" value="APP">
+                                            <label class="" for="Approve">Approve</label>
+                                            <input class="" type="radio" name='{{skills.id}}' id="{{skills.id}}Reject" value="REJ">
+                                            <label class="" for="Reject">Reject</label>
+                                        </div>
                                     </div>
                                     <span class="button_for_comment">Add Reason</span>
                                     <div class="textarea_modal d-none">
